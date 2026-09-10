@@ -22,7 +22,7 @@ export const defaultRadioHtml = `
         </details>
 `
 //an object for storing objects created to manage elements
-const elementHandlers = {}
+const handlers = {}
 
 //exporting incase I need to rerun it, but reruning it may not be a good idea
 export async function init() {
@@ -36,7 +36,7 @@ export async function init() {
         radioPlayerElement.innerHTML = defaultRadioHtml;
         const { initRadio } = await import('/widgets/radio_player.js');
         onload.push(() => {
-            elementHandlers.radioPlayer = initRadio()
+            handlers.radioPlayer = initRadio()
         })
     }
 
@@ -44,10 +44,11 @@ export async function init() {
     let pageType = document.querySelector('meta[name="page-type"]')?.content || 'page';
 
     if (pageType === 'posts') {
-        const { Post_Page_Loader, load_page } = await import('/scripts/content_loader.js');
+        console.log('posts')
+        const { Post_Page_Loader, load_page, PostManager } = await import('/scripts/content_loader.js');
         const module = await import('/lib/sitemap.js');
-        const Sitemap = module.default;
-
+        handlers.sitemap = module.default;
+        handlers.postManager = new PostManager();
         //using hash to be client side only (neocities may server ancient files elsewise)
         const params = new URLSearchParams(window.location.hash.slice(1));
         //const TYPES = {POSTS:'posts',MEDIA:'media',PROJECTS:'projects'} //may not use. type is the dir or map name. group is the sub dir name or key in the map(group is not really needed)
@@ -93,11 +94,16 @@ export async function init() {
             }
         }
         else {
-            await Sitemap.load();
+            await handlers.sitemap.load();
             const post_template = document.createElement('div');
-            const dir = Sitemap.getDir(`pages/${type}`);
+            const dir = handlers.sitemap.getDir(`pages/${type}`);
             post_template.className = 'info_container collapsible';
-            await load_page(`/pages/${type}`, dir, document.getElementById('body_container'), post_template, page, max_posts)
+
+
+            //await load_page(`/pages/${type}`, dir, document.getElementById('body_container'), post_template, page, max_posts)
+            handlers.postManager.directory = `/pages/${type}`;
+            await handlers.postManager.loadPage(dir, page, max_posts, document.getElementById('body_container'));
+            console.log(handlers.postManager)
 
             const next_page = parseInt(page) + 1;
             const back_page = parseInt(page) - 1;
@@ -126,16 +132,17 @@ export async function init() {
         if (active_tab) {
             active_tab.className = 'active'
         }
-
     })
 
 
     if (document.querySelector('.markdown')) {
         const { markdownToHtml } = await import('/lib/inline_parsers/markdown_parser.js');
         document.head.innerHTML = `${'<link rel="stylesheet" href="/styles/markdown.css">'} ${document.head.innerHTML}`
-        const markdownElements = document.querySelectorAll('.markdown');
-        markdownElements.forEach((element) => {
-            element.innerHTML = markdownToHtml(element.textContent)
+        onload.push(() => {
+            const markdownElements = document.querySelectorAll('.markdown');
+            markdownElements.forEach((element) => {
+                element.innerHTML = markdownToHtml(element.textContent)
+            });
         });
 
     }

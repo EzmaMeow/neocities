@@ -36,6 +36,9 @@ export async function add_html_from_file(file, container = document.body_class_n
     }
 }
 
+//todo: remake the class to be used to make an instance so that the page can be reloaded
+//also clean up the logic. most of the structure could be declared in a overridable function and most cases can be handle with a single load page/post function
+
 export async function load_page(dir = '', files = [], container = document.body, element = document.createElement('div'), page = 0, max_posts = 20) {
     const page_start = page * max_posts;
     const page_end = (page + 1) * max_posts;
@@ -45,7 +48,7 @@ export async function load_page(dir = '', files = [], container = document.body,
         }
         if (typeof files[i] === 'string') {
             const ext = ((/(?:\.([^.]+))?$/).exec(files[i])[1] || '').toLowerCase();
-            if (ext === 'html'){
+            if (ext === 'html') {
                 const html = await load_html_body(dir + '/' + files[i])
                 if (!html) { continue }
                 //going to allow element to copy, string to create a generic element, or create a div if no else applies
@@ -53,7 +56,7 @@ export async function load_page(dir = '', files = [], container = document.body,
                 post.innerHTML = html
                 container.appendChild(post)
             }
-            else if ( ext === 'txt' || ext === 'md'){
+            else if (ext === 'txt' || ext === 'md') {
                 let postText = await fetch(dir + '/' + files[i]).then(
                     result => {
                         if (!result.ok) { return null }
@@ -62,11 +65,11 @@ export async function load_page(dir = '', files = [], container = document.body,
                 ).catch(
                     error => { return null }
                 );
-                if (!postText){continue}
+                if (!postText) { continue }
                 let postData = postText.match(/<data>(.*?)<\/data>/s)[1];
-                try{
+                try {
                     postData = JSON.parse(postData) || {}
-                }catch(err){
+                } catch (err) {
                     postData = {}
                 }
                 postText = postText.replace(/<data>.*?<\/data>/s, "");
@@ -85,6 +88,91 @@ export async function load_page(dir = '', files = [], container = document.body,
         }
     }
 }
+
+//todo: this works (at least for loading the posts page with posts), but need to do the same with media
+//a static media page vs one that uses post manager but change the getposthtml to use the media post html
+//and a md file of the image link. also could handle image ext, but the files wull lack alt and other features
+// may add a post type that decided html stying and such
+export class PostManager {
+    page = 0;
+    max_posts = 20;
+    postDataExpression = /<data>(.*?)<\/data>/s;
+    directory = '';
+    loadedPosts = [];
+    container = document.body;
+    getPostData(rawPost = '') {
+        let postData = rawPost.match(this.postDataExpression);
+        try {
+            postData = JSON.parse(postData[1]) || {}
+        } catch (err) {
+            postData = {}
+        }
+        return postData;
+    }
+    getPostHtml(content = '', postData = {}, ext = '') {
+        if (ext === 'html') {
+            return `<div class="info_container collapsible">${content}</div>`
+        }
+        return `
+<div class="info_container collapsible">
+	<div class="info_title collapsible_toggle">
+		<h1>${postData.title || ''}</h1>
+	</div>
+	<div class="info_content post collapsible_content ${ext === 'md' || ext === 'markdown' ? 'markdown' : ''}">
+        ${content}
+	</div>
+</div>
+        `
+    }
+    getPostContent(rawPost = '', ext = '') {
+        if (ext === 'html') {
+            const doc = new DOMParser().parseFromString(rawPost, "text/html");
+            return doc.body.innerHTML;
+        }
+        return rawPost.replace(/<data>.*?<\/data>/s, "");
+    }
+    async getRawPost(postSource = '') {
+        if (!postSource) { return '' };
+        let rawPost = await fetch(this.directory + '/' + postSource).then(
+            result => {
+                if (!result.ok) { return '' }
+                return result.text()
+            }
+        ).catch(
+            error => { return '' }
+        );
+        return rawPost;
+    }
+    async createPost(postSource, container = document.body) {
+        const ext = ((/(?:\.([^.]+))?$/).exec(postSource)[1] || '').toLowerCase();
+        const rawPost = await this.getRawPost(postSource);
+        const postData = this.getPostData(rawPost);
+        const postContent = this.getPostContent(rawPost, ext);
+        console.log(ext)
+        const postHtml = this.getPostHtml(postContent, postData, ext);
+        container.innerHTML = `${container.innerHTML} ${postHtml}`
+    }
+    async loadPage(files = [], page = this.page, max_posts = this.max_posts || 1, container = this.container) {
+        if (!container || !files) { return }
+        const page_start = page * max_posts;
+        const page_end = (page + 1) * max_posts;
+        if (this.loadedPosts.length > 0) {
+            for (let post of this.loadedPosts) {
+                if (post) { post.remove() }
+            }
+            this.loadedPosts.length = 0;
+        }
+
+        for (let i = page_start; i < page_end; i++) {
+            if (!(i >= 0 && i < files.length)) {
+                break;
+            }
+            await this.createPost(files[i], container);
+        }
+
+    }
+}
+
 //should make a load content funtion instead of fighting with below
 //that use the sitemap approch or that brute force approch
 //would need pageing, async, and anding invalid types
