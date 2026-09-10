@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Random Dev Stuff</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles/data_styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body>
+    <div class="info_title collapsible_toggle">
+        <h1>Random Dev Stuff</h1>
+    </div>
+    <div class="info_content collapsible_content post">
+      <a>This or that(5/13/26)</a>
+      <p>
+        Meow the logical OR or inline conditional can be useful for short checks or when one
+        wants to set it as a const without using a prep varible.
+        <br><br>
+        <code>const content = this.content || My.CONTENT;</code><br>
+        <code>const content = this.content !== undefined ? this.content : My.CONTENT;</code>
+        <br><br>
+        In both cases, My.CONTENT will be used if this.content is undefined (logical OR(||) this.content just needs to be falsly).
+      </p>
+      <details>
+        <summary>Additional context</summary>
+          <p>
+            My.CONTENT is a static var from the class My in which the source this is made from. this.content is an optional
+            override of the static var. In other words content default to the class content if the instance dose not assign content. Truth is const
+            content could be replace to this.content and called once.
+          </p>
+      </details>
+      <p>
+        Inline if statement is more useful since logical OR works diffrently outside js (and gdscript) when dealing with non-booleans/bits,
+        yet it is shorter when used in js as longs as one remebers that it will return the second if the first is falsly (like 0, '', undefined, and others).
+        The inline if can be shorten to <code>const content = !this.content ? this.content : My.CONTENT;</code> to act similar to the logical OR and the previous
+        example was for a undefined cases where content is assume to be a defined object. In short I wanted to show inline ifs can be modified more than the logic OR.
+        <br><br>
+        For more complex cases, a function may be ideal unless the const is an object and the object properties can be added, removed, or edited without side effects.
+      </p>
+      <a>Signal Object(5/13/26)</a>
+      <p>
+        Below is a signal class to help make a subscribing object.
+        <textarea rows="27" readonly>
+          export class Signal {
+            static get REMOVE() { return -1 };
+            #connections = new Set()
+            connect(callable) {
+                if (typeof callable === 'function') {
+                    this.#connections.add(callable);
+                    return () => this.disconnect(callable);
+                }
+            }
+            disconnect(callable) {
+                this.#connections.delete(callable);
+            }
+            emit(...args) {
+                for (const callable of this.#connections) {
+                    if (callable(...args) === Signal.REMOVE) {
+                        this.disconnect(callable)
+                    };
+                }
+            }
+            clear() {
+                this.#connections.clear();
+            }
+            delete() {
+                this.delete = true;
+                this.clear()
+            }
+        }
+      </textarea>
+      Use case: the object that want to let connectors knows something changed or happen creates
+      a signal and emit the signal when ever the change happens with as many parameters is wants. Anything that want to react
+      just need to connect to this signal and pass a callable of what they want to do when the signal emits (and delete it self from
+      the signal when it do not want update or want to not exists). Note: the callable can be declared like with the html events, but I do 
+      not feel like explain that here. (NOTE: the idea is that the parent connects to the signal of a child or an object connects to a independent system signal where indpendent means
+      it dose not know the object details nor ever directly interact with it).
+      <br><br>
+      This one may be a bit odd since it add a remove case if the listerner return -1 when after handling a signal.
+      This is for a limited used connection where the connector get auto disconnected when they return -1 so they do not have
+      to handle it themselves. It can be ignored or the emit for content replace with just `callable(...args)`
+      <br><br>
+      Now the role of a signal is to get notifcations of state changes of some object so it dose not have to check it every update.
+      It is kind of like the events, but this is more localized. The connector is assume to know about the owner of the signal(or a handler that knows both)
+      since the connector needs to disconnect before being nulled (even the auto remove will need to be manually disconnected if never remotly called and return a -1).
+      In js (with html) this is common for events as well and not that big of an issue. One could try to wrap all this around a handler to auto cleanup, but it is good practice
+      to get use to deconstruction of object before leaving it for the trash. 
+      <br>
+      I like the callback approch and signals is like if a callback was subscrible instead of limited to one connection. Event buses can get crazy big if one only use them for all reactive responces and
+      I kind of do not want to depend on some central event bus for all my systems and this is simple enough to recreate as needed. 
+    </p>
+    <a>Extendable Code or What not(5/15/26)</a>
+    <p>
+      Mew there is a lot of time code can be simplify to a resuable state which can make adding similar logic across project easier. 
+      Generaly breaking the code into function and into at least two classes/object (the base and the implementation) is how I try to make reuseable code.
+      Above I mention signals as a way to listen to changes. There are general callbacks which is a function/callback formated property that may be left undefined
+      if not used (I tend to declare it as an empty callable with the bare min parameter and a default return as a form of lazy readbilty).
+    </p>
+    <p>
+      Also by spliting the code into functions, things like monkey patching could be used to extend it. How to split it is a bit hard to disribe and it help to know what
+      will be replaced or modified. Too many functions may be unessary and may make the code harder to read. I think a function for the main chunk of a loop segment (not including the pre and post process in the loop if it can be pass as parameter), update logic, setups, and thing like property getters may be good to turn into overridable or replacable functions. Sometimes it is easly to overthink this and think one need to hook to serveral points where one point 
+      could be simplify. For example I had a property getter for my item display and a update function. I was storing the property fecth from the data it represts in itself and then updating the display info from them. Not all of the data was safe to display as is (the data it represent is a static and meta data and some properties require merging two or more properties from both sets). Orignally I patch the getter, but realize I could do all that logic in the update patch since the item display role is to store the elements used and to make it easier to update the elements, not to make the item data easier to read. 
+    </p>
+    <a>Three major parts of a reusable game system(5/19/26)</a>
+    <p>
+      Meow this one I had trouble with the name. I belive games and stuff have at least three type of code levels to allow some of the code to be reused (or to allow reusable parts to be used). 
+      These are the core, the core implementation, and the game implementation. There is a forth that is reusable game components that depends on the core implementation(it be part of the core if it did not)
+      that the game implementation may used, but that is optional. 
+    </p>
+    <p>
+      I may misused the term core, but in this case it is all independent modules, lib, or components that dose nothing by themself (meaning a function needs to be called or they need to be implemented).
+      They are things like vectors, and signal objects. 
+    </p>
+    <p>
+      The core implementation is more parts, but these depend on some of the core to get things done. They tend to be core systems such as a physics world system, rendering system, sound systems. (Random note:
+      I am not sure where hardware interfaces would be. They feel more like a core implementation, but of hardware stuff yet they could be consider a core part). They usally can do something, but need some more information
+      to be usable.
+    </p>
+    <p>
+      The game or content implementation is adding the actual data(like assets) to the system. This part can be heavy depending on the project and may be hard to make reusable code for. I do admit an advance core implementation could make this part data driven. Most engines expect users to create this part while they provide the core implementation (though the implementation may be lacking for some projects).
+    </p>
+    <p>
+      Mew this segment is a bit short and I guess lacking. I just want to say I been trying to focus making these core parts in a way that is similar to other while making a core implementation that can swap these parts out
+      and reduced to maybe extend existing implementations. Though it may be something I have to come back to, but hopefully I could make some useful things from that approch. Also means I will try to treat vectors and transformations
+      as arrays and have the implementation convert them if the system need to read it like an object.
+    </p>
+    </div>
+</body>

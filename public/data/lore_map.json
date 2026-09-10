@@ -1,0 +1,16 @@
+{
+    "default": [
+        {
+            "title": "<h1>About The Lore Page</h1>",
+            "path": "data/lore/lore0.html"
+        },
+        {
+            "title": "<h1>How I See Myself</h1>",
+            "path": "data/lore/lore1.html"
+        },
+        {
+            "title": "<h1>Mammalian Extinction Virus</h1>",
+            "path": "data/lore/lore2.html"
+        }
+    ]
+}

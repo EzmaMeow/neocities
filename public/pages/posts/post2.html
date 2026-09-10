@@ -1,0 +1,60 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Post Colors Nonsense</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles/data_styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body>
+    <div class="info_title collapsible_toggle">
+        <h1>Post Colors Nonsense</h1>
+    </div>
+    <div class="info_content collapsible_content post">
+
+      <p>
+        One day I want to figure out colors for the posts.
+        I mean <a>I been using the `a` tag to change the color
+        to the link color.</a> Really these are the two major text
+        colors. I could make the text any color I want do to how
+        I format and load the text like <span style="color: rgb(0, 0, 255);">blue</span> or 
+        <span style="color: #009a00;">green</span>.
+        
+        I think I could make classes for secondary colors since using the anchor tag 
+        for the secondary color is a bit dirty meow. 
+      </p>
+      <p>
+        Also I probably should add a read more. I think the collapse code
+        might not work with nested collapsable types, so I do not think I can
+        add it to the post. I may need to make a diffrent kind using some other
+        element for text or forms unless a way already exist natively.
+        <span class='collapsible'>
+          <a class='collapsible_toggle'>
+            <br>Update: (click me to show)<br>
+          </a>
+          <span class='collapsible_content' hidden>
+            I manage to get it to work, but I am sticking to the scrolling boxes for now.
+            This is an example of it working meow. Truth is that sometimes details acts odd,
+            so it is tempting to use this meow.
+          </span>
+        </span>
+      </p>
+      <p>
+        The issue is that there is a lot of empty space between post when
+        the screen can fit two or more columns and the post sizes are vastly diffrent.
+        Trying to keep them the same size will help. I also could allow scrolling inside the post,
+        but that may be odd to have two scrollables.
+      </p>
+      <p>
+        (Update): I decided to use scrollbars for now since it seem I would have to do more 
+        JS hooks and nonsense to have the other way work in a more automatic way.
+      </p>
+      <p>
+        Also maybe (well maybe not) I should store the whole post html instead the formated text. I may be able to redirect to the
+        source and it will render okay (maybe), just won't be centered and probably anchored to the top left of the
+        screen. Eh the source file really is not meant to be viewed as is.
+      </p>
+
+    </div>
+</body>

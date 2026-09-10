@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Roll Tables</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles/data_styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body style='display: flex; justify-content: center;'>
+    <div style='max-width:640px;'>
+    <label title='Seed input'><a>Seed: <input value="" id="seedInput" name="seedInput" style="width: 50%;"></a></label>
+    <div class="info_title collapsible_toggle">
+        <h1>Roll Tables</h1>
+    </div>
+    <div class="info_content collapsible_content post" style='text-align: center; display: flex; flex-direction: column;'>
+        <p>I plan on having tables and discribing what their properties repsent. Also plan on them rolling their values base on the seed</p>
+        <table style='text-align: center;'>
+            <tbody>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                    <th>Info</th>
+                </tr>
+                <tr>
+                    <td>Difficulty</td>
+                    <td class='randomRange'>1-20</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Custom</td>
+                    <td class='randomRange'>1-20</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Lethalness</td>
+                    <td class='randomRange'>1-20</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Stableness</td>
+                    <td class='randomRange'>1-20</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Greed</td>
+                    <td class='randomRange'>1-20</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Cruelty</td>
+                    <td class='randomRange'>1-20</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Acceptance</td>
+                    <td class='randomRange'>1-20</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Violence Tolerance</td>
+                    <td class='randomRange'>1-20</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Magic Use</td>
+                    <td class='randomRange'>1-20</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Worship</td>
+                    <td class='randomRange'>1-20</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="info_title collapsible_toggle">
+        <h1>Attribute Table</h1>
+    </div>
+    <div class="info_content collapsible_content post" style='text-align: center; display: flex; flex-direction: column;'>
+        <p>1-18 rolls. 12 free points to redistubute (from 1-20 range) to help correct too many low stats</p>
+        <table style='text-align: center;'>
+            <tbody>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                    <th>Info</th>
+                </tr>
+                <tr>
+                    <td>Str</td>
+                    <td class='randomRange' data-rand-max="18"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Con</td>
+                    <td class='randomRange' data-rand-max="18"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Dex</td>
+                    <td class='randomRange' data-rand-max="18"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Int</td>
+                    <td class='randomRange' data-rand-max="18"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Wis</td>
+                    <td class='randomRange' data-rand-max="18"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Chr</td>
+                    <td class='randomRange' data-rand-max="18"></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>1-20 roll of other stats.</p>
+        <table style='text-align: center;'>
+            <tbody>
+                <tr>
+                    <th>Property</th>
+                    <th>Value</th>
+                    <th>Info</th>
+                </tr>
+                <tr>
+                    <td>Wealth</td>
+                    <td class='randomRange'></td>
+                    <td>Starting wealth or current wealth if ncp</td>
+                </tr>
+                <tr>
+                    <td>Luck</td>
+                    <td class='randomRange'></td>
+                    <td>
+                    Determin if character get a extra roll against or for them. 
+                    This mean a luck roll can be made using their luck as a pass.
+                    Good luck can allow rerolling nat 1 once while bad luck may have their nat 20 rerolled.
+                    </td>
+                </tr>
+                <tr>
+                    <td>Health</td>
+                    <td class='randomRange'></td>
+                    <td>Starting health or current health if ncp. From near death or sickly ill to being well feed and full hp (or maybe even have some buffs)</td>
+                </tr>
+                <tr>
+                    <td>Mood</td>
+                    <td class='randomRange'></td>
+                    <td>Starting mood or current mood if ncp</td>
+                </tr>
+                <tr>
+                    <td>Age</td>
+                    <td class='randomRange'></td>
+                    <td>Starting age or current age if ncp. The age range may be define elsewhere and do not need to be their full life range.</td>
+                </tr>
+                <tr>
+                    <td>Event State</td>
+                    <td class='randomRange'></td>
+                    <td>If they are currently dealing with a issue, not doing much, or something good is happening to them.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <script type="module">
+        import { RandomGenerator } from "/lib/random_generator.js"
+        
+        const randomGenerator = new RandomGenerator();
+
+        function replaceRandCalls(root = document) {
+            const elements = root.querySelectorAll('.randomRange');
+            for (const element of elements) {
+                const min = Number(element.dataset.randMin) || 1;
+                const max = Number(element.dataset.randMax) || 20;
+                element.textContent = randomGenerator.randomRange(min, max);
+            }
+        }
+        
+        //todo: each table may or may not have its own seed system
+        //also reroll should recaculate the values without reseting the generator state or picking a random seed
+        //but should keep count of the amount of times (not sure if it is possible to forward to without rerolling it x amount of times)
+        
+        const seedInput = document.getElementById("seedInput");
+        seedInput.value = randomGenerator.seed
+        let seedInputValue = ''
+        if (seedInput){
+            seedInput.addEventListener('change', function() {
+                console.log(typeof Number(this.value) === "number", ' ', Number.isFinite(Number(this.value)) , ' ', (Number(this.value) | 0) === Number(this.value))
+                if (this.value !== seedInputValue){
+                    seedInputValue = this.value
+                    randomGenerator.setSeed(seedInputValue)
+                    replaceRandCalls()
+                    if (this.value === ''){
+                        this.value = randomGenerator.seed
+                    }
+                }
+            });
+        }
+        replaceRandCalls()
+    </script>
+    
+</body>
+

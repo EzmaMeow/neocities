@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Random Dev Nonsense</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles/data_styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body>
+    <div class="info_title collapsible_toggle">
+        <h1>Random Dev Nonsense</h1>
+    </div>
+    <div class="info_content collapsible_content post">
+      <a>Routing Functions(4/29/26)</a>
+      <p>
+        Meow may say some random dev nonsense. This is related to routing a
+        bunch of stuff to one place. Yeah that may not sound intresting or useful
+        like that so I guess I should explain the case.
+      </p>
+      <p>
+        The default way of adding events to html buttons and things seem limited or I do not
+        know how to pass the event, parameters, or get it to work with script type="module". 
+        This means I attach everything in js (`addEventListener`). Now that mean making or declaring
+        a function/callable for every case. Say if you want to make a option for all the mayjor properties
+        of a media or aduio node, then that could lead to lots of similar code.
+      </p>
+      <p>
+        The router idea is to redirect all related events to a single functions that manage them. 
+        I use it in the maze game to connect the game menu to the option state (I assign the property they reprent when I bind it).
+        The radio player takes the assigment a step further and used `querySelectorAll` with dataset (to assign addional parameters).
+        This allow option to be assign via a class and a dataset in html as long as the class is routed to that function
+        and that function can handle it.
+      </p>
+      <p>
+        NOTE: one could 'brute force' this and allow it to attemp to assign anything as long as it a standard 'update property' approch,
+        vut I rather check each case in this function so I can make sure the types are handle correctly since it may be treated as a
+        string which messes up non-string properties. Also the router is to move as much of the code off the html as well as make as 
+        much of the code reusable.
+      </p>
+      <a>Readibilty Layer (5/2/26)</a>
+      <p>
+        I have an issue with the idea that everything should be (human) readable, but I am fine with a stripable or light layer that add that readbilty to a data system or struct.
+        For example int base states and bitflag can use a class static feild to know what each value/flag represents without each instance having a list of keys. This can work with
+        structured array like vectors and matrixes as well. The transformation is stored in a 3x3 or 4x4 maxtrix(or 9/16 size arrays) and acess/modify by functions or get a copy of the
+        raw version if stored in a way that hardware may be able to use directly. The thing is that not all data is going to be read by humans after it is built and having the core work
+        better with the machince is ideal when it comes to networking and graphics. Meow then again it more me not wanting to be force to code like 'do this and that then for each apple do this'
+        when prototyping something I may have to convert to c, c++ or lower.
+      </p>
+      <a>Inventory (5/7/26)</a>
+      <p>
+        Mew inventories in games or in general can be easy or hard depending on what being saved with it
+        and how often they are updated. I tend to like inventories with metadata, but settle on having a simple 
+        count of items and a detail array of items.
+      </p>
+      <p>
+        The simple inventory is a map of items paired with a count. It could be an array, but I feel it is easier when updating to 
+        save the id(keys) incase the index order ever needs to change. This inventory is for most common items that dose not need extra info
+        or their extra info is static (one unit of cut fish is always 1kg). NOTE the static info it looked up via the item key/id.
+      </p>
+      <p>
+        The advance inventory usally is a container(array or map) of objects. The object contain the item type (or extends the item type class) and any dynamic data about the item such as amount, size, weight, custom name, and other
+        modifiers. The item type normally will hold any static info, but also provided the defaults. The issue with this inventory is that the default and structure of the item can be change so update could break an item. Solutions usally
+        is to try to use the static class to caculate the final results when possible and keep the data stored in the advance inventory simple. For example a fish weight may be 0.8, but the game will caculated it as 16.8 kg if the base
+        weight is 21kg. If the base weight changes, then the fish size will update as well which should help prevent old extream sizes from lasting through updates(as long as it not a bug that affect the save scale). 
+      </p>
+      <p>
+        The advance inventory may use up too much memory if left to grow to a large size. One could try to stack ones with the same metadata (where amount comes in), yet that only will work for items
+        that do not have much or any variation. So the idea is to convert the bulk of the hoardable items into simple items and any advance items will have a limited storaged and a way to process it if
+        used as ingredents. For example a cought fish is an advance item and the game limit the max amount of live fish that can exist at a times (probably a few ways depending on game design and memory limits). 
+        The fish could be relased, stored in a limited size fish tank, or process into resources (cut fish, fish oil, ect). The last option will convert the fish into simple items that is only limited by their max amount or stack 
+        size (per container or item slot of using a hybird storage system).
+      </p>
+      <p>
+        I also like the idea of having one central simple inventory and as many advance inventories as needed. Simple items can be represented as advance items as well (as a comsumable that will add to the simple item when used or given),
+        so there little reason to have a simple inventory outside of the player (game or ai) state. Also given dedicated inventories to everything is kind of overkill, so most likly an invetory interface is used so one can fake inventories
+        for a more dumb down version (a copy of a static set that may replace it if an item is removed(Ugh hard to explain, basicly init it in memory only if there a change)).
+      </p>
+    </div>
+</body>

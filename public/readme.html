@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Read Me</title>
+    
+    <meta name="page-type" content="readme">
+    <link rel="stylesheet" href="/styles/markdown.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/data_styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body>
+    <div class="info_title collapsible_toggle">
+        <h1>Read Me</h1>
+    </div>
+    <div class="info_content collapsible_content post">
+      <p><details>
+      <summary>
+      <a>[About this page]</a>
+      </summary>
+        <span class='markdown'>
+This page is mostly for notes and info related to this site. It is not meant to be expose to the main site and is expected to sit in the directory for reference.
+        </span>
+      </details> </p>
+      <span class='markdown'>
+### File structure  
+The file structure at the time of writing this is a bit of a mess. The ideal structure is to have a global and (optional) local directory for each resource type and to wrap the pages into their own directory or group together with similar types.  
+- Globals:
+  - Data : Text files or binary data. May contain html.
+  - Assets : General location of art and media files.
+  - Styles : CSS files that mulitple pages uses.
+  - Lib : JS modules that are more independent and design to be resused.
+  - Scripts : Site wide JS.
+  
+- Other Dir:  
+  - Pages : Files for standalone webpages. They should be in their own directory containing at least an index.html.
+    - Posts : Html or markdown format txt files that represent a post. (the posts page will render them if correctly added to the sitemap)
+  - Games : Files related to games. They should be in their own directory, but are not expected to have an index.html
+  - Widgets : Files that are meant to build or handle elements in webpages.
+- Other files: theses are related to the landing page or the site in general.
+  - index.html
+  - styles.css
+  - script.js
+  - sitemap.json
+  - sitemap.html
+  - not_found.html
+  - readme
+      </span>
+
+    </div>
+    <script type="module" src="/default_page.js"></script>
+</body>

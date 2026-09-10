@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Markdown Support</title>
+    <link rel="stylesheet" href="/styles/markdown.css">
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles/data_styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body>
+    <div class="info_title collapsible_toggle">
+        <h1>Markdown Support</h1>
+    </div>
+    <div class="info_content collapsible_content post center markdown">
+# About
+
+For some reason I got distracted improving this little markdown lib and added more to it and fixed some things.  
+So now I might try to use it, though I still depend on extracting the html body for the posts.  
+This means most my markdown usage would be inside the html instead of in its own file(or part of user inputs).
+- meow
+  - mew
+    - meoow
+      - merrow
+I also added a few of my own things like more than 3 list depths, but currently lack adding paragraphs and other block
+size stuff as part of the list.
+Now that I think about it, I lack ways to color text. I may think of something later.
+>this is a quote
+`this is an inline code block`
+~~meow~~ ~mew~ meow ^merrow^
+[return to top](#About)
+        
+    </div>
+</body>
+<script type="module">
+	import { markdownToHtml } from '/lib/inline_parsers/markdown_parser.js'
+
+    const markdownElements = document.querySelectorAll('.markdown');
+        markdownElements.forEach((element) => {
+            element.innerHTML = markdownToHtml(element.textContent)
+    });
+</script>

@@ -1,0 +1,52 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Distracted</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles/data_styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body>
+    <div class="info_title collapsible_toggle">
+        <h1>Distracted</h1>
+    </div>
+    <div class="info_content collapsible_content post">
+        
+      <p>
+        I spent too much time working on my neocities site that I
+        neither been working on my games or been playing games...just this
+        silly site or standard work.
+      </p>
+      <p>
+        The issue is I am not a web designer and designing GUI is something
+        I dislike. That is why this site is simple even my game GUI I tend to
+        perfer a veiwport into the world vs some fancy window or HUD. My web games 
+        I took a likling to have menu and stuff handle outside the viewport so it could
+        be config by the user with just html (truth is I have not export too much to the document
+        with the maze game. A secret fishing game and it precessor cat room did make use of it).
+      </p>
+      <p>
+        I been tempted to make a dumb down version of the (non-public) fishing game prototype.
+        Mostly I kind of want to not use canvas and have a few static fish elements floating above
+        the water(background) but behind everything else. Also no fancy catch mechanics, just the dumb down
+        click to catch and play splash sound. It will be hidden and maybe player get a point or something
+        (I may eventually port the fish data. I still need to work on it).
+      </p>
+      <p>
+        All I need to do it manage the image used for the scene full background and make sure to create a aabb (loaded from a json
+        that link it to the background) that only cover the water zone that the fish can swim in. Then make sure the check bounds, random
+        point in bounds, and move to logic work correctly. Maybe add in the distance scaling. Make sure the fish swim animation works 
+        (I may need to convert to gif and switch between idle and moving or I could try to copy and repurpose the animation logic from that other 
+        fishing game). Mew also add x amount of fish and set them hidden, link the fish logic to them, and set up a timer. Also the whole catch logic
+        which is just click events
+      </p>
+      <p>
+        The only issue is that I would need to paint waterscapes for the minigame to be worth it. The issue is I am a lazy cat when
+        it comes to art. Below is my lastest lazy painting out of my head. 
+        <img src='https://64.media.tumblr.com/e98d0375bdc66a34480164c535f87872/bffe166c6db88413-3d/s400x600/9aa3a8b6cb3ec80147edaf474ad8b4bec15b3e64.pnj' alt='A lazy, mouse painted, waterscape.'>
+        
+      </p>
+        
+    </div>
+</body>

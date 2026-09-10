@@ -1,0 +1,71 @@
+[
+    {
+      "assets": [
+        "anim_profile_pic.gif",
+        "background.png",
+        "fish.gif",
+        "frame.png"
+        ],
+      "data": [
+          {
+            "html": [
+              "links.html",
+              "navigation.html",
+              "other_about_me.html",
+              "other_links.html"
+            ]
+          },
+          "lore_map.json",
+          "media_map.json",
+          "posts_map.json"
+        ],
+      "lib": [
+          "collapsibles.js",
+          "file_loader.js",
+          "media_wrapper.js",
+          "storage.js"
+        ],
+      "scripts":[
+        "content_loader.js"
+      ],
+      "pages":[
+        {
+          "posts": [
+              "post0.txt",
+              "lastest_update.html",
+              "post1.html",
+              "post2.html",
+              "post3.html",
+              "post4.html",
+              "post5.html",
+              "things_about_me.html",
+              "random_dev_info.html"
+            ],
+            "lore": [
+              "lore0.html",
+              "lore1.html",
+              "lore2.html",
+              "us_and_them.html"
+            ]
+          },
+        "about.html",
+        "guestbook.html",
+        "posts.html",
+        "questions_and_answers.html"
+      ],
+      "games":[
+        "fishing.html",
+        "fishing.js"
+      ],
+      "widgets":[
+        "radio_player.js"
+      ],
+      "styles":[
+        "markdown.css"
+      ]
+    },
+    "index.html",
+    "not_found.html",
+    "styles.css",
+    "neocities.png"
+]

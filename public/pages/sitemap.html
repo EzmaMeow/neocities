@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Sitemap</title>
+    <meta name="page-type" content="sitemap">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body>
+    <div id="nav">
+    </div>
+
+    <div id="background">
+    </div>
+
+    <div id="body_container">
+        <div class="container text-center">
+			<div id='radio-player'></div>
+		</div>
+		<div class="flex-break"></div>
+        <div class="info_container collapsible">
+            <div class="info_title collapsible_toggle">
+                <h2 class="text-center">Sitemap</h2>
+            </div>
+            <div class="info_content collapsible_content">
+                <p id="sitemap_container">
+                </p>
+            </div>
+            
+        </div>
+    </div>
+
+
+    <script type="module">
+        import Sitemap from '/lib/sitemap.js';
+        await Sitemap.load();
+        const sitemapElm = document.getElementById('sitemap_container');
+        if (sitemapElm) {
+            sitemapElm.innerHTML = Sitemap.createSitemapHtml()
+        }
+    </script>
+    <script type="module" src="/scripts/default_page.js"></script>
+
+</body>
+
+</html>

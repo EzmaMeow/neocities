@@ -1,0 +1,144 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Fishing</title>
+    
+    <meta name="page-type" content="fishing">
+    <link rel="stylesheet" href="/styles.css">
+    <style>
+        /* Container that holds all images */
+        .level-container {
+            position: relative;
+            width: 100%;
+            /* Responsive width */
+            /* max-width: 800px;*/
+            margin: auto;
+        }
+
+        /* Main large image */
+        .background-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            user-drag: none;
+            -webkit-user-drag: none;
+        }
+    </style>
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body>
+
+    <div id="nav">
+
+    </div>
+
+    <div id="background">
+    </div>
+
+    <div id="body_container">
+        <div class="container text-center">
+            <div id='radio-player'></div>
+        </div>
+        <div class="flex-break"></div>
+
+        <div class="info_container">
+            <div class="info_title">
+                <h1 id='room_name'>Fishing</h1>
+            </div>
+            <div class="info_content">
+                <p class='text-center'>
+                    Meow click to fish : 3<br>
+                    <br>
+                    <a class='text-center' id="score">(NOTE:this is a prototype)</a>
+                </p>
+
+            </div>
+            <div class="level-container" id="world">
+                <img src='https://64.media.tumblr.com/e98d0375bdc66a34480164c535f87872/bffe166c6db88413-3d/s400x600/9aa3a8b6cb3ec80147edaf474ad8b4bec15b3e64.pnj'
+                    alt='A lazy, mouse painted, waterscape.' class="background-image" id="level">
+
+            </div>
+            <details class="text-center">
+                <summary>Options</summary>
+                <br>
+                <label>Save Locally: <input type="checkbox" id="fishing_save_locally"></label><br>
+                <br>
+                Sound Volume: <input type="range" id="sound_volume" min="0" max="1" step="0.01" value="0.5"
+                    style="width: 75%;"><br>
+            </details>
+            <details class="text-center">
+                <summary>Inventory(WIP. Not saved)</summary>
+                <div id='inventory'></div>
+                <br>
+                <button id="inventory_previous">Back</button>
+                <button id="inventory_next">Next</button>
+            </details>
+        </div>
+    </div>
+
+    <audio id="splash_sound" src="https://ezmameow.github.io/assets/splash.wav"></audio>
+    <audio id="quick_splash_sound" src="https://ezmameow.github.io/assets/quick_splash.wav"></audio>
+
+    <script type="module">
+        import { start_fishing_game } from "./fishing.js"
+        import { Inventory } from "/scripts/inventory.js"
+	      
+	    const game = await start_fishing_game();
+        const inventory = new Inventory('inventory')
+        
+        const inventory_previous_button = document.getElementById('inventory_previous');
+        const inventory_next_button = document.getElementById('inventory_next');
+        function update_inventory_buttons(){
+            inventory_previous_button.hidden = !inventory.has_previous_page();
+            inventory_next_button.hidden = !inventory.has_next_page();
+        }
+        inventory_previous_button.addEventListener('click', (event) => {
+            inventory.previous_page();
+            update_inventory_buttons()
+        })
+        inventory_next_button.addEventListener('click', (event) => {
+            inventory.next_page();
+            update_inventory_buttons()
+        })
+
+        inventory.update_item = function(item, item_data) {
+            item.icon_src = this.get_item_data_property(item_data, 'icon_src','')
+            const min = this.get_item_data_property(item_data, 'min_weight', 0.0)
+            const max = this.get_item_data_property(item_data, 'max_weight', 1.0)
+            const min_weight_ratio = this.get_item_data_property(item_data, 'min_weight_ratio', 0)
+            const max_weight_ratio = this.get_item_data_property(item_data, 'max_weight_ratio', 0)
+            const min_weight = min + (max - min) * min_weight_ratio;
+            const max_weight = min + (max - min) * max_weight_ratio;
+            const weight = min + (max - min) *  this.get_item_data_property(item_data, 'weight_ratio', 0.0);
+            const total_caught = this.get_item_data_property(item_data, 'total_catches', 0)
+            const name = this.get_item_data_property(item_data, 'name', 'no_name')
+
+            item.update_text(`${name} ${weight.toFixed(3)}kg`);
+            item.update_info(`Total Caught:${total_caught} <br> Min Weight:${min_weight.toFixed(3)}kg <br> Max Weight::${max_weight.toFixed(3)}kg`);
+
+        }
+        game.on_fish_caught = function(){
+            inventory.load(game.inventory)
+            inventory.update_items();
+            update_inventory_buttons()
+        }
+
+        inventory.load(
+            game.inventory
+        )
+        inventory.update_items();
+        update_inventory_buttons()
+	      
+	 </script>
+	 
+	 <script type="module" src="/scripts/default_page.js"></script>
+    
+
+</body>
+
+</html>

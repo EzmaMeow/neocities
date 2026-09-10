@@ -1,0 +1,185 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Random Update</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles/data_styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body>
+    <div class="info_title collapsible_toggle">
+        <h1>Random Update</h1>
+    </div>
+    <div class="info_content collapsible_content post">
+      <p>
+        Meow added that dumb down fishing game. It still lack size and speed base on perceived depth.
+        Also I need to make it load data from json and maybe make the fish more configurable since
+        I would like to add a few images and each image would need a aabb for the fish nav area.
+        For the fish, I would like to add catching diffrent types and maybe a weight and size logging.
+        The data I have of fish is pretty simple, but still is enough to work. I probably should add
+        a scare state and a miss chance for fish not close to the surface. I am not sure if I want
+        to add a notify all fish like logic so fish in an area around the cursor will panic. Truth is
+        I might not touch it for a bit.
+      </p>
+      <p>
+        I notice that I may have too much nav tabs for the title so the style breaks a little
+        with mobile. The theme a bit fixed in parts so I am not sure if I can fix it without breaking
+        things via css. I kind of want less tabs so I may end up grouping the post type if I figure
+        out how I want to display subpost. I could add it to the body container and style the first
+        content slightly diffrently and use that row breaker to keep everything below it.
+        The things is I am a lazy cat that have not been playing game, so I might not work on
+        this site for a bit meow.
+      </p>
+      
+      <a>Random Update 2 (date not logged)</a>
+      <p>
+        Meow working on a website can take a while, though if
+        I get inspire enough, maybe I could change this to 
+        be base on the fishing minigame but expanted. Like add
+        a story, but it would be me talking to myselves trying to
+        survive by fishing and other stuff
+      </p>
+      <p>
+        I mean I probably will have other site stuff, but more hidden
+        or blended in if I did that. I do plan on keeping a static landing page
+        so more can view the basic stuff. It may be some time before I think about
+        event try to see if I could make that idea work (if I even want to. It be a lot of work)
+      </p>
+      <p>
+        Also I might strip out the uncensored secrets. They are not really bad except for the link
+        going to my Pillowfort. I may keep the content flag thing, but that kind of stuff would be a 
+        lot of work to maintain. I rather have an uncensored site and rather this site be for 
+        adult dispite the content most likly being tame(I do not want to deal with drama with minors). 
+      </p>
+      <p>
+        Meow decided to use session storage by default for some settings that would be too annoying
+        to have reset between pages. Seems like it is 'allowed'. It may be a bit before it is tied to
+        the storage script, but currently the options page (for permissions) is hidden so I can wait.
+        The ideal way to handle it is to have options try to live in local if user allows it to be stored 
+        there, else use session since it is cleared after the session ended.
+      </p>
+      
+      <a>Random Update 3 (date not logged)</a>
+      <p>
+        Meow may be lazy with this site for a bit or maybe coding in general untill I
+        gain energy back and maybe when the sun is back.
+      </p>
+      <p>
+        I do want to use a diffrent content loader(post loader) that like the html loader.
+        I just need to strip things from the text such as all header info or
+        add a filter to strip all risky elements from it before making a post.
+        I just would like to have all the post data in one file plus have it viewable
+        from the source without being a generic text page. (Mew may need to look
+        into how people may site maps. If neocites have any feature of genrating
+        a site map, then I could abuse it to get data without prebaking the map)
+        (I think most sitemap are user created or generated locally so I may have
+        to keep using the maps, but convert them to be only about links and dir)
+      </p>
+      <p>
+        The current content loader would still be useful for things that do not need
+        a dedicated file per post like the media page. *rolls around* Also maybe I should
+        have 'long' post for nonsense base on subject like a dev log and me log, but each
+        entry would need a date and mew been bad with dates.
+      </p>
+      <a>(4/27/26)</a>
+      <p>
+        I think I manage to move to the new way of loading posts(except for media). I can edit them by
+        their selves and overide their style as long as I keep the body safe for the post format.
+        I was thinking about adding filter or a fetcher to limit what gets extracted, but
+        the source post should be farily simple.
+      </p>
+      <p>
+        Meow I was low on enegry today as well and almost fell asleep while working.
+        I been too hungry latly and I am not sure why, but it makes it harder to focus.
+        I kind of want to clean up the posts here, but also don't since it will feel 
+        empty. Ugh I just remember there more features I could add that I do not really need.
+        Also the sitemap being used is just a path map with no metadata, though the other feature
+        would need acess to metadata so it dose not need to load a full post(the idea was to use a 
+        detailed map with the map and load it as needed so they only take up space as needed(I still 
+        need to add that clear function, but a few kilos won't kill anyone)). *rolls around*
+      </p>
+      <a>(4/29/26)</a>
+      <p>
+        This kind of starting to become a random log (for now).
+        Well I might not turn this into a gamify website due to sometimes not being able to upload patches to files (js).
+        So I may stop updating the fishing game for a bit here and only focus on it in my github. I mean I probably could
+        iframe it here, but I will worry about that if I make enough progress. I should work on my main projects though.
+      </p>
+      <a>(4/30/26)</a>
+      <p>
+        Meow added an option to save the radio player setting via localSession, but I chicken out for the fishing game.
+        For the fishing game I would need to handle the save state better else I risk adding unessarry things to the localStorage
+        that would be harder to manage. The radio player is a little lazy, but it prefix all its properties with a fixed key and there
+        should not be that many option nor should their structure change (well it could if I want to compress it). *rolls around*
+        I just been having trouble focusing meow.
+      </p>
+      <a>(5/2/26)</a>
+      <p>
+        Meow I move the fishing game and split it into files, but I took a while mostly because of thinking I needed to redesign
+        the position system. It is fine as is since it modify html elements and not canvas or more advance rending stuff. A little
+        rule that modifing position won't really work as expected and that set_position would need to be called to make sure it is updated
+        (though enitities that update may do it automatic. it is more used for static enitities and the init position setting). Mew the fishing game
+        is not really a good design (I do not really care about that, just want to make stuff that is easy to work with in the long run). I just 
+        wanted to push it out in a day(I did, but did minor touch up over time). I think I can use the mess to better simpify object for games. 
+        I overthing too much though. I should make a log of things that I keep looking up related to js since I keep mixing up words and terms. 
+      </p>
+      <a>(5/3/26)</a>
+      <p>
+        Mew the fishing game is in its own class and just a few function calls after construction to run. I find classes to be easier to read
+        and polute the global scope a lot less. I just need to strip the old loading/saving of the state for the new approch (get a save object,
+        convert to json, and then save to storage. loading is converting to to an object to pass to load). Meow my mind just too tired tonight. 
+        Mew a lazy cat.
+      </p>
+      <a>(5/4/26)</a>
+      <p>
+        Mew I was able to focus enough today to add localSession saving to the fishing game. Well I built it around a key being a json object 
+        so I did not have to deal with key conflicts. I probably will make a dedicated save state instead of creating one from the game state
+        each request (I am just lazy and did not feel like finding all the names to add state or save_state to it). *rolls around*
+      </p>
+      <a>(5/13/26)</a>
+      <p>
+        Meow my mood and energy levels been bad, but I been slowly working on an inventory display script that should be able to handle both cases (or those function be overriden). It may be some time
+        that it is added here since I need to gather, modify, and implement the fish data here. I am probably will keep the fish as a simple inventory, but relize the (map not object) could use an object for the value.
+        It is a bit(only a bit) of a waste if it will only store the amount, but I could use it as a way to flag the item state (is fav) or use it as a log with the items (total collected, total weight(for the fish), current total weight(acts as a specail amount. more so to handle the floating point of the amount(int) so there no loss), total used, ect). Mew *rolls around* I just have trouble focusing
+      </p>
+      <a>(5/16/26)</a>
+      <p>
+        I been slowly working on a inventory display script(for any use) plus fish item and an inventory object(for the fishing game). Today I added the paging feature since I load a fixed amount of item display elements
+        and hid then when they are not used (I should do similar for the posts so I can load them all at once without breaking order, but I am lazy). The paging just allow reading a index range of the loaded data and well I 
+        am not sure how to discribe it. 30 entries and each page is 10 and only one page are fully loadedm the rest is data or paths to load. I do admit the inventory use the current loaded inventory so it could be big, but 
+        that why I have the idea of various inventory containers with similar yet diffrent function with the dynamic one more likly to have bloat have a size limit.
+      </p>
+      <p>
+        I want to make more things, but my energy and focus been bad. Once I finish adding the fish items correctly (at least for the current version), I kind of want to add other game modes maybe like a zone to build and harvest
+        like a farming sim and then add usage for the items. Meow I have an idea of the characters being base off me (for the base idea) and it be simple survial to showcase the features. Probably more focus on fishing and cat befriending
+        plus extra.
+      </p>
+      <p>
+        NOTE: on neocities, I might delete update news depending on what is display(idk if I can controll what gets displayed). Usally if it very minor update or some post about subjects I kind of do not want to appear on
+        the news feed. (Also I still need to clean up posts, but I am really lazy with that and most likly delete a lot of them. I might make dedicate log pages where each post is month base if I decide to be diligent about that.
+        Truth is I rather focus on game stuff min posts about things that is useful or lore based and the current posts is to fill the void untill then). 
+      </p>
+      <a>(5/17/26)</a>
+      <p>
+        I made the fish size, catch chance, and score amount base on the weight. I also added a fake cooldown so rapid click have a reduce catch chance by 0.25, but after a second should be a 1.25 catch chance.
+        Okay the catch chance is a modify to the catch roll against the difficulty of the catch which is base on the fish diffculty(base on weight) and how deep it is in the water. This all prototype stuff, but wanted
+        to reflect the fish better and try to add some form of difficulty. In the future I would like to add more modfiers and maybe add a fish catching minigame to bypass the randomness of the click fishing. 
+      </p>
+      <a>(5/25/26)</a>
+      <p>
+        I been lazy and focusing on somthing else. I wanted to make a tilemap interaction area, but felt it be better to do that with js canvas instead of making a element per tile. This is mostly because it be easier to add a view camera
+        and manage a larger area with js canvas. The thing is that I wanted to use transformation matrixes and have all that fancy math be base on that instead. The core parts will use the matrix math and stuff, but the core impentation would add a readable layer to it. Though I decided to try to use per property modification instead of forcing data types so one would need to acess either the x,y,z position instead of expecting or passing a vector formated object. Some function may require all the axis pass like setting the scale since it triggers changes to the transformation matrix. I may add more of thouse setter along with the independent ones for more control of when the update happens. Most cases it will update the transformation matrix and then notify the manager that it state is dirty so the render order can be update on the next pass.
+      </p>
+      <p>
+        Mostly I keep rethinking about the design trying to simplify and make sure the part are where they should be. It seems the render object manager will do all the rendering order logic and the renderer just handle caculating the view matrix to be pass to the object manager for sorting. I also need to make sure the sorting only runs when there some change. orignally I was going to do it per object unless the view change, but figure a full recauclation would be better since I do not plan on having a lot of render object (I want to compress static tilemaps into a single render object or at least into large chunks to sample from). So many little things. Also this is for 2d rendering with 3d matrix support just in case, but I may use three.js for 3d stuff. I feel working with transformation matrixes will help when dealing with three.js and cannon.es since their vectors do not play well and I already have a lib that re-add some of the vector and rot math to work with generic vector object. I just like vector arrays over vector object and a transformation maxtrix is like that plus extra. The only issue is the format need to be the same but it seems js stuff use screenspace draw order for 2d. 3d can be mapped base on the 3d lib, I am defaulting to z being depth(forward/back) and I think that how most handle it (unlike 3d game engins where z is up/down).
+        </p>
+        <p>
+        Meow I should try to work on it more tonight if I can manage to gain enough energy and focus. Seems the rendering works for a 2d or 3d object, but i need to make the camera matrix and move it and make sure I understand it and the matrix mulipcation works. I also need to clamp base on the viewport. I design it to allow a viewport object, but most cases it will use the canvas bounds.
+        </p>
+      <a>(6/5/26)</a>
+      <p>
+        I still having energy and focus issues. I somewhat got the render system design and a prototype working, but need to work on click projection for on click events. I have something simple, but currently dose not use the camera projection. What is really slowing me down is the fact that I am working with 3d for a 2d project and there a lot of other things to solve since cameras can rotate and may have perspective plus things might exist with 3d data. The render system probably be a dumb down 3d render with support of working with 2d transformation matrixes. I would like to use three.js, but this pain should allow me to work with it better plus not need it for simple cases. The code is not a lot, but it require understanding math. I guess if I knew a good source to explain it then this be less of a pain. I should try to think of stuff outside of rendering or physics though, but I like having a world to test in. 
+      </p>
+    </div>
+</body>

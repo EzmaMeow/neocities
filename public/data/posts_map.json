@@ -1,0 +1,46 @@
+{
+    "default": [
+        
+        {
+            "title": "<h1>About Posts</h1>",
+            "path": "data/posts/post0.html"
+        },
+        {
+            "title": "<h1>Lastest Update</h1>",
+            "path": "data/posts/lastest_update.html"
+        },
+        {
+            "title": "<h1>Meow</h1>",
+            "text": "<p>Meow mew meoow meow meow pss pss meooow. : 3</p>"
+        },
+        {
+            "title": "<h1>Managing Posts</h1>",
+            "path": "data/posts/post1.html"
+        },
+        {
+            "title": "<h1>Post Colors Nonsense</h1>",
+            "path": "data/posts/post2.html"
+        },
+        {
+            "title": "<h1>Distracted</h1>",
+            "path": "data/posts/post3.html"
+        },
+        {
+            "title": "<h1>Random Update</h1>",
+            "path": "data/posts/post4.html"
+        },
+        {
+            "title": "<h1>Radio Player</h1>",
+            "path": "data/posts/post5.html"
+        },
+        {
+            "title": "<h1>Random Update 2</h1>",
+            "path": "data/posts/post6.html"
+        },
+        {
+            "title": "<h1>Random Update 3</h1>",
+            "path": "data/posts/post7.html"
+        }
+        
+    ]
+}

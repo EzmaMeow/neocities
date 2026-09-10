@@ -1,0 +1,57 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Managing Posts</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles/data_styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body>
+    <div class="info_title collapsible_toggle">
+        <h1>Managing Posts</h1>
+    </div>
+    <div class="info_content collapsible_content post">
+
+      <p>
+        Meow been using my post loader from github. I really want to improve it,
+        but most static sites do not have a way to get an array of expose stuff
+        in a directory (maybe this neocity dose, but I do not feel like trying). 
+        This leads to needing to make or generate a map file to create this array 
+        or have all related files name post_type plus a number and use a loop.
+      </p>
+      <p>
+        Currently, as of writing this, I am using a map file that hold a title and either
+        a link to a text file for the content or just the content in the text feild of the json.
+        I want to move the title to the text file, but I have not felt like parcing nor figuring
+        out a tag to use to identify the title. I could use another json, but loading a json, a json per 
+        post, and maybe a file per post is a lot of requests.
+      </p>
+      <p>
+        The other options sound useful, but harder to look up thing without remaping.
+        Instead of loading a json of all the posts url, it only will look up a link
+        if it exists. This link could be a json that point to a text file and provide
+        the title or metadata. This would make locating the posts easier, but require more
+        work per post to create. I would rather keep the 'post0, post1' style and figure out
+        a format I would like to include the metadata.
+      </p>
+      <p>
+        Most of the added stuff is added to an element innerHTML. This mean that the 'text'
+        is a segment of html. I do not nessary need to generate a post, but instead use the new
+        function that either replace an element innerhtml from a file or create a new element with the loaded html to
+        add to this source element. This would be like copy pasting each post segment in the static html,
+        but instead in separate file. The only reason why I am not doing that here is it would mean I
+        would have to edit each post file if the formating every changes. Also it a bit of a pain to read.
+      </p>
+      <p>
+        Mew having a map or database/table that have ways to look up the files would be better for loading posts if a site ever expects to
+        have hundred of them. Mostly since I think that would help with title, tags, and metadata lookup, but require someplace to store that
+        infomation. Post look up and sorting would be possible on static sites, but it far more easier to work with a server ran site.
+      </p>
+      <p>
+        (Random note: I send the data via html link for telling the site what data to load. `/posts.html?type=media` state that the posts type is
+        media. I use `const params = new URLSearchParams(window.location.search)` to parce the data and `params.get('type')` to get the value.)
+      </p>
+
+    </div>
+</body>
