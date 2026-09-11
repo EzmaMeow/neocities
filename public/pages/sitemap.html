@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Sitemap</title>
     <meta name="page-type" content="sitemap">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
 </head>
 
@@ -47,6 +47,7 @@
     </div>
 
 
+    <script type="module" src="/scripts/default_page.js"></script>
     <script type="module">
         import Sitemap from '/lib/sitemap.js';
         await Sitemap.load();
@@ -55,7 +56,7 @@
             sitemapElm.innerHTML = Sitemap.createSitemapHtml()
         }
     </script>
-    <script type="module" src="/scripts/default_page.js"></script>
+    
 
 </body>
 
