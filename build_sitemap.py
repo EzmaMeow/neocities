@@ -43,19 +43,11 @@ def build_dir_array(path):
     return files
 
 
-# -----------------------------
-# Determine root + output paths
-# -----------------------------
-
 root = os.path.abspath(sys.argv[1]) if len(sys.argv) > 1 else DEFAULT_ROOT
 output_path = os.path.abspath(sys.argv[2]) if len(sys.argv) > 2 else DEFAULT_OUTPUT
 
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
-
-# -----------------------------
-# Build top-level structure
-# -----------------------------
 
 entries = sorted(os.listdir(root))
 top_dirs = {}
