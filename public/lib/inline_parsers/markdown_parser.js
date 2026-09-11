@@ -5,6 +5,10 @@ let tabSize = 2;
 let maxListDepth = 10;
 let headerPrefixId = 'markdown-header'
 
+//protections that allow more, but may limit other things
+let protectHtml = true;
+let protectUrl = true;
+
 export function escapeHtml(str) {
   return str
     .replace(/&/g, '&amp;')
@@ -18,13 +22,34 @@ export function renderInline(text, handleEscChar = true) {
     text = escapeHtml(text);
   }
 
+  //protect html blocks
+  const htmlBlocks = [];
+  if (protectHtml) {
+    text = text.replace(
+      /<details[\s\S]*?<\/details>/gi,
+      block => `§HTML${htmlBlocks.push(block) - 1}§`
+    );
+  }
+
+  // Protect URLs before inline parsing
+  const urlTokens = [];
+  if (protectUrl) {
+    text = text.replace(
+      /\(([^)\s]+)(?:\s+"[^"]*")?\)/g,
+      (full, url) => {
+        const id = urlTokens.push(url) - 1;
+        return `(§U${id}§)`;
+      }
+    );
+  }
+
   // images ![alt](src)
   text = text.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,
     (full, alt, src, title) => `<img src="${src}" alt="${alt}"${title ? ` title="${title}"` : ''}>`);
 
   //anchor links [text](#anchor) //Note: could merge with links, but would need to check the href for #
   text = text.replace(/\[([^\]]*)\]\(#([^)\s]+)(?:\s+"([^"]*)")?\)/g,
-    (full, label, anchor, title) =>  `<a href="#${headerPrefixId}-${anchor}"${title ? ` title="${title}"` : ''} target="_self">${label}</a>`);
+    (full, label, anchor, title) => `<a href="#${headerPrefixId}-${anchor}"${title ? ` title="${title}"` : ''} target="_self">${label}</a>`);
 
   // links [text](href)
   text = text.replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,
@@ -56,6 +81,18 @@ export function renderInline(text, handleEscChar = true) {
   text = text.replace(/\[\s\]/g, '<input type="checkbox">');
   //inline checkbox check
   text = text.replace(/\[x\]/gi, '<input type="checkbox" checked>');
+
+  // Restore URLs
+  text = text.replace(
+    /§U(\d+)§/g,
+    (full, id) => urlTokens[id]
+  );
+
+  //restore html
+  text = text.replace(
+    /§HTML(\d+)§/g,
+    (full, id) => htmlBlocks[id]
+  );
 
   return text;
 }
