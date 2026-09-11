@@ -6,21 +6,27 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<title>Ezma's Page</title>
-	
+
 	<meta name="page-type" content="guestbook">
 	<link rel="stylesheet" href="/styles.css">
-	<link rel="icon"
-		href="/assets/anim_profile_pic.gif"
-		type="image/x-icon">
+	<link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
 </head>
 
 <body>
 
 	<div id="nav">
 		<ul>
-			<li><a class="active" href="/index.html">Home</a></li>
-			<li><a href="/pages/about.html">About</a></li>
-			<li><a href="/pages/settings.html">Settings</a></li>
+			<li><a href="/pages/about.html"><span id="about_tab">About</span></a></li>
+			<li>
+				<details id="posts-nav" class="nav-tab">
+					<summary style="display: block;">Posts</summary>
+					<a href="/pages/posts.html"><span id="posts_tab">Posts</span></a>
+					<a href="/pages/posts.html#type=media"><span id="media_tab">Media</span></a>
+					<a href="/pages/posts.html#type=lore"><span id="lore_tab">Lore</span></a>
+				</details>
+			</li>
+			<li><a href="/pages/guestbook.html"><span id="guestbook_tab">Guestbook</span></a></li>
+			<li><a href="/games/fishing/fishing.html"><span id="fishing_tab">Fishing</span></a></li>
 		</ul>
 	</div>
 
@@ -28,26 +34,26 @@
 	</div>
 
 	<div id="body_container">
-	
-	  <div class="container text-center">
-            <div id='radio-player'></div>
-        </div>
-        <div class="flex-break"></div>
-	
+
+		<div class="container text-center">
+			<div id='radio-player'></div>
+		</div>
+		<div class="flex-break"></div>
+
 		<div class="info_container">
 			<div class="info_title">
 				<h1>Guestbook</h1>
 			</div>
-			
+
 			<div class="info_content">
-			  <p class='text-center'><a href="https://ezmameow.atabook.org/">My Atabook Guessbox</a>
-			  </p>
+				<p class='text-center'><a href="https://ezmameow.atabook.org/">My Atabook Guessbox</a>
+				</p>
 			</div>
 			<iframe src="https://ezmameow.atabook.org/" title="ezma's Guestbool" width=396 height=516></iframe>
 		</div>
 	</div>
 
-<script type="module" src="/scripts/default_page.js"></script>
+	<script type="module" src="/scripts/default_page.js"></script>
 
 </body>
 

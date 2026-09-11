@@ -44,13 +44,13 @@ export async function init() {
     if (pageType === 'posts') {
 
         const body_container = document.getElementById('body_container');
-        const oldDisplay = body_container.style.display;
-        body_container.style.display = 'none';
-        onload.push(() => {
-            body_container.style.display = oldDisplay;
-        })
+        //const oldDisplay = body_container.style.display;
+        //body_container.style.display = 'none';
+        //onload.push(() => {
+        //    body_container.style.display = oldDisplay;
+        //})
 
-        const { Post_Page_Loader, load_page, PostManager } = await import('/scripts/content_loader.js');
+        const { PostManager } = await import('/scripts/content_loader.js');
         const module = await import('/lib/sitemap.js');
         handlers.sitemap = module.default;
         handlers.postManager = new PostManager();
@@ -98,16 +98,18 @@ export async function init() {
                 window.location.href = `posts.html#type=${type}&group=${group}&page=${back_page}&max_posts=${max_posts}`
             });
         }
-
+        
     }
 
-    const { add_html_from_file } = await import('/scripts/content_loader.js');
-    add_html_from_file('/data/html/navigation.html', document.getElementById('nav'), null).then((result) => {
+    //const { add_html_from_file } = await import('/scripts/content_loader.js');
+    //add_html_from_file('/data/html/navigation.html', document.getElementById('nav'), null).then((result) => {
+        //keeping this so most pages can have their nav updated by copy pasting. Only pages in dropdown nav need to
+        //set that nav as active, but I could change it is page id and page type is set as meta instead of just type (and swicth their roles)
         const active_tab = document.getElementById(pageType + '_tab');
         if (active_tab) {
             active_tab.className = 'active'
         }
-    })
+    //})
 
 
     if (document.querySelector('.markdown')) {
