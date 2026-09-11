@@ -28,8 +28,6 @@ const handlers = {}
 export async function init() {
     const onload = [];
 
-
-
     //load a radio player if one exists
     const radioPlayerElement = document.getElementById('radio-player');
     if (radioPlayerElement) {
@@ -44,7 +42,14 @@ export async function init() {
     let pageType = document.querySelector('meta[name="page-type"]')?.content || 'page';
 
     if (pageType === 'posts') {
-        console.log('posts')
+
+        const body_container = document.getElementById('body_container');
+        const oldDisplay = body_container.style.display;
+        body_container.style.display = 'none';
+        onload.push(() => {
+            body_container.style.display = oldDisplay;
+        })
+
         const { Post_Page_Loader, load_page, PostManager } = await import('/scripts/content_loader.js');
         const module = await import('/lib/sitemap.js');
         handlers.sitemap = module.default;
@@ -63,67 +68,37 @@ export async function init() {
         //change page type to the posts type since it type may change from the url params
         if (pageType !== type) { pageType = type }
 
-        if (type === 'media') {
-            //media posts use media class. 
-            Post_Page_Loader.body_class_name = "info_content media collapsible_content"
-        }
-
         window.addEventListener("hashchange", () => {
-
             location.reload();
         });
-        if (type === 'media' || type === 'projects') {
-            await Post_Page_Loader.load_page(type, group, page, max_posts);
 
-            const next_page = Post_Page_Loader.page + 1;
-            const back_page = Post_Page_Loader.page - 1;
-            document.title = type.charAt(0).toUpperCase() + type.slice(1);
-            if (Post_Page_Loader.has_page(next_page)) {
-                console.log('has next page')
-                next_button.hidden = false
-                next_button.addEventListener("click", (event) => {
-                    window.location.href = `posts.html#type=${type}&group=${group}&page=${next_page}&max_posts=${max_posts}`
-                });
-            }
-            if (Post_Page_Loader.has_page(back_page)) {
-                console.log('has before page')
-                back_button.hidden = false
-                back_button.addEventListener("click", (event) => {
-                    window.location.href = `posts.html#type=${type}&group=${group}&page=${back_page}&max_posts=${max_posts}`
-                });
-            }
+        await handlers.sitemap.load();
+
+        const dir = handlers.sitemap.getDir(`pages/${type}`);
+
+        handlers.postManager.directory = `/pages/${type}`;
+        handlers.postManager.type = type;
+        await handlers.postManager.loadPage(dir, page, max_posts, body_container);
+
+        const next_page = parseInt(page) + 1;
+        const back_page = parseInt(page) - 1;
+        const total = typeof dir[0] === 'object' ? dir.length - 1 : dir.length;
+        document.title = type.charAt(0).toUpperCase() + type.slice(1);
+        if (next_page >= 0 && (next_page) * max_posts < total) {
+            console.log('has next page')
+            next_button.hidden = false
+            next_button.addEventListener("click", (event) => {
+                window.location.href = `posts.html#type=${type}&group=${group}&page=${next_page}&max_posts=${max_posts}`
+            });
         }
-        else {
-            await handlers.sitemap.load();
-            const post_template = document.createElement('div');
-            const dir = handlers.sitemap.getDir(`pages/${type}`);
-            post_template.className = 'info_container collapsible';
-
-
-            //await load_page(`/pages/${type}`, dir, document.getElementById('body_container'), post_template, page, max_posts)
-            handlers.postManager.directory = `/pages/${type}`;
-            await handlers.postManager.loadPage(dir, page, max_posts, document.getElementById('body_container'));
-            console.log(handlers.postManager)
-
-            const next_page = parseInt(page) + 1;
-            const back_page = parseInt(page) - 1;
-            const total = typeof dir[0] === 'object' ? dir.length - 1 : dir.length;
-            document.title = type.charAt(0).toUpperCase() + type.slice(1);
-            if (next_page >= 0 && (next_page) * max_posts < total) {
-                console.log('has next page')
-                next_button.hidden = false
-                next_button.addEventListener("click", (event) => {
-                    window.location.href = `posts.html#type=${type}&group=${group}&page=${next_page}&max_posts=${max_posts}`
-                });
-            }
-            if (back_page >= 0 && (back_page) * max_posts < total) {
-                console.log('has before page')
-                back_button.hidden = false
-                back_button.addEventListener("click", (event) => {
-                    window.location.href = `posts.html#type=${type}&group=${group}&page=${back_page}&max_posts=${max_posts}`
-                });
-            }
+        if (back_page >= 0 && (back_page) * max_posts < total) {
+            console.log('has before page')
+            back_button.hidden = false
+            back_button.addEventListener("click", (event) => {
+                window.location.href = `posts.html#type=${type}&group=${group}&page=${back_page}&max_posts=${max_posts}`
+            });
         }
+
     }
 
     const { add_html_from_file } = await import('/scripts/content_loader.js');

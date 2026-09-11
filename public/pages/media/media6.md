@@ -1,0 +1,1 @@
+<data>{"title":"Pixel Bamboo Wall"}</data>[![Pixelize bamboo wall.](https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:ccettyatno57ej3bza3wrxcw/bafkreifoh27djw6g23gubdp2v4kjqmbt6pkdn35bcfenzetsoc7yxztlea@jpeg)](https://cdn.bsky.app/img/feed_thumbnail/plain/did:plc:ccettyatno57ej3bza3wrxcw/bafkreifoh27djw6g23gubdp2v4kjqmbt6pkdn35bcfenzetsoc7yxztlea@jpeg)

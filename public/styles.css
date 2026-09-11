@@ -163,6 +163,9 @@ a {
 .max_image {
 	width: 320px;
 }
+.media img{
+	width: 320px;
+}
 
 .info_links {
 	padding-top: 16px;
