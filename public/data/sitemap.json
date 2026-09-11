@@ -1,87 +1,120 @@
 [
-    {
-      "assets": [
-        "anim_profile_pic.gif",
-        "background.png",
-        "fish.gif",
-        "frame.png"
-        ],
-      "data": [
+  {
+    "assets": [
+      "anim_profile_pic.gif",
+      "background.jpg",
+      "ezma_button.gif",
+      "fish.gif",
+      "frame.png"
+    ],
+    "data": [
+      {
+        "html": [
+          "links.html",
+          "navigation.html"
+        ]
+      },
+      "lore_map.json",
+      "media_map.json",
+      "posts_map.json",
+      "sitemap.json"
+    ],
+    "games": [
+      {
+        "fishing": [
           {
-            "html": [
-              "links.html",
-              "navigation.html",
-              "other_about_me.html",
-              "other_links.html"
+            "data": [
+              "freshwater_fish.json",
+              "mixwater_fish.json",
+              "saltwater_fish.json"
             ]
           },
-          "lore_map.json",
-          "media_map.json",
-          "posts_map.json"
+          "entity.js",
+          "fish.js",
+          "fishing.html",
+          "fishing.js",
+          "level.js",
+          "world.js"
+        ]
+      }
+    ],
+    "lib": [
+      {
+        "inline_parsers": [
+          "calc_parser.js",
+          "func_parser.js",
+          "markdown_parser.js",
+          "var_parser.js"
+        ]
+      },
+      "collapsibles.js",
+      "file_loader.js",
+      "media_wrapper.js",
+      "random_generator.js",
+      "sitemap.js",
+      "storage.js"
+    ],
+    "pages": [
+      {
+        "lore": [
+          "lore0.html",
+          "lore1.html",
+          "lore2.html",
+          "us_and_them.html"
         ],
-      "lib": [
-          "collapsibles.js",
-          "file_loader.js",
-          "media_wrapper.js",
-          "storage.js"
+        "media": [
+          "media0.md",
+          "media1.md",
+          "media10.md",
+          "media11.md",
+          "media12.md",
+          "media13.md",
+          "media2.md",
+          "media3.md",
+          "media4.md",
+          "media5.md",
+          "media6.md",
+          "media7.md",
+          "media8.md",
+          "media9.md"
         ],
-      "scripts":[
-        "content_loader.js"
-      ],
-      "pages":[
-        {
-          "posts": [
-              "post0.md",
-              "lastest_update.html",
-              "post1.html",
-              "post2.html",
-              "post3.html",
-              "post4.html",
-              "post5.html",
-              "things_about_me.html",
-              "random_dev_info.html"
-            ],
-            "lore": [
-              "lore0.html",
-              "lore1.html",
-              "lore2.html",
-              "us_and_them.html"
-            ],
-            "media": [
-              "media0.md",
-              "media1.md",
-              "media2.md",
-              "media3.md",
-              "media4.md",
-              "media5.md",
-              "media6.md",
-              "media7.md",
-              "media8.md",
-              "media9.md",
-              "media10.md",
-              "media11.md",
-              "media12.md",
-              "media13.md"
-            ]
-          },
-        "about.html",
-        "guestbook.html",
-        "posts.html",
-        "questions_and_answers.html"
-      ],
-      "games":[
-        "fishing.html",
-        "fishing.js"
-      ],
-      "widgets":[
-        "radio_player.js"
-      ],
-      "styles":[
-        "markdown.css"
-      ]
-    },
-    "index.html",
-    "not_found.html",
-    "styles.css",
-    "neocities.png"
+        "posts": [
+          "lastest_update.html",
+          "markdown_support.html",
+          "post0.md",
+          "post1.html",
+          "post2.html",
+          "post3.html",
+          "post4.html",
+          "post5.html",
+          "post8.html",
+          "random_dev_info.html",
+          "things_about_me.html"
+        ]
+      },
+      "about.html",
+      "guestbook.html",
+      "posts.html",
+      "questions_and_answers.html",
+      "roll_table.html",
+      "sitemap.html"
+    ],
+    "scripts": [
+      "content_loader.js",
+      "default_page.js",
+      "inventory.js"
+    ],
+    "styles": [
+      "data_styles.css",
+      "markdown.css"
+    ],
+    "widgets": [
+      "radio_player.js"
+    ]
+  },
+  "index.html",
+  "not_found.html",
+  "readme.html",
+  "robots.txt",
+  "styles.css"
 ]

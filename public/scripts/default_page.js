@@ -28,6 +28,9 @@ const handlers = {}
 export async function init() {
     const onload = [];
 
+    const pageType = document.querySelector('meta[name="page-type"]')?.content || 'pages';
+    const pageId = document.querySelector('meta[name="page-id"]')?.content || 'page';
+
     //load a radio player if one exists
     const radioPlayerElement = document.getElementById('radio-player');
     if (radioPlayerElement) {
@@ -39,9 +42,9 @@ export async function init() {
     }
 
     //handle page types such as type of post which may have post type: posts or media
-    let pageType = document.querySelector('meta[name="page-type"]')?.content || 'page';
+    //let pageType = document.querySelector('meta[name="page-type"]')?.content || 'page';
 
-    if (pageType === 'posts') {
+    if (pageType === 'posts-loader') {
 
         const body_container = document.getElementById('body_container');
         //const oldDisplay = body_container.style.display;
@@ -57,16 +60,15 @@ export async function init() {
         //using hash to be client side only (neocities may server ancient files elsewise)
         const params = new URLSearchParams(window.location.hash.slice(1));
         //const TYPES = {POSTS:'posts',MEDIA:'media',PROJECTS:'projects'} //may not use. type is the dir or map name. group is the sub dir name or key in the map(group is not really needed)
-        const type = params.has('type') ? params.get('type') : 'posts'
+        //  TODO: remove only the page type/id from params since using static pages to declare them is more responsive
+        //but need to leep the page and max posts
+        const type = params.has('type') ? params.get('type') : pageId 
         const group = params.has('group') ? params.get('group') : 'default'
         const page = params.has('page') ? params.get('page') : 0;
         const max_posts = params.has('max_posts') ? params.get('max_posts') : 20;
         //const active_tab = document.getElementById(type + '_tab');
         const next_button = document.getElementById('next_button');
         const back_button = document.getElementById('back_button');
-
-        //change page type to the posts type since it type may change from the url params
-        if (pageType !== type) { pageType = type }
 
         window.addEventListener("hashchange", () => {
             location.reload();
@@ -100,17 +102,6 @@ export async function init() {
         }
         
     }
-
-    //const { add_html_from_file } = await import('/scripts/content_loader.js');
-    //add_html_from_file('/data/html/navigation.html', document.getElementById('nav'), null).then((result) => {
-        //keeping this so most pages can have their nav updated by copy pasting. Only pages in dropdown nav need to
-        //set that nav as active, but I could change it is page id and page type is set as meta instead of just type (and swicth their roles)
-        const active_tab = document.getElementById(pageType + '_tab');
-        if (active_tab) {
-            active_tab.className = 'active'
-        }
-    //})
-
 
     if (document.querySelector('.markdown')) {
         const { markdownToHtml } = await import('/lib/inline_parsers/markdown_parser.js');

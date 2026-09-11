@@ -39,13 +39,20 @@ a {
 	background-color: #0cefff52;
 }
 
-.nav-tab{
+.nav-tab {
 	cursor: pointer;
 	color: #0eebfb;
 	text-align: center;
-    padding: 12px 12px;
+	padding: 12px 12px;
+	display: block;
+
 }
-.nav-tab:hover:not(.active){
+
+.nav-tab>summary {
+	display: block;
+}
+
+.nav-tab:hover:not(.active) {
 	background-color: #0cefff52;
 }
 
@@ -166,7 +173,8 @@ a {
 .max_image {
 	width: 320px;
 }
-.media img{
+
+.media img {
 	width: 320px;
 }
 
@@ -233,13 +241,15 @@ label {
 	width: 100%;
 	white-space: nowrap;
 	flex-wrap: wrap;
-  flex-direction: column;
+	flex-direction: column;
 }
 
 button {
 	background-color: #771390;
-	color: #0eebfb;;
+	color: #0eebfb;
+	;
 }
+
 input {
 	background-color: #0cefff52;
 	color: #fb9ddf;

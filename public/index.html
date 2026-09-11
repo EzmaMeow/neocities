@@ -6,6 +6,9 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
 	<title>Ezma's Landing Page</title>
+
+	<meta name="page-type" content="landing">
+	<meta name="page-id" content="index">
 	
 	<link rel="stylesheet" href="/styles.css">
 	<link rel="icon"
@@ -16,10 +19,32 @@
 <body>
 
 	<div id="nav">
-		<ul>
-			<li><a class="active" href="/index.html">Landing Page</a></li>
-		</ul>
-	</div>
+    <ul>
+        <li><a href="/index.html"><span id="index-tab" class="active">Landing</span></a></li>
+        <li>
+            <details id="pages-nav" class="nav-tab">
+                <summary id="pages-tab">Pages</summary>
+                <a href="/pages/about.html"><span id="about-tab">About</span></a>
+                <a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
+                <a href="/pages/sitemap.html"><span id="sitemap-tab">Sitemap</span></a>
+            </details>
+        </li>
+        <li>
+            <details id="posts-nav" class="nav-tab">
+                <summary id="posts-loader-tab">Posts</summary>
+                <a href="/pages/posts.html"><span id="posts-tab">Posts</span></a>
+                <a href="/pages/media.html"><span id="media-tab">Media</span></a>
+                <a href="/pages/lore.html"><span id="lore-tab">Lore</span></a>
+            </details>
+        </li>
+        <li>
+            <details id="games-nav" class="nav-tab">
+                <summary id="games-tab">Games</summary>
+                <a href="/games/fishing/fishing.html"><span id="fishing-tab">Fishing</span></a>
+            </details>
+        </li>
+    </ul>
+</div>
 
 	<div id="background">
 	</div>
