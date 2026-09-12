@@ -8,12 +8,6 @@
       "frame.png"
     ],
     "data": [
-      {
-        "html": [
-          "links.html",
-          "navigation.html"
-        ]
-      },
       "lore_map.json",
       "media_map.json",
       "posts_map.json",
