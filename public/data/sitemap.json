@@ -8,12 +8,6 @@
       "frame.png"
     ],
     "data": [
-      {
-        "html": [
-          "links.html",
-          "navigation.html"
-        ]
-      },
       "lore_map.json",
       "media_map.json",
       "posts_map.json",
@@ -79,7 +73,7 @@
           "media9.md"
         ],
         "posts": [
-          "lastest_update.html",
+          "lastest_update.md",
           "markdown_support.html",
           "post0.md",
           "post1.html",

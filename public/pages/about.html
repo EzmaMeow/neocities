@@ -16,7 +16,8 @@
 
 <body>
 
-	<div id="nav">
+<!-- NAVBAR START -->
+<div id="nav">
     <ul>
         <li><a href="/index.html"><span id="index-tab">Landing</span></a></li>
         <li>
@@ -43,6 +44,7 @@
         </li>
     </ul>
 </div>
+<!-- NAVBAR END -->
 
 	<div id="background">
 	</div>
@@ -50,7 +52,26 @@
 	<div id="body_container">
 
 		<div class="container text-center">
-			<div id='radio-player'></div>
+			<!-- RADIO START -->
+<div id='radio-player'>
+    <b>Radio Player</b><br>
+    <audio id="radioAudio" preload="none"></audio>
+    <button id="toggleRadio">Waiting</button>
+    <details>
+        <summary>Radio Options</summary><br>
+        <label>Use Local Storage: <input type="checkbox" class="radioOptions" data-property="useLocalStorage"
+                title="Uses localStorage to store options untill cleared."></label><br>
+        <label>Autoplay: <input type="checkbox" class="radioOptions" data-property="autoplay"></label><br><br>
+        Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions" data-property="volume"
+            style="width: 75%;"><br><br>
+        Url: <input type="text" id="streamUrl"
+            placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
+            value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
+            class="radioOptions" data-property="src">
+        <button id="radioDefaultStation">⟲</button>
+    </details>
+</div>
+<!-- RADIO END -->
 		</div>
 		<div class="flex-break"></div>
 

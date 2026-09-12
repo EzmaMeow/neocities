@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Sitemap</title>
+    <meta name="page-type" content="pages">
     <meta name="page-id" content="sitemap">
     <link rel="stylesheet" href="/styles.css">
     <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
@@ -11,12 +12,13 @@
 
 <body>
 
-    <div id="nav">
+<!-- NAVBAR START -->
+<div id="nav">
     <ul>
         <li><a href="/index.html"><span id="index-tab">Landing</span></a></li>
         <li>
             <details id="pages-nav" class="nav-tab">
-                <summary id="pages-tab">Pages</summary>
+                <summary id="pages-tab" class="active">Pages</summary>
                 <a href="/pages/about.html"><span id="about-tab">About</span></a>
                 <a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
                 <a href="/pages/sitemap.html"><span id="sitemap-tab" class="active">Sitemap</span></a>
@@ -38,13 +40,33 @@
         </li>
     </ul>
 </div>
+<!-- NAVBAR END -->
 
     <div id="background">
     </div>
 
     <div id="body_container">
         <div class="container text-center">
-			<div id='radio-player'></div>
+			<!-- RADIO START -->
+<div id='radio-player'>
+    <b>Radio Player</b><br>
+    <audio id="radioAudio" preload="none"></audio>
+    <button id="toggleRadio">Waiting</button>
+    <details>
+        <summary>Radio Options</summary><br>
+        <label>Use Local Storage: <input type="checkbox" class="radioOptions" data-property="useLocalStorage"
+                title="Uses localStorage to store options untill cleared."></label><br>
+        <label>Autoplay: <input type="checkbox" class="radioOptions" data-property="autoplay"></label><br><br>
+        Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions" data-property="volume"
+            style="width: 75%;"><br><br>
+        Url: <input type="text" id="streamUrl"
+            placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
+            value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
+            class="radioOptions" data-property="src">
+        <button id="radioDefaultStation">⟲</button>
+    </details>
+</div>
+<!-- RADIO END -->
 		</div>
 		<div class="flex-break"></div>
         <div class="info_container collapsible">

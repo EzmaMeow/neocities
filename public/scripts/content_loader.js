@@ -1,3 +1,4 @@
+import { markdownToHtml } from '/lib/inline_parsers/markdown_parser.js'
 
 export async function load_html_body(file) {
     //const html = await (await fetch(file)).text();
@@ -58,7 +59,7 @@ export class PostManager {
 	<div class="info_title collapsible_toggle">
 		<h1>${postData.title || ''}</h1>
 	</div>
-	<div class="info_content ${this.type} collapsible_content ${ext === 'md' || ext === 'markdown' ? 'markdown' : ''}">
+	<div class="info_content ${this.type} collapsible_content ">
         ${content}
 	</div>
 </div>
@@ -69,7 +70,11 @@ export class PostManager {
             const doc = new DOMParser().parseFromString(rawPost, "text/html");
             return doc.body.innerHTML;
         }
-        return rawPost.replace(/<data>.*?<\/data>/s, "");
+        let content = rawPost.replace(/<data>.*?<\/data>/s, "");
+        if (ext === 'md' || ext === 'markdown'){
+            content = markdownToHtml(content)
+        }
+        return content
     }
     async getRawPost(postSource = '') {
         if (!postSource) { return '' };
@@ -88,7 +93,6 @@ export class PostManager {
         const rawPost = await this.getRawPost(postSource);
         const postData = this.getPostData(rawPost);
         const postContent = this.getPostContent(rawPost, ext);
-        console.log(ext)
         const postHtml = this.getPostHtml(postContent, postData, ext);
         container.innerHTML = `${container.innerHTML} ${postHtml}`
     }

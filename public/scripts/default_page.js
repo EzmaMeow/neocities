@@ -34,7 +34,7 @@ export async function init() {
     //load a radio player if one exists
     const radioPlayerElement = document.getElementById('radio-player');
     if (radioPlayerElement) {
-        radioPlayerElement.innerHTML = defaultRadioHtml;
+    //    radioPlayerElement.innerHTML = defaultRadioHtml;
         const { initRadio } = await import('/widgets/radio_player.js');
         onload.push(() => {
             handlers.radioPlayer = initRadio()

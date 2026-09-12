@@ -40,11 +40,11 @@ def modifyPage(page_path):
     page_type = parser.page_type
     page_id = parser.page_id
 
-    start = page_html.find('<div id="nav"')
+    start = page_html.find('<!-- NAVBAR START -->')
     if start != -1:
-        end = page_html.find('</div>', start)
+        end = page_html.find('<!-- NAVBAR END -->', start)
         if end != -1:
-            end += len('</div>')
+            end += len('<!-- NAVBAR END -->')
             page_html = page_html[:start] + nav_html + page_html[end:]
 
     if page_type:
@@ -52,6 +52,13 @@ def modifyPage(page_path):
 
     if page_id:
         page_html = activate(page_html, f"{page_id}-tab")
+
+    start = page_html.find('<!-- RADIO START -->')
+    if start != -1:
+        end = page_html.find('<!-- RADIO END -->', start)
+        if end != -1:
+            end += len('<!-- RADIO END -->')
+            page_html = page_html[:start] + radio_html + page_html[end:]
 
     directory = os.path.dirname(OUTPUT_DIR+page_path)
     os.makedirs(directory, exist_ok=True)
