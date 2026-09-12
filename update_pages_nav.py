@@ -2,6 +2,7 @@ import os
 from html.parser import HTMLParser
 
 NAV_FILE = "./templates/navigation.html"
+RADIO_FILE = "./templates/radio.html"
 INPUT_DIR = "./public/"
 OUTPUT_DIR = "./"
 
@@ -21,6 +22,9 @@ class MetaParser(HTMLParser):
 
 with open(NAV_FILE, "r", encoding="utf-8") as f:
     nav_html = f.read()
+
+with open(RADIO_FILE, "r", encoding="utf-8") as f:
+    radio_html = f.read()
 
 def activate(html_text, tab_id):
     search = f'id="{tab_id}"'
@@ -42,7 +46,6 @@ def modifyPage(page_path):
         if end != -1:
             end += len('</div>')
             page_html = page_html[:start] + nav_html + page_html[end:]
-
 
     if page_type:
         page_html = activate(page_html, f"{page_type}-tab")

@@ -140,8 +140,6 @@ export class Sitemap {
             this.dirArrayToHtml(results)
         }
         else {
-            console.log('map is not an array')
-
             this.dirObjToHtml(results)
         }
         return results.out
