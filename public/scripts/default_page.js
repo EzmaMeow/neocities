@@ -103,7 +103,7 @@ export async function init() {
         
     }
 
-    if (document.querySelector('.markdown')) {
+    if (document.querySelector('.markdown') || document.querySelector('.markdown-render')) {
         const { markdownToHtml } = await import('/lib/inline_parsers/markdown_parser.js');
         document.head.innerHTML = `${'<link rel="stylesheet" href="/styles/markdown.css">'} ${document.head.innerHTML}`
         onload.push(() => {

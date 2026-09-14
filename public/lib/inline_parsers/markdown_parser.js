@@ -8,6 +8,9 @@ export let headerPrefixId = 'markdown-header'
 export let allowedTags = new Set([
   "details", "summary", "b", "i", "u", "em", "strong", "mark", "small"
 ]);
+export let customTags = new Map([
+  ["color",function(value){return `style="color:${value}"`}]
+]);
 
 export function escapeHtml(str) {
   return str
@@ -22,9 +25,12 @@ export function renderInline(text, handleEscChar = true) {
     text = escapeHtml(text);
   }
 
+  //anchor links [text](#anchor) //Note: could merge with links, but would need to check the href for #
+  text = text.replace(/\[([^\]]*)\]\(#([^)]+?)(?:\s+"([^"]*)")?\)/gi,
+    (full, label, anchor, title) => `<a href="#${headerPrefixId}-${anchor}"${title ? ` title="${title}"` : ''} target="_self">${label}</a>`);
+
   // Protect URLs before inline parsing
   const urlTokens = [];
-
   text = text.replace(
     /\(([^)\s]+)(?:\s+"[^"]*")?\)/g,
     (full, url) => {
@@ -38,9 +44,7 @@ export function renderInline(text, handleEscChar = true) {
   text = text.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,
     (full, alt, src, title) => `<img src="${src}" alt="${alt}"${title ? ` title="${title}"` : ''}>`);
 
-  //anchor links [text](#anchor) //Note: could merge with links, but would need to check the href for #
-  text = text.replace(/\[([^\]]*)\]\(#([^)\s]+)(?:\s+"([^"]*)")?\)/g,
-    (full, label, anchor, title) => `<a href="#${headerPrefixId}-${anchor}"${title ? ` title="${title}"` : ''} target="_self">${label}</a>`);
+
 
   // links [text](href)
   text = text.replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,
@@ -79,13 +83,24 @@ export function renderInline(text, handleEscChar = true) {
     (full, id) => urlTokens[id]
   );
 
-  //allow html by replacing <> with §TAG and §
-  text = text.replace(/§TAG(\/?[a-zA-Z]+)§/g, (full, tag) => {
-    const tagName = tag.replace("/", "").toLowerCase();
-    if (allowedTags.has(tagName)) {
-      return `<${tag}>`;
+  //NOTE CUSTOM CASES BELOW
+  //bbcode style captures
+  text = text.replace(/(\\)?\[(\/)?([A-Za-z0-9_-]+)(?:=([^\]]+))?\]/g, (full, esc, closed, id, value) => {
+    if (esc) {
+      return full.slice(1);
     }
-    return `&lt;${tag}&gt;`;
+    if (allowedTags.has(id)) {
+      return closed ? `</${id}>` : `<${id}>`;
+    }
+    //custom tags are reserve for custom styling or even features
+    //so they will likly have a callable tied to their id that modify the tag data
+    //like style, id, class, data, or similar.
+    if(customTags.has(id)){
+      const fn = customTags.get(id)
+      const data = fn ? fn(value) : ''
+      return closed ? `</${id}>` : `<${id} ${data}>`;
+    }
+    return full
   });
 
   return text;

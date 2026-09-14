@@ -51,10 +51,10 @@
     "pages": [
       {
         "lore": [
-          "lore0.html",
-          "lore1.html",
-          "lore2.html",
-          "us_and_them.html"
+          "lore0.md",
+          "lore1.md",
+          "lore2.md",
+          "lore3_us_and_them.md"
         ],
         "media": [
           "media0.md",
@@ -73,10 +73,10 @@
           "media9.md"
         ],
         "posts": [
-          "lastest_update.md",
-          "markdown_support.html",
           "post0.md",
+          "post0_lastest_update.md",
           "post1.html",
+          "post1_markdown_support.md",
           "post2.html",
           "post3.html",
           "post4.html",
