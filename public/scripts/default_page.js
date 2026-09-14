@@ -34,7 +34,7 @@ export async function init() {
     //load a radio player if one exists
     const radioPlayerElement = document.getElementById('radio-player');
     if (radioPlayerElement) {
-    //    radioPlayerElement.innerHTML = defaultRadioHtml;
+        //    radioPlayerElement.innerHTML = defaultRadioHtml;
         const { initRadio } = await import('/widgets/radio_player.js');
         onload.push(() => {
             handlers.radioPlayer = initRadio()
@@ -62,7 +62,7 @@ export async function init() {
         //const TYPES = {POSTS:'posts',MEDIA:'media',PROJECTS:'projects'} //may not use. type is the dir or map name. group is the sub dir name or key in the map(group is not really needed)
         //  TODO: remove only the page type/id from params since using static pages to declare them is more responsive
         //but need to leep the page and max posts
-        const type = params.has('type') ? params.get('type') : pageId 
+        const type = params.has('type') ? params.get('type') : pageId
         const group = params.has('group') ? params.get('group') : 'default'
         const page = params.has('page') ? params.get('page') : 0;
         const max_posts = params.has('max_posts') ? params.get('max_posts') : 20;
@@ -79,7 +79,7 @@ export async function init() {
         const dir = handlers.sitemap.getDir(`pages/${type}`);
 
         handlers.postManager.directory = `/pages/${type}`;
-        handlers.postManager.type = type;
+        handlers.postManager.type = type === "media" ? type : "post";
         await handlers.postManager.loadPage(dir, page, max_posts, body_container);
 
         const next_page = parseInt(page) + 1;
@@ -100,7 +100,7 @@ export async function init() {
                 window.location.href = `posts.html#type=${type}&group=${group}&page=${back_page}&max_posts=${max_posts}`
             });
         }
-        
+
     }
 
     if (document.querySelector('.markdown') || document.querySelector('.markdown-render')) {
