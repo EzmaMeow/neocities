@@ -53,16 +53,21 @@
         "lore": [
           "lore0.md",
           "lore1.md",
-          "lore2.md",
-          "lore3_us_and_them.md"
+          "lore2_us_and_them.md"
         ],
         "media": [
           "media0.md",
           "media1.md",
-          "media10.md",
+          "media10_0.md",
+          "media10_1.md",
+          "media10_2.md",
+          "media10_3.md",
+          "media10_4.md",
+          "media10_5.md",
+          "media10_6.md",
+          "media10_7.md",
           "media11.md",
           "media12.md",
-          "media13.md",
           "media2.md",
           "media3.md",
           "media4.md",
@@ -75,15 +80,11 @@
         "posts": [
           "post0.md",
           "post0_lastest_update.md",
-          "post1.html",
+          "post1.md",
           "post1_markdown_support.md",
-          "post2.html",
-          "post3.html",
-          "post4.html",
-          "post5.html",
-          "post8.html",
-          "random_dev_info.html",
-          "things_about_me.html"
+          "post2.md",
+          "post3.md",
+          "post4.md"
         ]
       },
       "about.html",
