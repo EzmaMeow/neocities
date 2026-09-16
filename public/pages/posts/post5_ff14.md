@@ -1,0 +1,3 @@
+<data>{"title":"FF14"}</data>
+
+A while ago I dediced to play ff14 again with the free trail due to inablity to subscribe. It a game where I enjoy the crafing adn just messing around. At the time of writing this(9/15/2026), I have am still doing a realm reborn stuff mostly do to the point I am at where I need to group up and my dislike of playing with strangers ontop of ~~now lacking~~ a pc or connection that can stay stable during long fight. Well now I am unable to mess around in ff14 due to my good pc refusing to boot up and because the game seem to require a dedicated gpu to run or on cpu is just too old.
