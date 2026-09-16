@@ -1,16 +1,33 @@
+:root {
+	--primary-background-color: #771390;
+	--secondary-background-color: #0cefff52;
+	--primary-color: #fb9ddf;
+	--secondary-color: #0eebfb;
+	--invert-color: #771390;
+	--invert-background-color: #0eebfb;
+	--border-color: #3665E7;
+
+	--image-border-radius: 8px;
+	--image-border-rendering: pixelated;
+	--image-border-source: url(assets/frame.png);
+	--image-border-slice: 25%;
+	--image-border-repeat: repeat;
+	--image-border-width: 32px;
+}
+
 body {
-	color: #fb9ddf;
-	background-color: #771390;
+	color: var(--primary-color);
+	background-color: var(--primary-background-color);
 	margin: 0%;
 }
 
 a {
-	color: #0eebfb;
+	color: var(--secondary-color);
 }
 
 #nav {
 	text-align: center;
-	background-color: #771390;
+	background-color: var(--primary-background-color);
 	width: 100%;
 	position: fixed;
 }
@@ -41,7 +58,7 @@ a {
 
 .nav-tab {
 	cursor: pointer;
-	color: #0eebfb;
+	color: var(--secondary-color);
 	text-align: center;
 	padding: 12px 12px;
 	display: block;
@@ -56,8 +73,8 @@ a {
 }
 
 .active {
-	background-color: #0eebfb;
-	color: #771390;
+	background-color: var(--invert-background-color);
+	color: var(--invert-color);
 	padding: 2px 6px 2px 6px;
 	border-radius: 4px;
 }
@@ -83,7 +100,7 @@ a {
 	/* Ensure the height and width are equal */
 	border-radius: 50%;
 	/* This makes the image circular */
-	border: 2px solid #3665E7;
+	border: 2px solid var(--border-color);
 	/* Adds a border around the image */
 	object-fit: cover;
 	background-color: #3665E7;
@@ -95,30 +112,37 @@ a {
 }
 
 .title {
-	color: #0eebfb;
+	color: var(--secondary-color);
 }
 
 .container {
 	height: fit-content;
-	background: #771390;
-	border: 8px solid #3665E7;
-	border-radius: 8px;
-	image-rendering: pixelated;
-	border-image-source: url(assets/frame.png);
-	border-image-slice: 25%;
-	border-image-repeat: repeat;
-	border-image-width: 32px;
+	background: var(--primary-background-color);
+	border: 8px solid var(--border-color);
+	border-radius: var(--image-border-radius);
+	image-rendering: var(--image-border-rendering);
+	border-image-source: var(--image-border-source);
+	border-image-slice: var(--image-border-slice);
+	border-image-repeat: var(--image-border-repeat);
+	border-image-width: var(--image-border-width);
 
 	width: 400px;
+}
 
+header {
+	color: var(--secondary-color);
+	background: var(--primary-background-color);
+}
+article {
+	background-color: #0cefff52;
 }
 
 .info_container {
 	display: flex;
 	flex-direction: column;
 	height: fit-content;
-	background: #771390;
-	border: 8px solid #3665E7;
+	background: var(--primary-background-color);
+	border: 8px solid var(--border-color);
 	border-radius: 8px;
 	image-rendering: pixelated;
 	border-image-source: url(assets/frame.png);
@@ -157,7 +181,7 @@ a {
 
 .info_content {
 	background-color: #0cefff52;
-	border: 2px solid #3665E7;
+	border: 2px solid var(--border-color);
 	padding-left: 16px;
 	padding-right: 16px;
 }
@@ -202,8 +226,8 @@ a {
 
 .highlight_select {
 	background-color: #0cefff52;
-	border: 2px solid #3665E7;
-	color: #fb9ddf;
+	border: 2px solid var(--border-color);
+	color: var(--primary-color);
 	padding: 2px;
 	font-family: monospace;
 	user-select: all;
@@ -243,19 +267,19 @@ label {
 }
 
 button {
-	background-color: #771390;
-	color: #0eebfb;
+	background-color: var(--primary-background-color);
+	color: var(--secondary-color);
 	;
 }
 
 input {
 	background-color: #0cefff52;
-	color: #fb9ddf;
+	color: var(--primary-color);
 }
 
 .checkbox-text {
 	flex: 1 1 100%;
-	color: #0eebfb;
+	color: var(--secondary-color);
 }
 
 ::-webkit-scrollbar {
@@ -270,10 +294,10 @@ input {
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #0eebfb;
+	background: var(--invert-background-color);
 	border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #fb9ddf;
+	background: var(--primary-color);
 }
