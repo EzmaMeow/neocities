@@ -1,0 +1,96 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="page-type" content="pages">
+    <meta name="page-id" content="polls">
+    <title>Polls</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.gif" type="image/x-icon">
+</head>
+
+<body>
+
+    <!-- NAVBAR START -->
+    <div id="nav">
+        <ul>
+            <li><a href="/index.html"><span id="index-tab">&#8962</span></a></li>
+            <li>
+                <details id="pages-nav" class="nav-tab">
+                    <summary id="pages-tab">Pages</summary>
+                    <a href="/pages/about.html"><span id="about-tab">About</span></a>
+                    <a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
+                    <a href="/pages/sitemap.html"><span id="sitemap-tab">Sitemap</span></a>
+                </details>
+            </li>
+            <li>
+                <details id="posts-nav" class="nav-tab">
+                    <summary id="posts-loader-tab" class="active">Posts</summary>
+                    <a href="/pages/posts.html"><span id="posts-tab" class="active">Posts</span></a>
+                    <a href="/pages/media.html"><span id="media-tab">Media</span></a>
+                    <a href="/pages/lore.html"><span id="lore-tab">Lore</span></a>
+                </details>
+            </li>
+            <li>
+                <details id="games-nav" class="nav-tab">
+                    <summary id="games-tab">Games</summary>
+                    <a href="/games/fishing/fishing.html"><span id="fishing-tab">Fishing</span></a>
+                </details>
+            </li>
+        </ul>
+    </div>
+    <!-- NAVBAR END -->
+
+    <div id="background">
+    </div>
+
+    <div id="body_container">
+        <div class="container text-center">
+            <!-- RADIO START -->
+            <div id='radio-player'>
+                <b>Radio Player</b><br>
+                <audio id="radioAudio" preload="none"></audio>
+                <button id="toggleRadio">Waiting</button>
+                <details>
+                    <summary>Radio Options</summary><br>
+                    <label>Use Local Storage: <input type="checkbox" class="radioOptions"
+                            data-property="useLocalStorage"
+                            title="Uses localStorage to store options untill cleared."></label><br>
+                    <label>Autoplay: <input type="checkbox" class="radioOptions"
+                            data-property="autoplay"></label><br><br>
+                    Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions"
+                        data-property="volume" style="width: 75%;"><br><br>
+                    Url: <input type="text" id="streamUrl"
+                        placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
+                        value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
+                        class="radioOptions" data-property="src">
+                    <button id="radioDefaultStation">⟲</button>
+                </details>
+            </div>
+            <!-- RADIO END -->
+        </div>
+        <div class="flex-break"></div>
+
+        <div class="info_container collapsible">
+            <div class="info_title collapsible_toggle">
+                <h2 class="text-center">Test</h2>
+            </div>
+            <div class="info_content collapsible_content">
+                <div class="tumblr-post"
+                    data-href="https://embed.tumblr.com/embed/post/t:Q-WuFivgO8Np-dFhS0sw1Q/827950103497211904/v2"
+                    data-did="4b751f9da06e20e84bf8bb7c54fc41d7ec2c94d3"><a
+                        href="https://www.tumblr.com/ezmagreen/827950103497211904/this-is-a-test-but-also-a-random-poll">https://www.tumblr.com/ezmagreen/827950103497211904/this-is-a-test-but-also-a-random-poll</a>
+                </div>
+                <script async src="https://assets.tumblr.com/post.js?_v=2e3257777411face7e6785c8941f968f"></script>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module" src="/scripts/default_page.js"></script>
+</body>
+
+</html>
