@@ -70,7 +70,7 @@ export class PostManager {
             const doc = new DOMParser().parseFromString(rawPost, "text/html");
             return doc.body.innerHTML;
         }
-        let content = rawPost.replace(/<data>.*?<\/data>/s, "");
+        let content = rawPost.replace(this.postDataExpression, "");
         if (ext === 'md' || ext === 'markdown'){
             content = markdownToHtml(content)
         }

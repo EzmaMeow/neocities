@@ -88,14 +88,15 @@
           "post4.md",
           "post5_ff14.md",
           "post6_warframe.md",
-          "post7_starbound.md"
+          "post7_starbound.md",
+          "post8.md"
         ]
       },
       "about.html",
       "guestbook.html",
       "lore.html",
       "media.html",
-      "notebook.html",
+      "notepage.html",
       "polls.html",
       "posts.html",
       "questions_and_answers.html",
