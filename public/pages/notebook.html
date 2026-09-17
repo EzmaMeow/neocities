@@ -74,21 +74,45 @@
             <!-- RADIO END -->
         </div>
         <div class="flex-break"></div>
+        <div class="container text-center" style="margin-top:2vh;">
+            <details>
+                <summary>
+                    About
+                </summary>
+                <br>
+                This is a experimental page that parses the input text through a few text parsers that may be used in
+                this site. <br><br>
+                Currently there is a custom markdown parser with some specail bbcode style additions such as
+                <code>[color=blue]text[/color]</code> and a few other.<br><br>
+                There is a varible replacer that will replace expressions like <code>%random</code> to something if it
+                exists (random will be replace by a random float between 0-1)<br><br>
+                There is also an inline function parser, but it mostly to exposed <code>$calc()</code> which will solve
+                simple math expressions that is passed as a parameter<br><br>
+                NOTE: the html is wrap in a span tag with a markdown-render class. This is to allow markdown styling to be appled to the elements inside it and it is not really needed.<br><br>
+            </details>
+            <button onclick="copyAllText(0)">Copy Input</button>
+            <button onclick="copyAllText(1)">Copy Output Text</button>
+            <button onclick="copyAllText(2)">Copy Output Html</button>
+        </div>
+        <div class="flex-break"></div>
+
 
         <div class="info_container collapsible">
             <div class="info_title collapsible_toggle">
                 <h2 class="text-center">Input</h2>
             </div>
-            <div class="info_content collapsible_content">
-                <textarea id="input" name="input" placeholder='' title="input" style="resize: vertical; height: 50vh; width:100%; margin-top: 8px; margin-bottom: 4px;"></textarea>
+            <div class="info_content collapsible_content" style="padding-top: 4%; padding-bottom: 4%;">
+                <textarea id="input" name="input" placeholder='' title="input"
+                    style="resize: vertical; height: 50vh; width:100%;"></textarea>
             </div>
         </div>
         <div class="info_container collapsible">
             <div class="info_title collapsible_toggle">
                 <h2 class="text-center">Preview</h2>
             </div>
-            <div class="info_content collapsible_content">
-                <span id="output" style="display:inline-block; height: 50vh; width:100%; margin-top: 8px; margin-bottom: 4px;"></span>
+            <div class="info_content collapsible_content" style="overflow: auto; padding-top: 4%; padding-bottom: 4%;">
+                <span id="output"
+                    style="display:inline-block; min-height: 50vh; width:100%; background-color: #ffffff1f;"></span>
             </div>
         </div>
 
@@ -110,6 +134,16 @@
             input.addEventListener('input', function () {
                 output.innerHTML = textProcessing(this.value);
             });
+            window.copyAllText = function (type) {
+                const text = type === 0 ? input.value : type === 1 ? output.textContent : output.innerHTML;
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        //alert('Copied: ' + text);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy: ', err);
+                    });
+            }
         </script>
 </body>
 
