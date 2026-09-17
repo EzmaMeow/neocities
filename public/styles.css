@@ -134,7 +134,7 @@ header {
 	background: var(--primary-background-color);
 }
 article {
-	background-color: #0cefff52;
+	background-color: var(--secondary-background-color);
 }
 
 .info_container {

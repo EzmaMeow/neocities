@@ -53,7 +53,8 @@
         "lore": [
           "lore0.md",
           "lore1.md",
-          "lore2_us_and_them.md"
+          "lore2_us_and_them.md",
+          "lore3_mew_the_stray.md"
         ],
         "media": [
           "media0.md",
@@ -86,7 +87,8 @@
           "post3.md",
           "post4.md",
           "post5_ff14.md",
-          "post6_warframe.md"
+          "post6_warframe.md",
+          "post7_starbound.md"
         ]
       },
       "about.html",
