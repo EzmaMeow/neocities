@@ -25,8 +25,8 @@ export const defaultAllowedTags = [
     "details", "summary", "b", "i", "u", "em", "strong", "mark", "small"
 ];
 export const defaultCustomTags = {
-    "color": function (value) { return `style="color:${value ||'white'}"` },
-    "spoiler": function (value) { return ``}
+    "color": function (value) { return `style="color:${value || 'white'}"` },
+    "spoiler": function (value) { return `` }
 };
 export const defaultVaribles = {
     'prev_result': '',
@@ -67,7 +67,8 @@ class MarkupParser {
     parseCustomTags(full, id, value, closed) {
         if (this.customTags.has(id)) {
             const fn = this.customTags.get(id)
-            const data = fn ? fn(value) : ''
+            const parsedValue = this.parseInlineVaribles(value)
+            const data = fn ? fn(parsedValue) : ''
             return closed ? `</${id}>` : `<${id} ${data}>`;
         }
     }
@@ -83,7 +84,8 @@ class MarkupParser {
         if ('%' && this.allowUserVaribles && !closed) {
             if (id.startsWith('%')) {
                 if (typeof value !== 'undefined' && (!this.limitToExistingUserVaribles || this.userVaribles.has(id))) {
-                    this.userVaribles.set(id, value)
+                    const parsedValue = this.parseInlineVaribles(value)
+                    this.userVaribles.set(id, parsedValue)
                     return ''
                 }
                 return this.userVaribles.get(id)
@@ -92,6 +94,9 @@ class MarkupParser {
     }
 
     parseInlineVaribles(text) {
+        if (!text) {
+            return text
+        }
         return text.replace(/var:([^\s]+)/g, (full, id) => {
             let results = this.parseVaribles(full, id);
             if (typeof results !== 'undefined') { return results }
