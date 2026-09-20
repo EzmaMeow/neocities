@@ -1,4 +1,5 @@
 import { markdownToHtml } from '/lib/inline_parsers/markdown_parser.js'
+import markupParser from '/lib/inline_parsers/markup_parser.js'
 
 export async function load_html_body(file) {
     //const html = await (await fetch(file)).text();
@@ -74,6 +75,7 @@ export class PostManager {
         if (ext === 'md' || ext === 'markdown'){
             content = markdownToHtml(content)
         }
+        content = markupParser.parseText(content)
         return content
     }
     async getRawPost(postSource = '') {

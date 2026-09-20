@@ -6,6 +6,14 @@ Notices (Updated 8/14/26)
 - Primary PC not working(~8/11/26)
 
 [details]
+[summary] Log (9/19/26) [/summary]
+I decided I could merge most of the parsers into a markup parser base around bracket style formating `\[id] \[id=value]`. I use it with markdown (well after parsing it) since it replaces the bracket content instead of doing any fancy formating. I might need to check to make sure markdown ignore formating bracket contents it do not handle directly if it messes with feature. Truth is this parse is easier to work with than markdown.
+
+Also I added the user varibles `\[%name=meow] where \[%name] should return meow after it`. functions like `\[calc= 5 + var:prev_rand]` should replace var:id with an exsiting var (prefixing the id with % for user defined var). Yeah seem like overkill, but I want to make a tool or system that make use of this stuff. If i decide on a way to handle how I should catch notepage input (so last entry could be restored) then I could use that as a writing tool. I still need to output the user var in the output and handle inputing it so there a way to set default values. I added a flag to limit only existing user var, but it is off now since I do not feel like thinking up a set of names to reserve. It is mostly something that could be useful if I need to limit possible size caused by user abuse(though being client side, it will only hurt them).
+[spoiler]also I added a `\[spoiler]` tag meow. I should try not to abused them > : 3. Look like there is limits such as certain formating breaking it. A fix is to make a spoiler style version of each case if I feel like it.[/spoiler]
+[/details]
+
+[details]
 [summary] Log (9/13/26) [/summary]
 I decided to clear some of the old logs from here since that was the plan for this post. Also I change formating quite a bit and editing the old stuff would be a pain.
 So I decided to use a markdown base and extend it with bbcode style formating for extra features. I still need to work on tab like feature for the markdown so I can have list function properly, but that is for later since it is a side project and all the features that I plan to use are covered.

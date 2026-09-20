@@ -133,6 +133,7 @@ header {
 	color: var(--secondary-color);
 	background: var(--primary-background-color);
 }
+
 article {
 	background-color: var(--secondary-background-color);
 }
@@ -300,4 +301,10 @@ input {
 
 ::-webkit-scrollbar-thumb:hover {
 	background: var(--primary-color);
+}
+
+spoiler {
+	color: var(--secondary-color);
+	background-color: var(--secondary-color);
+	border-radius: 4px;
 }

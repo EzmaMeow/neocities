@@ -24,4 +24,5 @@ I have ideas of using this logic for user formated iu like stuff or anything tha
 - tab: This might be added to the markdown, but make likes that start with 2-4 spaces be wrap in a tab class/element for each of those sets. How much spaces = a tab would be a const in the file, but I might use 2 if used with markdown. bbcode style may use it own, but would allow tabs anywhere instead of at the start (which idk would be a good idea meow).
 - theme override: This one just wrap it in a class that may override the current theme, but require me to make themes (aka just diffrent css styles).
 - Other focused styling such as text background color or font.
+- spoiler or hidden text. I think hidden be easier to add since it just setting the color and backgound color the same, but having it be readible when selected. Idk there may be a element that dose it better that I do not know about.
 [/details]

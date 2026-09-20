@@ -117,7 +117,8 @@ export function calc(expr) {
     try {
         return Function(`"use strict"; return (${expr});`)();
     } catch (err) {
-        console.error(err)
+        //silencing it so it dose not spam in cases where this is used during input events (though one should try not to process it there)
+        //console.error(err)
         return expr;
     }
 }

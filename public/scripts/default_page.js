@@ -109,7 +109,9 @@ export async function init() {
         onload.push(() => {
             const markdownElements = document.querySelectorAll('.markdown');
             markdownElements.forEach((element) => {
-                element.innerHTML = markdownToHtml(element.textContent)
+                let parsedHtml = markdownToHtml(element.textContent);
+                parsedHtml = markupParser.parseText(parsedHtml)
+                element.innerHTML = parsedHtml
             });
         });
 

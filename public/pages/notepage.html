@@ -133,6 +133,7 @@
             import { markdownToHtml } from '/lib/inline_parsers/markdown_parser.js'
             import { parseInlineFunction } from '/lib/inline_parsers/func_parser.js'
             import { parseInlineVariable } from '/lib/inline_parsers/var_parser.js'
+            import markupParser from '/lib/inline_parsers/markup_parser.js'
             //import { calc } from '/lib/inline_parsers/calc_parser.js'
             
             const input = document.getElementById('input');
@@ -142,9 +143,10 @@
             const titleOutput = document.getElementById('titleOutput');
 
             function textProcessing(text) {
-                text = parseInlineVariable(text)
-                text = parseInlineFunction(text)
+                //text = parseInlineVariable(text)
+                //text = parseInlineFunction(text)
                 text = markdownToHtml(text);
+                text = markupParser.parseText(text)
                 return text
             }
 
