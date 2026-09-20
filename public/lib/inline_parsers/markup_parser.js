@@ -75,7 +75,6 @@ class MarkupParser {
 
     parseVaribles(full, id, value, closed) {
         if (this.varibles.has(id) && !closed) {
-            console.log('var: ', id)
             return this.varibles.get(id);
         }
     }

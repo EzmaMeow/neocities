@@ -16,35 +16,35 @@
 <body>
 
     <!-- NAVBAR START -->
-<div id="nav">
-    <ul>
-        <li><a href="/index.html"><span id="index-tab">&#8962</span></a></li>
-        <li>
-            <details id="pages-nav" class="nav-tab">
-                <summary id="pages-tab" class="active">Pages</summary>
-                <a href="/pages/about.html"><span id="about-tab">About</span></a>
-                <a href="/pages/notepage.html"><span id="notepage-tab" class="active">Notepage</span></a>
-                <a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
-                <a href="/pages/sitemap.html"><span id="sitemap-tab">Sitemap</span></a>
-            </details>
-        </li>
-        <li>
-            <details id="posts-nav" class="nav-tab">
-                <summary id="posts-loader-tab">Posts</summary>
-                <a href="/pages/posts.html"><span id="posts-tab">Posts</span></a>
-                <a href="/pages/media.html"><span id="media-tab">Media</span></a>
-                <a href="/pages/lore.html"><span id="lore-tab">Lore</span></a>
-            </details>
-        </li>
-        <li>
-            <details id="games-nav" class="nav-tab">
-                <summary id="games-tab">Games</summary>
-                <a href="/games/fishing/fishing.html"><span id="fishing-tab">Fishing</span></a>
-            </details>
-        </li>
-    </ul>
-</div>
-<!-- NAVBAR END -->
+    <div id="nav">
+        <ul>
+            <li><a href="/index.html"><span id="index-tab">&#8962</span></a></li>
+            <li>
+                <details id="pages-nav" class="nav-tab">
+                    <summary id="pages-tab" class="active">Pages</summary>
+                    <a href="/pages/about.html"><span id="about-tab">About</span></a>
+                    <a href="/pages/notepage.html"><span id="notepage-tab" class="active">Notepage</span></a>
+                    <a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
+                    <a href="/pages/sitemap.html"><span id="sitemap-tab">Sitemap</span></a>
+                </details>
+            </li>
+            <li>
+                <details id="posts-nav" class="nav-tab">
+                    <summary id="posts-loader-tab">Posts</summary>
+                    <a href="/pages/posts.html"><span id="posts-tab">Posts</span></a>
+                    <a href="/pages/media.html"><span id="media-tab">Media</span></a>
+                    <a href="/pages/lore.html"><span id="lore-tab">Lore</span></a>
+                </details>
+            </li>
+            <li>
+                <details id="games-nav" class="nav-tab">
+                    <summary id="games-tab">Games</summary>
+                    <a href="/games/fishing/fishing.html"><span id="fishing-tab">Fishing</span></a>
+                </details>
+            </li>
+        </ul>
+    </div>
+    <!-- NAVBAR END -->
 
     <div id="background">
     </div>
@@ -54,25 +54,27 @@
     <div id="body_container">
         <div class="container text-center">
             <!-- RADIO START -->
-<div id='radio-player'>
-    <b>Radio Player</b><br>
-    <audio id="radioAudio" preload="none"></audio>
-    <button id="toggleRadio">Waiting</button>
-    <details>
-        <summary>Radio Options</summary><br>
-        <label>Use Local Storage: <input type="checkbox" class="radioOptions" data-property="useLocalStorage"
-                title="Uses localStorage to store options untill cleared."></label><br>
-        <label>Autoplay: <input type="checkbox" class="radioOptions" data-property="autoplay"></label><br><br>
-        Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions" data-property="volume"
-            style="width: 75%;"><br><br>
-        Url: <input type="text" id="streamUrl"
-            placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
-            value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
-            class="radioOptions" data-property="src">
-        <button id="radioDefaultStation">⟲</button>
-    </details>
-</div>
-<!-- RADIO END -->
+            <div id='radio-player'>
+                <b>Radio Player</b><br>
+                <audio id="radioAudio" preload="none"></audio>
+                <button id="toggleRadio">Waiting</button>
+                <details>
+                    <summary>Radio Options</summary><br>
+                    <label>Use Local Storage: <input type="checkbox" class="radioOptions"
+                            data-property="useLocalStorage"
+                            title="Uses localStorage to store options untill cleared."></label><br>
+                    <label>Autoplay: <input type="checkbox" class="radioOptions"
+                            data-property="autoplay"></label><br><br>
+                    Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions"
+                        data-property="volume" style="width: 75%;"><br><br>
+                    Url: <input type="text" id="streamUrl"
+                        placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
+                        value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
+                        class="radioOptions" data-property="src">
+                    <button id="radioDefaultStation">⟲</button>
+                </details>
+            </div>
+            <!-- RADIO END -->
         </div>
         <div class="flex-break"></div>
 
@@ -109,8 +111,8 @@
             <div class="info_title">
                 <br>
                 <h2 style="display:inline;">Title: </h2>
-                <input type="text" id="titleInput" title="This is the title of the notebook."
-                    placeholder="Notebook" style="width: 75%; ">
+                <input type="text" id="titleInput" title="This is the title of the notebook." placeholder="Notebook"
+                    style="width: 75%; ">
                 <br><br>
             </div>
             <div class="info_content" style="padding-top: 4%; padding-bottom: 4%;">
@@ -134,13 +136,16 @@
             import { parseInlineFunction } from '/lib/inline_parsers/func_parser.js'
             import { parseInlineVariable } from '/lib/inline_parsers/var_parser.js'
             import markupParser from '/lib/inline_parsers/markup_parser.js'
+            import { defaultVaribles, defaultUserVaribles } from '/lib/inline_parsers/markup_parser.js'
             //import { calc } from '/lib/inline_parsers/calc_parser.js'
-            
+
             const input = document.getElementById('input');
             const output = document.getElementById('output');
             const fileInput = document.getElementById('fileInput');
             const title = document.getElementById('titleInput');
             const titleOutput = document.getElementById('titleOutput');
+
+            let fileData = {};
 
             function textProcessing(text) {
                 //text = parseInlineVariable(text)
@@ -150,9 +155,12 @@
                 return text
             }
 
-            function updateOutput(){
+            function updateOutput() {
                 output.innerHTML = textProcessing(input.value);
                 titleOutput.textContent = title.value || "Preview"
+                fileData.title = title.value || ''
+                //note: need to remeber sync any var exposed to the markup parser (and vise versa)
+                markupParser.varibles.set("title", title.value)
             }
 
             input.addEventListener('input', function () {
@@ -174,7 +182,7 @@
             }
 
             window.downloadText = function (type) {
-                const text = (`${title.value && type === 0 ? `<data>{"title":"${title.value}"}</data>` : ''}${type === 0 ? input.value : type === 1 ? output.textContent : output.innerHTML}`);
+                const text = (`${type === 0 ? `<data>${JSON.stringify(fileData)}</data>` : ''}${type === 0 ? input.value : type === 1 ? output.textContent : output.innerHTML}`);
                 const ext = type === 0 ? '.md' : type === 1 ? '.txt' : '.html';
                 const blob = new Blob([text], { type: 'text/plain' });
                 const url = URL.createObjectURL(blob);
@@ -193,8 +201,8 @@
                     const reader = new FileReader();
                     reader.onload = function (e) {
                         let fileText = e.target.result;
-                        const rawFileData = fileText.match(/<data>.*?<\/data>/s)[0].replace(/<\/?data>/g, '');
-                        let fileData
+                        let rawFileData = fileText.match(/<data>.*?<\/data>/s);
+                        rawFileData = rawFileData ? rawFileData[0].replace(/<\/?data>/g, '') : "";
                         try {
                             fileData = JSON.parse(rawFileData) || {}
                         } catch (err) {
@@ -202,6 +210,20 @@
                         }
                         title.value = fileData.title ? fileData.title : "";
                         input.value = fileText.replace(/<data>.*?<\/data>/s, "");
+                        //Note: make sure replacing it wont cause issues. usally text get reparsed on change so this should not be an issue
+                        //reseting the varibles to default before rebuilding it. if varibles and uservaribles may be defined in data atm, but might
+                        //limit it to user varibles if needed
+                        markupParser.userVaribles = new Map(Object.entries(defaultUserVaribles));
+                        markupParser.varibles = new Map(Object.entries(defaultVaribles));
+                        for (let [key, value] of Object.entries(fileData)) {
+                            console.log([key, value, markupParser.userVaribles, markupParser.varibles, markupParser]);
+                            if (key.startsWith('%')) {
+                                markupParser.userVaribles.set(key,value);
+                            }
+                            else{
+                                markupParser.varibles.set(key,value);
+                            }
+                        }
                         updateOutput()
                     };
                     reader.readAsText(file);
