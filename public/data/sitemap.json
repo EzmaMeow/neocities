@@ -38,6 +38,7 @@
           "calc_parser.js",
           "func_parser.js",
           "markdown_parser.js",
+          "markup_parser.js",
           "var_parser.js"
         ]
       },
