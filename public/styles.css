@@ -95,16 +95,11 @@ a {
 
 .circle-image {
 	width: 64px;
-	/* Adjust the size as needed */
 	height: 64px;
-	/* Ensure the height and width are equal */
 	border-radius: 50%;
-	/* This makes the image circular */
 	border: 2px solid var(--border-color);
-	/* Adds a border around the image */
 	object-fit: cover;
 	background-color: #3665E7;
-	/* Ensures the image covers the entire area */
 }
 
 .text-center {
@@ -232,7 +227,6 @@ article {
 	padding: 2px;
 	font-family: monospace;
 	user-select: all;
-	/* Clicking selects all text */
 	cursor: pointer;
 }
 
@@ -253,7 +247,6 @@ textarea {
 .flex-break {
 	flex-basis: 100%;
 	height: 0;
-	/* No visible height */
 }
 
 label {
