@@ -41,8 +41,11 @@ export const defaultAllowedTags = [
     "details", "summary", "b", "i", "u", "em", "strong", "mark", "small", "code", "blockquote", "table", "tr","th","td","ul","li","ol","dl","dt","dd"
 ];
 export const defaultCustomTags = {
-    "color": function (value) { return `style="color:${value || 'white'}"` },
-    "hide": function (value) { return `hidden` },
+    "color": function (value) { return value?`style="color:${value}"`:"" },
+    "highlight": function (value) { return value?`style="background-color:${value}"`:"" },
+    "hide": function (value) { return "hidden" },
+    "tooltip": function (value) { return `title="${value}"` },
+    "theme": function (value) { return `class="theme-${value}"` },
     "spoiler": undefined, "tab":undefined,
     "center": undefined, "left": undefined, "right": undefined,
 };
@@ -62,7 +65,9 @@ export const defaultFunctions = {
         state.varibles.set('prev_rand', Math.random())
         return state.varibles.get('prev_rand')
     },
-    "calc": (state, value) => calc(value),
+    "calc": (state, value) => {
+        return `<span title="${value}">${calc(value)}</span>`
+    },
     "link": (state, value, closed) => htmlLink(value, closed),
     "image": (state, value, closed) => htmlImage(value, closed)
 }
