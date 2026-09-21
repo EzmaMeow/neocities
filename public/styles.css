@@ -296,8 +296,23 @@ input {
 	background: var(--primary-color);
 }
 
-spoiler {
+mk-spoiler {
 	color: var(--secondary-color);
 	background-color: var(--secondary-color);
 	border-radius: 4px;
+}
+mk-center {
+	text-align: center;
+	display:block
+}
+mk-left {
+	text-align: left;
+	display:block
+}
+mk-right {
+	text-align: right;
+	display:block
+}
+mk-tab {
+	padding-left: 2em;
 }

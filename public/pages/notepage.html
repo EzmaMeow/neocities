@@ -148,8 +148,6 @@
             let fileData = {};
 
             function textProcessing(text) {
-                //text = parseInlineVariable(text)
-                //text = parseInlineFunction(text)
                 text = markdownToHtml(text);
                 text = markupParser.parseText(text)
                 return text
