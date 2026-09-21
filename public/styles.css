@@ -316,6 +316,9 @@ mk-right {
 mk-tab {
 	padding-left: 2em;
 }
+mk-right mk-tab {
+	padding-right: 2em;
+}
 .theme-invert {
 	color:var(--invert-color);
 	background-color:var(--invert-background-color);
