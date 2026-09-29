@@ -9,7 +9,7 @@
 
 	--image-border-radius: 8px;
 	--image-border-rendering: pixelated;
-	--image-border-source: url(assets/frame.png);
+	--image-border-source: url(assets/frame.webp);
 	--image-border-slice: 25%;
 	--image-border-repeat: repeat;
 	--image-border-width: 32px;
@@ -83,7 +83,7 @@ a {
 	background-color: #3665E7;
 	image-rendering: pixelated;
 
-	background-image: url(assets/background.jpg);
+	background-image: url(assets/background.webp);
 	background-repeat: repeat;
 	background-position: center top;
 
@@ -141,7 +141,7 @@ article {
 	border: 8px solid var(--border-color);
 	border-radius: 8px;
 	image-rendering: pixelated;
-	border-image-source: url(assets/frame.png);
+	border-image-source: url(assets/frame.webp);
 	border-image-slice: 25%;
 	border-image-repeat: repeat;
 	border-image-width: 32px;
