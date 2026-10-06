@@ -6,6 +6,14 @@ Notices (Updated 8/14/26)
 - Primary PC not working(~8/11/26)
 
 [details]
+[summary] Log (10/6/26) [/summary]
+I been distracted working on the rendering framework. I belive I am at the point where I can use it or migrate the fishing game to it. 
+Today and yesterday I spent fixing the actual matrix math and render pipeline since I notice I mess it up when starting the convertion of the fishing game. So there are chances otherthings need to be fixed. Also the animation is hardcoded and I should finish designing the data structure for it or at least before I have more than one animation.
+Mew is a slow cat. I also should try to make a character or me as a character, but I have not felt like doing art mew.
+[/details]
+
+
+[details]
 [summary] Log (9/19/26) [/summary]
 I decided I could merge most of the parsers into a markup parser base around bracket style formating `\[id] \[id=value]`. I use it with markdown (well after parsing it) since it replaces the bracket content instead of doing any fancy formating. I might need to check to make sure markdown ignore formating bracket contents it do not handle directly if it messes with feature. Truth is this parse is easier to work with than markdown.
 
