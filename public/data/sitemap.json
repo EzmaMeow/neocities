@@ -1,14 +1,10 @@
 [
   {
     "assets": [
-      "anim_profile_pic.gif",
       "anim_profile_pic.webp",
-      "background.jpg",
       "background.webp",
-      "ezma_button.gif",
       "ezma_button.webp",
       "fish.gif",
-      "frame.png",
       "frame.webp"
     ],
     "data": [
