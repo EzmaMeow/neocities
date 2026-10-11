@@ -1,0 +1,140 @@
+<!doctype html>
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Goals</title>
+
+    <meta name="page-type" content="pages">
+    <meta name="page-id" content="goals">
+
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="icon" href="/assets/anim_profile_pic.webp" type="image/x-icon">
+</head>
+
+<body>
+
+    <!-- NAVBAR START -->
+    <div id="nav">
+        <ul>
+            <li><a href="/index.html"><span id="index-tab">&#8962</span></a></li>
+            <li>
+                <details id="pages-nav" class="nav-tab">
+                    <summary id="pages-tab" class="active">Pages</summary>
+                    <a href="/pages/about.html"><span id="about-tab">About</span></a>
+                    <a href="/pages/notepage.html"><span id="notepage-tab">Notepage</span></a>
+                    <a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
+                    <a href="/pages/sitemap.html"><span id="sitemap-tab">Sitemap</span></a>
+                </details>
+            </li>
+            <li>
+                <details id="posts-nav" class="nav-tab">
+                    <summary id="posts-loader-tab">Posts</summary>
+                    <a href="/pages/posts.html"><span id="posts-tab">Posts</span></a>
+                    <a href="/pages/media.html"><span id="media-tab">Media</span></a>
+                    <a href="/pages/lore.html"><span id="lore-tab">Lore</span></a>
+                </details>
+            </li>
+            <li>
+                <details id="games-nav" class="nav-tab">
+                    <summary id="games-tab">Games</summary>
+                    <a href="/games/fishing/fishing.html"><span id="fishing-tab">Fishing</span></a>
+                </details>
+            </li>
+        </ul>
+    </div>
+    <!-- NAVBAR END -->
+
+    <div id="background">
+    </div>
+
+    <div id="body_container">
+
+        <div class="container text-center">
+            <!-- RADIO START -->
+            <div id='radio-player'>
+                <b>Radio Player</b><br>
+                <audio id="radioAudio" preload="none"></audio>
+                <button id="toggleRadio">Waiting</button>
+                <details>
+                    <summary>Radio Options</summary><br>
+                    <label>Use Local Storage: <input type="checkbox" class="radioOptions"
+                            data-property="useLocalStorage"
+                            title="Uses localStorage to store options untill cleared."></label><br>
+                    <label>Autoplay: <input type="checkbox" class="radioOptions"
+                            data-property="autoplay"></label><br><br>
+                    Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions"
+                        data-property="volume" style="width: 75%;"><br><br>
+                    Url: <input type="text" id="streamUrl"
+                        placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
+                        value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
+                        class="radioOptions" data-property="src">
+                    <button id="radioDefaultStation">⟲</button>
+                </details>
+            </div>
+            <!-- RADIO END -->
+        </div>
+        <div class="flex-break"></div>
+
+
+
+        <div class="info_container collapsible">
+            <div class="info_title collapsible_toggle">
+                <h1>Main Goal</h1>
+            </div>
+            <div class="info_content collapsible_content">
+                <p>
+                    I would like to either make or be part of a project that provides code that solve problem
+                    independent segments as well as being open source and close to public domain.
+                    The idea is the systems are meant to be used to build more complex systems either to learn from, use
+                    as is, or use and improve. They are also should focus on being simple and any possible dependencies
+                    be abstracted.
+                </p>
+                <p>
+                    I am focusing more on code focusing on systems to be used to build games for the web, though I may
+                    make random stuff for use on this website or others. These are base framework and not a dedicated
+                    engine.
+                    I may have a implemented system to test or demostrate it which follow a diffrent set of rules.
+                    Generally the system I make should be able to be swap out with existing systems with some work.
+                    Also my system will be subjected to change for some time untill I get a soild game or more running
+                    with them and spend time cleaning them up.
+                </p>
+                <p>
+                    The reasons is because I am tired of working around limitations or dealing with bloat when making
+                    web games. Also to try to evade copywrite issues dealing with redistribution since it seems I have
+                    to depend on an unoffical online export if I do not want to clone the code to my directoty.
+                    I also do not like hosting code that require additional downloads beside the language (aka python,
+                    web browser with js support, or similar cases) to run or work on it.
+                    <br>
+                    There is also the case that I think it be better to learn or make games from the ground up for those
+                    who are more focus on the code than the art. This is because a lot of little things can be misses
+                    working with only an existing engine.
+                    Then when working on a system that chanegs physics or rendering, the game start to get slower due to
+                    various reasons between either not handling it correctly or the engine limitation.
+                </p>
+            </div>
+        </div>
+
+        <div class="info_container collapsible">
+            <div class="info_title collapsible_toggle">
+                <h1>Goals</h1>
+            </div>
+            <div class="info_content collapsible_content">
+                <ul>
+                    <li>Make games.</li>
+                    <li>Make resources others can use.</li>
+                    <li>Make an interactive website or one with useful tools or widgets</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module" src="/scripts/default_page.js"></script>
+
+</body>
+
+
+</html>
