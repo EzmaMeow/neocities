@@ -6,6 +6,14 @@ Notices (Updated 8/14/26)
 - Primary PC not working(~8/11/26)
 
 [details]
+[summary] Log (10/12/26) [/summary]
+I took a break after slow working on the conversion of the fishing game. All progress is still local with some back up to my github.
+Today I was able to mirror most stuff in canvas, but the design of the fishing game is kind of rushed and too much stuff was dependent on how the level implement it.
+So the most recent bug might only be solvable changing how the fish is loaded in and creating signals for the fish so it can handle its own onclick event. I also should change it all. World(basicly a global or the game, could be call game or anything that represent the session) could be a singleton and everything else be a generic object that can be chain (like in a node system) as needed. I can use dedicated system to do things and have them configured to work together. 
+[/details]
+
+
+[details]
 [summary] Log (10/6/26) [/summary]
 I been distracted working on the rendering framework. I belive I am at the point where I can use it or migrate the fishing game to it. 
 Today and yesterday I spent fixing the actual matrix math and render pipeline since I notice I mess it up when starting the convertion of the fishing game. So there are chances otherthings need to be fixed. Also the animation is hardcoded and I should finish designing the data structure for it or at least before I have more than one animation.
