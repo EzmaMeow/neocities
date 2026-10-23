@@ -17,7 +17,7 @@
 <body>
 
     <!-- NAVBAR START -->
-    <div id="nav">
+    <nav id="nav">
         <ul>
             <li><a href="/index.html"><span id="index-tab">&#8962</span></a></li>
             <li>
@@ -44,17 +44,15 @@
                 </details>
             </li>
         </ul>
-    </div>
+    </nav>
     <!-- NAVBAR END -->
+    <background></background>
 
-    <div id="background">
-    </div>
+    <main id="body_container">
 
-    <div id="body_container">
-
-        <div class="container text-center">
+        <form class="container text-center">
             <!-- RADIO START -->
-            <div id='radio-player'>
+            <section id='radio-player'>
                 <b>Radio Player</b><br>
                 <audio id="radioAudio" preload="none"></audio>
                 <button id="toggleRadio">Waiting</button>
@@ -73,39 +71,39 @@
                         class="radioOptions" data-property="src">
                     <button id="radioDefaultStation">⟲</button>
                 </details>
-            </div>
+            </section>
             <!-- RADIO END -->
-        </div>
+        </form>
         <div class="flex-break"></div>
 
-        <div class="info_container collapsible">
-            <div class="info_title collapsible_toggle">
+        <article class="info_container collapsible">
+            <header class="info_title collapsible_toggle">
                 <h1>About</h1>
-            </div>
-            <div class="info_content collapsible_content">
+            </header>
+            <section class="info_content collapsible_content">
                 <p>
                     This page will list useful sites. It may be empty for a bit.
                     Also check out <a href="/pages/rec_assets_sites.html">Recommended Assets Sites</a>.
                 </p>
-            </div>
-        </div>
+            </section>
+        </article>
 
         <div class="flex-break"></div>
 
-        <div class="info_container collapsible">
-            <div class="info_title collapsible_toggle">
+        <article class="info_container collapsible">
+            <header class="info_title collapsible_toggle">
                 <h1>Programing</h1>
-            </div>
-            <div class="info_content collapsible_content">
+            </header>
+            <section class="info_content collapsible_content">
                 <ul>
                     <li><a href="https://www.w3schools.com/">W3schools</a></li>
                     <li><a href="https://www.geeksforgeeks.org/">Geeksforgeeks</a></li>
                     <li><a href="https://developer.mozilla.org/">MDN(Mozilla Developer Network)</a></li>
                 </ul>
-            </div>
-        </div>
+            </section>
+        </article>
 
-    </div>
+    </main>
 
     <script type="module" src="/scripts/default_page.js"></script>
 

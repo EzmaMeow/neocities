@@ -93,6 +93,20 @@ a {
 	z-index: -1;
 }
 
+background {
+	background-color: #3665E7;
+	image-rendering: pixelated;
+
+	background-image: url(assets/background.webp);
+	background-repeat: repeat;
+	background-position: center top;
+
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+}
+
 .circle-image {
 	width: 64px;
 	height: 64px;

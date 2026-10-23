@@ -16,74 +16,75 @@
 
 <body>
 
-<!-- NAVBAR START -->
-<div id="nav">
-    <ul>
-        <li><a href="/index.html"><span id="index-tab">&#8962</span></a></li>
-        <li>
-            <details id="pages-nav" class="nav-tab">
-                <summary id="pages-tab" class="active">Pages</summary>
-                <a href="/pages/about.html"><span id="about-tab" class="active">About</span></a>
-                <a href="/pages/notepage.html"><span id="notepage-tab">Notepage</span></a>
-                <a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
-                <a href="/pages/sitemap.html"><span id="sitemap-tab">Sitemap</span></a>
-            </details>
-        </li>
-        <li>
-            <details id="posts-nav" class="nav-tab">
-                <summary id="posts-loader-tab">Posts</summary>
-                <a href="/pages/posts.html"><span id="posts-tab">Posts</span></a>
-                <a href="/pages/media.html"><span id="media-tab">Media</span></a>
-                <a href="/pages/lore.html"><span id="lore-tab">Lore</span></a>
-            </details>
-        </li>
-        <li>
-            <details id="games-nav" class="nav-tab">
-                <summary id="games-tab">Games</summary>
-                <a href="/games/fishing/fishing.html"><span id="fishing-tab">Fishing</span></a>
-            </details>
-        </li>
-    </ul>
-</div>
-<!-- NAVBAR END -->
+	<!-- NAVBAR START -->
+	<nav id="nav">
+		<ul>
+			<li><a href="/index.html"><span id="index-tab">&#8962</span></a></li>
+			<li>
+				<details id="pages-nav" class="nav-tab">
+					<summary id="pages-tab" class="active">Pages</summary>
+					<a href="/pages/about.html"><span id="about-tab" class="active">About</span></a>
+					<a href="/pages/notepage.html"><span id="notepage-tab">Notepage</span></a>
+					<a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
+					<a href="/pages/sitemap.html"><span id="sitemap-tab">Sitemap</span></a>
+				</details>
+			</li>
+			<li>
+				<details id="posts-nav" class="nav-tab">
+					<summary id="posts-loader-tab">Posts</summary>
+					<a href="/pages/posts.html"><span id="posts-tab">Posts</span></a>
+					<a href="/pages/media.html"><span id="media-tab">Media</span></a>
+					<a href="/pages/lore.html"><span id="lore-tab">Lore</span></a>
+				</details>
+			</li>
+			<li>
+				<details id="games-nav" class="nav-tab">
+					<summary id="games-tab">Games</summary>
+					<a href="/games/fishing/fishing.html"><span id="fishing-tab">Fishing</span></a>
+				</details>
+			</li>
+		</ul>
+	</nav>
+	<!-- NAVBAR END -->
 
-	<div id="background">
-	</div>
+	<background></background>
 
-	<div id="body_container">
+	<main id="body_container">
 
-		<div class="container text-center">
+		<form class="container text-center">
 			<!-- RADIO START -->
-<div id='radio-player'>
-    <b>Radio Player</b><br>
-    <audio id="radioAudio" preload="none"></audio>
-    <button id="toggleRadio">Waiting</button>
-    <details>
-        <summary>Radio Options</summary><br>
-        <label>Use Local Storage: <input type="checkbox" class="radioOptions" data-property="useLocalStorage"
-                title="Uses localStorage to store options untill cleared."></label><br>
-        <label>Autoplay: <input type="checkbox" class="radioOptions" data-property="autoplay"></label><br><br>
-        Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions" data-property="volume"
-            style="width: 75%;"><br><br>
-        Url: <input type="text" id="streamUrl"
-            placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
-            value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
-            class="radioOptions" data-property="src">
-        <button id="radioDefaultStation">⟲</button>
-    </details>
-</div>
-<!-- RADIO END -->
-		</div>
+			<section id='radio-player'>
+				<b>Radio Player</b><br>
+				<audio id="radioAudio" preload="none"></audio>
+				<button id="toggleRadio">Waiting</button>
+				<details>
+					<summary>Radio Options</summary><br>
+					<label>Use Local Storage: <input type="checkbox" class="radioOptions"
+							data-property="useLocalStorage"
+							title="Uses localStorage to store options untill cleared."></label><br>
+					<label>Autoplay: <input type="checkbox" class="radioOptions"
+							data-property="autoplay"></label><br><br>
+					Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions"
+						data-property="volume" style="width: 75%;"><br><br>
+					Url: <input type="text" id="streamUrl"
+						placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
+						value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
+						class="radioOptions" data-property="src">
+					<button id="radioDefaultStation">⟲</button>
+				</details>
+			</section>
+			<!-- RADIO END -->
+		</form>
 		<div class="flex-break"></div>
 
-		<div class="info_container collapsible">
-			<div class="profile_icon">
+		<article class="info_container collapsible">
+			<figure class="profile_icon">
 				<img src="/assets/anim_profile_pic.webp" alt="profile image" class="circle-image">
-			</div>
-			<div class="info_title collapsible_toggle">
+			</figure>
+			<header class="info_title collapsible_toggle">
 				<h1>About Me</h1>
-			</div>
-			<div class="info_content collapsible_content" id='about_me'>
+			</header>
+			<section class="info_content collapsible_content" id='about_me'>
 				<p>
 					I am an <del>old</del> adult <del>cat</del>girl who likes to mess with computers too much.
 					What I may post here may not always seem to be real nor do I care to prove if it is either fact or
@@ -95,18 +96,16 @@
 					I find enjoyment in solving problems and creating things <del>though I seem to enjoy hoarding loot
 						and farming/fishing</del>.
 				</p>
-			</div>
-			<div class="info_links collapsible_content" id='links'>
-			</div>
-		</div>
+			</section>
+		</article>
 
 		<div class="flex-break"></div>
 
-		<div class="info_container collapsible">
-			<div class="info_title collapsible_toggle">
+		<article class="info_container collapsible">
+			<header class="info_title collapsible_toggle">
 				<h1>About This Site</h1>
-			</div>
-			<div class="info_content collapsible_content">
+			</header>
+			<section class="info_content collapsible_content">
 				<p>
 					This is my <del>more</del> personal website where I am more free to post nonsense.
 					<a href="https://ezmameow.github.io/">My Github pages</a> will have more stuff about my projects
@@ -128,21 +127,25 @@
 					though there will be less content. The theme may change for projects pages since they will
 					act as subsites off of this.<br>
 					<br>
-					Note: My code may be either messy or clean, but everything should be reable either from the browser inspector or
-					the sitemap. I tend to solve problems first then worry about cleaning things up in the distanct future, yet I try to keep things simple. 
-					I just lack proper docs for things mostly since things tend to change often and I get lazy with updating. <del>I do abuse comments, but best to ignore them since they are more like personal notes and may not make sence to others.</del>
+					Note: My code may be either messy or clean, but everything should be reable either from the browser
+					inspector or
+					the sitemap. I tend to solve problems first then worry about cleaning things up in the distanct
+					future, yet I try to keep things simple.
+					I just lack proper docs for things mostly since things tend to change often and I get lazy with
+					updating. <del>I do abuse comments, but best to ignore them since they are more like personal notes
+						and may not make sence to others.</del>
 
 				</p>
-			</div>
-		</div>
+			</section>
+		</article>
 
 		<div class="flex-break"></div>
 
-		<div class="info_container collapsible">
-			<div class="info_title collapsible_toggle">
+		<article class="info_container collapsible">
+			<header class="info_title collapsible_toggle">
 				<h1>Links</h1>
-			</div>
-			<div class="info_content collapsible_content">
+			</header>
+			<section class="info_content collapsible_content">
 				<div class='text-center'>
 
 					<h4>Inner Links:</h4>
@@ -165,10 +168,10 @@
 					<a href="https://na.finalfantasyxiv.com/lodestone/character/55585435/">FF14(Ezma Mewrilah)</a><br>
 					<br>
 				</div>
-			</div>
-		</div>
+			</section>
+		</article>
 
-	</div>
+	</main>
 
 	<script type="module" src="/scripts/default_page.js"></script>
 

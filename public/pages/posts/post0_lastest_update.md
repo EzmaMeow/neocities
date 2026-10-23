@@ -6,6 +6,13 @@ Notices (Updated 8/14/26)
 - Primary PC not working(~8/11/26)
 
 [details]
+[summary] Log (10/23/26) [/summary]
+I am still slowly cleaning up the canvas verion of the fishing game offsite. The lastest update is just changing the tags used in the pages (except fishing since I am lazy). Also added some of the tags to the markup allowed tags, but I have yet to make use of them but I feel they could be useful in rare cases.
+
+Note: The tag use is probably not the best, but I think it better than using only div with ids meow.
+[/details]
+
+[details]
 [summary] Log (10/12/26) [/summary]
 I took a break after slow working on the conversion of the fishing game. All progress is still local with some back up to my github.
 Today I was able to mirror most stuff in canvas, but the design of the fishing game is kind of rushed and too much stuff was dependent on how the level implement it.

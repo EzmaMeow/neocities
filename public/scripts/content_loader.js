@@ -53,18 +53,30 @@ export class PostManager {
     }
     getPostHtml(content = '', postData = {}, ext = '') {
         if (ext === 'html') {
-            return `<div class="info_container collapsible">${content}</div>`
+            return `<article class="info_container collapsible">${content}</article>`
         }
-        return `
-<div class="info_container collapsible">
-	<div class="info_title collapsible_toggle">
-		<h1>${postData.title || ''}</h1>
-	</div>
-	<div class="info_content ${this.type} collapsible_content ">
-        ${content}
-	</div>
-</div>
-        `
+        if (this.type === 'media') {
+            return (
+                `<figure class="info_container collapsible">
+                    <figcaption class="info_title collapsible_toggle">
+                        <h1>${postData.title || ''}</h1>
+                    </figcaption>
+                    <section class="info_content ${this.type} collapsible_content ">
+                        ${content}
+                    </section>
+                </figure>`
+            )
+        }
+        return (
+            `<article class="info_container collapsible" >
+	            <header class="info_title collapsible_toggle">
+		            <h1>${postData.title || ''}</h1>
+	            </header>
+	            <section class="info_content ${this.type} collapsible_content ">
+                    ${content}
+	            </section>
+            </article>`
+        )
     }
     getPostContent(rawPost = '', ext = '') {
         if (ext === 'html') {
@@ -72,7 +84,7 @@ export class PostManager {
             return doc.body.innerHTML;
         }
         let content = rawPost.replace(this.postDataExpression, "");
-        if (ext === 'md' || ext === 'markdown'){
+        if (ext === 'md' || ext === 'markdown') {
             content = markdownToHtml(content)
         }
         content = markupParser.parseText(content)
@@ -96,7 +108,7 @@ export class PostManager {
         const postData = this.getPostData(rawPost);
         const postContent = this.getPostContent(rawPost, ext);
         const postHtml = this.getPostHtml(postContent, postData, ext);
-        container.innerHTML = `${container.innerHTML} ${postHtml}`
+        container.innerHTML = `${container.innerHTML} ${postHtml} `
     }
     async loadPage(files = [], page = this.page, max_posts = this.max_posts || 1, container = this.container) {
         if (!container || !files) { return }
