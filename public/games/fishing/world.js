@@ -21,7 +21,10 @@ export class World {
         return results
     }
     update_ppu(screen_width = 0.0, screen_height = 0.0, native_width = 0.0, native_height = 0.0) {
+        console.log('ignoring ppu update due to the conversion to canvas')
+        return
         this.#ppu[0] = screen_width / native_width;
         this.#ppu[1] = screen_width / native_width;
+        console.log(['mew:', this.#ppu])
     }
 }

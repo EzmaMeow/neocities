@@ -1,9 +1,14 @@
 import { Entity } from './entity.js'
+import assetManager from "./canvas_game/asset_manager.js"
+import renderObjectManager from "./canvas_game/render_object_manager.js"
+import { ImageRenderObject } from "./canvas_game/image_render_object.js"
+import { CAPABILITY_FLAGS } from "./canvas_game/render_object.js"
+import navigationManager from "./canvas_game/navigation_manager.js"
 
 export class Fish extends Entity {
-    move_to = [0.0, 0.0];
-    direction = [0.0, 0.0];
-    velocity = [0.0, 0.0];
+    move_to = [0.0, 0.0, 0.0];
+    direction = [0.0, 0.0, 0.0];
+    velocity = [0.0, 0.0, 0.0];
     base_speed = 8.0;
     //depth and opacity are related, but not the same
     //for example if fish base opacity is .8, then it should
@@ -13,13 +18,13 @@ export class Fish extends Entity {
     type = {}
     weight_ratio = 1.0;
     difficulty = 0.0;
-    get min_weight(){
+    get min_weight() {
         return this.type.min_weight || 0.001;
     }
-    get max_weight(){
+    get max_weight() {
         return this.type.max_weight || 1.000;
     }
-    get weight(){
+    get weight() {
         //console.log(`${min_weight} ${max_weight} ${this.weight_ratio}`)
         return this.min_weight + (this.max_weight - this.min_weight) * this.weight_ratio;
     } //used as static info about the fish povided by json
@@ -28,24 +33,94 @@ export class Fish extends Entity {
     }
     set depth(value = 1.0) {
         this._depth = value;
-        this.image.style.zIndex = Math.floor(this._depth * 10);
         this.update_opacity();
     }
     update_opacity() {
-        //can not use private depth here due to call order
-        //would need to rebuild  how things are updated so the first sync dose not happen in const if want to use private depth
-        this.image.style.opacity = this.depth * this.opacity;
+        if (this.sprite) {
+            this.sprite.opacity = Math.min(Math.max(this.depth * this.opacity, 0), 1);
+        }
     }
     get_speed() {
+        if (this.sprint) {
+            return this.base_speed * this.sprint;
+        }
         return this.base_speed;
     }
-    update_animation(delta = 1.0) {
 
-        if (this.velocity[0] < 0) {
-            this.image.style.transform = 'scaleX(-1)';
+    onCaught;
+    onEscaped;
+    onBite;
+
+    onClick(event) {
+        this.bite(event)
+    }
+    caught(event) {
+        if (this.onCaught) {
+            this.onCaught(event)
         }
-        else {
-            this.image.style.transform = 'scaleX(1)';
+    }
+    escape(event) {
+        if (this.onEscaped) {
+            this.onEscaped(event)
+        }
+        this.flee()
+    }
+    catch(event) {
+        //run logic to see if it Caught or Escaped
+        if (!event) {
+            event = {}
+        }
+        if (!event.fish) { event.fish = this }
+        event.catchRoll = Math.random();
+        event.difficulty = this.difficulty * 0.5 + (1.0 - this.depth) * 0.75; //0.75 is an offset so deep fishes can be impossible (under 0.5 but in this case 0.4-0.3)
+        if (event.catchRoll * (event.catchBonus || 1) <= event.difficulty * 2) {
+            event.catchSucess = false;
+            this.escape(event)
+            return
+        }
+        event.catchSucess = true;
+        this.caught(event);
+    }
+    //bite happens on click
+    bite(event) {
+        event.fish = this;
+        //starts the logic after taking the bait
+        if (this.onBite) {
+            this.onBite(event)
+        }
+        this.catch(event)
+    }
+    flee() {
+        this.dive = 0.0;
+        this.getRandomPoint(this.move_to);
+        //navigationManager.getRandomPoint(this.width, this.height,1, this.move_to)
+        this.ai_state = 'dive';
+        this.sprint = 2;
+
+    }
+
+    //get random point in the default region
+    //this could be more compucated depending on how regions are handled.
+    getRandomPoint(results =[0,0,0]){
+        const region = navigationManager.getRegion('bounds');
+        navigationManager.getRandomPoint(region,this.width, this.height,0, results)
+        this.move_to[2]=this.dive;
+        return results
+    }
+
+
+    update_animation(delta = 1.0) {
+        if (this.sprite) {
+            if (typeof this.sprite.frame === "undefined") { this.sprite.frame = 0 }
+            if (this.velocity[0] < 0) {
+                this.sprite.textureY = 0;
+            }
+            else {
+                this.sprite.textureY = 1;
+            }
+            this.sprite.frame += delta;
+            let step = Math.round(this.sprite.frame * 4)
+            this.sprite.textureX = step % 4
         }
 
     }
@@ -63,20 +138,23 @@ export class Fish extends Entity {
                 if (this.depth <= 0.5) {
                     this.dive = Math.random() * 0.5 + 0.5;
                     this.ai_state = 'surface'
-                    this.world.random_point_in_nav_area(this.width, this.height, this.move_to)
+                    this.getRandomPoint(this.move_to);
+                    //navigationManager.getRandomPoint(this.width, this.height,1, this.move_to)
                     return
 
                 }
                 else {
                     this.dive = Math.random() * 0.5
                     this.ai_state = 'dive'
-                    this.world.random_point_in_nav_area(this.width, this.height, this.move_to)
+                    this.getRandomPoint(this.move_to);
+                    //navigationManager.getRandomPoint(this.width, this.height,1, this.move_to)
                     return
 
                 }
             }
             else {
-                this.world.random_point_in_nav_area(this.width, this.height, this.move_to)
+                this.getRandomPoint(this.move_to);
+                //navigationManager.getRandomPoint(this.width, this.height,1, this.move_to)
                 this.ai_state = 'swiming';
                 return
                 //console.log('set to swim ', this.move_to);
@@ -101,12 +179,14 @@ export class Fish extends Entity {
             }
             if (Math.abs(this.move_to[0] - this.position[0]) <= 1 && Math.abs(this.move_to[1] - this.position[1])
             ) {
-                this.world.random_point_in_nav_area(this.width, this.height, this.move_to)
+                this.getRandomPoint(this.move_to);
+                //navigationManager.getRandomPoint(this.width, this.height,1, this.move_to)
             }
 
         }
         else if (this.ai_state === 'dive') {
             if (this.depth <= this.dive || this.depth <= 0.0) {
+                this.sprint = 1;
                 this.ai_state = 'swiming';
                 return
             }
@@ -115,7 +195,8 @@ export class Fish extends Entity {
             }
             if (Math.abs(this.move_to[0] - this.position[0]) <= 1 && Math.abs(this.move_to[1] - this.position[1])
             ) {
-                this.world.random_point_in_nav_area(this.width, this.height, this.move_to)
+                this.getRandomPoint(this.move_to);
+                //navigationManager.getRandomPoint(navigationManager.getRegion('bounds'),this.width, this.height,1, this.move_to)
             }
 
         }
@@ -129,12 +210,16 @@ export class Fish extends Entity {
 
     }
     update(delta = 1.0) {
-        if (!world) { return }
+        //needed to have the global transfrom caculated on update if dirty here since it was not updating before (probably too dependent on the getter logic)
+        //might be able to remove it and update it on certain changes, but here allow it to run once per update at the cost of when it is called.
+        //so may be better to have a few update functions base on order like pre render and post render (and pre physics and post pyshics)
+        super.update(delta)
         const position = this.position;
         const speed = this.get_speed()
         this.ai(delta);
 
         if (this.ai_state === 'idle' || this.ai_state === 'wait') {
+            this.update_animation(delta);
             return
         }
 
@@ -145,16 +230,14 @@ export class Fish extends Entity {
 
         this.direction[0] /= length;
         this.direction[1] /= length;
-        this.velocity[0] = this.direction[0] * speed * this.world.ppu[0] * this.world.world_scale[0] * delta;
-        this.velocity[1] = this.direction[1] * speed * this.world.ppu[1] * this.world.world_scale[1] * delta;
-        this.set_position(position[0] + this.velocity[0], position[1] + this.velocity[1]);
-        if (length > 0.2) {
-            this.update_animation(delta);
-        }
-
-
+        this.velocity[0] = this.direction[0] * speed  * delta;
+        this.velocity[1] = this.direction[1] * speed  * delta;
+        this.set_position(position[0] + this.velocity[0], position[1] + this.velocity[1], this.depth);
+        //if (length > 0.2) {
+        this.update_animation(delta);
     }
-    save(){
+
+    save() {
         const data = super.save();
         data.depth = this.depth;
         data.base_speed = this.base_speed;
@@ -181,8 +264,22 @@ export class Fish extends Entity {
             this.weight_ratio = parseFloat(data.weight_ratio) || 1.0;
         }
     }
-    //const build the nessary peices while setup assign world related data
-    constructor(data = {}, world = undefined) {
-        super(data, world);
+
+    async ready() {
+        const spriteImage = await assetManager.load("/assets/fish.json");
+        this.sprite = new ImageRenderObject(spriteImage, {
+            width: 12,
+            height: 12,
+            capabilityFlags: CAPABILITY_FLAGS.CLICKABLE,
+            //need to use ()=> since function will bind this to sprite
+            onClick: (event) => {
+                if (this.onClick) {
+                    this.onClick(event || {})
+                }
+            }
+        })
+        renderObjectManager.add(this.sprite)
+        this.addChild(this.sprite)
+
     }
 }

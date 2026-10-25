@@ -1,126 +1,158 @@
 import { World } from './world.js'
 import { Level } from './level.js'
 import { Fish } from './fish.js'
+import renderObjectManager from "./canvas_game/render_object_manager.js"
+import assetManager from "./canvas_game/asset_manager.js"
+import { Renderer } from "./canvas_game/renderer.js"
+import { OrthogonalCamera } from "./canvas_game/cameras.js"
+import navigationManager from "./canvas_game/navigation_manager.js"
+import stateManager from "./canvas_game/state_manager.js"
+import audioManager from "./canvas_game/audio_manager.js"
+
+
+const renderer = new Renderer();
+//256 is the background size since the background was not scaled. so the background need to be resized or scaled up
+//or everything in the world needs to be scaled base of the background size. may be better to 4x times the background so
+//fish can be scaledby pixels with a 4x boundry
+const camera = new OrthogonalCamera(undefined, 256, 256)
+renderer.renderObjectManager = renderObjectManager;
+renderer.camera = camera
+
+//TODO:
+//Should keep the class as a way to set up the state though a object could be used as well
+//most of the elements should be const above unless the elemenet are expeced to be changed
+//though this script should be run when added to html. though allowing the object be modified after
+//would allow more control
 
 //will move the game logic in the class and have the html create and start the game
 //so create, register, and then load, also should have a start function that start 
 //the loop. same with a pause
 export class Fishing_Game {
-    #sound_volume = 0.25; get sound_volume() { return this.#sound_volume }
-    set sound_volume(value) {
-        this.#sound_volume = value;
-        this.update_sounds();
+    //check to see if this is needed. currently trying to move sound related stuff to the soundVolumnContoller
+    //or in other words moving the volumn to to element events
+    //#sound_volume = 0.25;
+    //get sound_volume() {
+    //    return this.#sound_volume
+    //}
+    //set sound_volume(value) {
+    //    this.#sound_volume = value;
+    //    this.updateSounds();
+    //    console.log('meow i am called?')
+    //}
+
+    //NOTE: save locally may be part of the client state and a setting in the state manager.
+    //it is for js html local storage use and might not be needed and a save flag could replace it
+    //since the save data may live in ram. session storage could be useful for offloading nessary states
+    //to free ram. in short the flag should change to an int and the name change to represent how the data should be
+    //save if at all. none(disallow offloading states), session only, local, or other formats
+    #save_locally = false;
+    get save_locally() {
+        return this.#save_locally
     }
-    #save_locally = false; get save_locally() { return this.#save_locally }
     set save_locally(value) {
         this.#save_locally = value;
         if (this.elements.save_locally) {
             this.elements.save_locally.checked = value;
         }
+        stateManager.saveLocally = value
     }
+
     #current_time = 0;
     #last_time = 0;
-    #paused = false; get paused() { return this.#paused; }
-    #started = false; get started() { return this.#started; }
-    #level; get level() { return this.#level; }
-    #world; get world() { return this.#world; }
+    //NOTE: paused location may or may not need to be change. as long as it is part of the game loop, it should be fine (though an interface my be needed to check if paused) 
+    #paused = false;
+    get paused() {
+        return this.#paused;
+    }
+    #started = false;
+    get started() {
+        return this.#started;
+    }
+    #level; get level() {
+        return this.#level;
+    }
+    #world; get world() {
+        return this.#world;
+    }
+    //save key is not needed, but a key that represent the game namespace may be useful.
     save_key = 'fishing_save_state';
     save_version = 1;
     dirty_save_state = false;
+    //most of the rod logic should stay here or in it own object. how the fish respond should be move to the fish object and simplfy the callbacks
     catch_bonus = 0.5; //this is to allow one to wait between catches
     //should have them assign later
+    //NOTE: this might be kept, but it may be better to have them at class level since assets are going to be stored in the asset manager
+    //so controll elements will be the only ones that will manage here(though assests may still be stored for quicker acess)
     elements = {
         sound_volume: undefined,
         splash_sound: undefined,
         quick_splash_sound: undefined,
         score: undefined
     }
-    update_sounds() {
-        if (this.elements.sound_volume) {
-            if (Number(this.elements.sound_volume.value) !== this.sound_volume) {
-                this.elements.sound_volume.value = this.sound_volume;
-            }
+    //todo: have the sounds stored in a array and loop it to set the sound volumn. could also make callables that dose that as well, but that can be harder to manage
+    updateSounds() {
+        let soundVolume = 1;
+        if (this.soundVolumnController) {
+            soundVolume = this.soundVolumnController.value;
+            audioManager.volume = soundVolume = this.soundVolumnController.value;
         }
-        if (this.elements.splash_sound) {
-            this.elements.splash_sound.volume = this.sound_volume;
+        if (this.soundsEffects.splash) {
+            this.soundsEffects.splash.volume = soundVolume;
         }
-        if (this.elements.quick_splash_sound) {
-            this.elements.quick_splash_sound.volume = this.sound_volume;
+        if (this.soundsEffects.quickSplash) {
+            this.soundsEffects.quickSplash.volume = soundVolume;
         }
+        
     }
-    //NOTE: could store them in an object and use it ref. this would be ideal so no objects are being created, but require everything to pull from the save state.
-    get_save_data() {
-        return {
-            save_version: this.save_version,
-            save_locally: this.save_locally,
-            sound_volume: this.sound_volume,
-            score: this.score
-        }
+    save() {
+        //need to set the state properties to sync for now 
+        //since old system did not store a state and store these values in itself
+        const client = stateManager.getState('client')
+        const player = stateManager.getState('player')
+
+        //also save version may need to be save on all state base on what logic change. for now verion is not really used
+        client.save_version = this.save_version;
+        client.save_locally = this.save_locally;
+        client.sound_volume = this.sound_volume;
+        player.fishingScore = this.score;
+
+        stateManager.saveState('client')
+        stateManager.saveState('player')
+
     }
-    save(save_key = this.save_key) {
-        let save_data = this.get_save_data();
-        save_data = JSON.stringify(save_data);
-        if (this.save_locally) {
-            localStorage.setItem(save_key, save_data)
-        }
-        else {
-            sessionStorage.setItem(save_key, save_data)
-            //purge the local storage catch if exists since
-            //we only update it if allowed which may cause issue if one is left (session would be ignored)
-            //also would act as a easy way to clean it up at the risk of dataloss (need a way to export state if it needs to be protected)
-            if (save_key in localStorage) {
-                localStorage.removeItem(save_key);
-            }
-        }
-    }
-    //load from storage or disk/string/file(if it ever needed)
-    fetch_save_state(save_key = this.save_key, default_state = {}) {
-        let save_state = null;
-        if (save_key) {
-            save_state = localStorage.getItem(save_key)
-            if (save_state === null) {
-                save_state = sessionStorage.getItem(save_key)
-            }
-        }
-        if (save_state === null) {
-            save_state = default_state
-        }
-        else {
-            save_state = JSON.parse(save_state);
-        }
-        return save_state;
-    }
-    load(save_key = this.save_key, default_state = {}, use_save_key = true) {
-        const save_state = this.fetch_save_state(save_key, default_state)
-        if (use_save_key) {
-            this.save_key = save_key
-        }
-        if (save_state.save_version && this.save_version != save_state.save_version) {
-            console.log(`save state is a diffrent version. game: ${this.save_version}, save: ${save_state.save_version}`)
-        }
-        //below will load the data
-        this.save_locally = save_state.save_locally ? true : false;
-        this.sound_volume = parseFloat(save_state.sound_volume) || 0.25;
-        this.score = save_state.score || 0;
+    load() {
+
+        const client = stateManager.loadState('client') || {}
+        const player = stateManager.loadState('player') || {}
+
+        this.save_locally = client.save_locally ? true : false;
+        this.sound_volume = parseFloat(client.sound_volume) || 0.25;
+        this.score = player.fishingScore || 0;
         if (this.score > 0 && this.elements.score) {
             this.elements.score.innerHTML = `Score: ${this.score}`;
         }
     }
-    register_elements(element_info = {}) {
+    async register_elements(element_info = {}) {
+        this.soundVolumnController = document.getElementById(element_info.sound_volume || 'sound_volume')
+        this.soundsEffects = {
+            splash: await assetManager.load('/assets/splash.wav', 'splashSound'),
+            quickSplash: await assetManager.load('/assets/quick_splash.wav', 'quickSplashSound')
+        }
         this.elements = {
             save_locally: document.getElementById(element_info.save_locally || 'fishing_save_locally'),
-            sound_volume: document.getElementById(element_info.sound_volume || 'sound_volume'),
-            splash_sound: document.getElementById(element_info.splash_sound || 'splash_sound'),
-            quick_splash_sound: document.getElementById(element_info.quick_splash_sound || 'quick_splash_sound'),
-            score: document.getElementById(element_info.score || 'score')
+            score: document.getElementById(element_info.score || 'score'),
+            gameCanvas: document.getElementById(element_info.gameCanvas || 'gameCanvas')
+
         }
-        this.update_sounds();
-        if (this.elements.sound_volume) {
-            this.elements.sound_volume.addEventListener('change', (event) => {
-                this.sound_volume = parseFloat(event.target.value);
-                this.elements.splash_sound.pause();
-                this.elements.splash_sound.currentTime = 0;
-                this.elements.splash_sound.play();
+        console.log(this.elements)
+        camera.viewport = this.elements.gameCanvas
+        this.updateSounds();
+        if (this.soundVolumnController) {
+            this.soundVolumnController.addEventListener('change', (event) => {
+                this.soundVolume = parseFloat(event.target.value);
+                const sound = this.soundsEffects.splash;
+                audioManager.volume = parseFloat(event.target.value);
+                audioManager.playAudioElement(sound,'soundEffects')
                 this.dirty_save_state = true;
             })
         }
@@ -149,9 +181,14 @@ export class Fishing_Game {
             this.save();
             this.dirty_save_state = false;
         }
-        if (this.catch_bonus < 1.25){
+        if (this.catch_bonus < 1.25) {
             this.catch_bonus += delta
         }
+        if (this.elements.gameCanvas) {
+            renderer.render(this.elements.gameCanvas)
+        }
+
+
         requestAnimationFrame(() => this.update());
     }
     pause() {
@@ -169,17 +206,24 @@ export class Fishing_Game {
         this.update();
     }
     update_fish(fish, depth = 0) {
-        const random_point = [0.0, 0.0];
-        this.level.world.random_point_in_nav_area(fish.width, fish.height, fish.move_to)
-        this.level.world.random_point_in_nav_area(fish.width, fish.height, random_point)
+        const random_point = [0.0, 0.0, 0.0];
+
+        const region = navigationManager.getRegion('bounds');
+        if (region) {
+            navigationManager.getRandomPoint(region, fish.width, fish.height, 0, fish.move_to)
+            navigationManager.getRandomPoint(region, fish.width, fish.height, 0, random_point)
+        }
+
+        //this.level.world.random_point_in_nav_area(fish.width, fish.height, fish.move_to)
+        //this.level.world.random_point_in_nav_area(fish.width, fish.height, random_point)
         const fish_types = Object.keys(this.fish_data);
         fish.type = this.fish_data[fish_types[Math.floor(Math.random() * fish_types.length)]] || {};
         fish.weight_ratio = Math.random();
         const weight = fish.type.min_weight + (fish.type.max_weight - fish.type.min_weight) * fish.weight_ratio;
-        const size = weight<=10 ? 0.25 + (0.75 - 0.25) * weight/10.0 :0.75 + (3.0 - 0.75) * (weight-10)/1000.0;
-        fish.difficulty = size/3.0;
+        const size = weight <= 10 ? 0.25 + (0.75 - 0.25) * weight / 10.0 : 0.75 + (3.0 - 0.75) * (weight - 10) / 1000.0;
+        fish.difficulty = size / 3.0;
         fish.set_position(random_point[0], random_point[1]);
-        fish.base_speed = Math.random() * 10 + 5 + size*2;
+        fish.base_speed = Math.random() * 10 + 5 + size * 2;
         fish.set_scale(
             Math.random() + size,
             Math.random() + size
@@ -190,9 +234,12 @@ export class Fishing_Game {
     }
     fish_caught(catch_data = {}) {
         const random_point = [0.0, 0.0];
-        this.elements.splash_sound.pause();
-        this.elements.splash_sound.currentTime = 0;
-        this.elements.splash_sound.play();
+        const sound = this.soundsEffects.splash;
+        if (!sound.paused && !sound.ended) {
+            sound.pause();
+            sound.currentTime = 0;
+        };
+        sound.play();
         if (!this.inventory) {
             this.inventory = new Map();
         }
@@ -214,7 +261,7 @@ export class Fishing_Game {
             //be config to handle display that correctly
             const total_weight = catch_data.fish.weight + (catch_data.fish.min_weight + (catch_data.fish.max_weight - catch_data.fish.min_weight) * meta.weight_ratio)
             meta.weight_ratio = (total_weight - catch_data.fish.min_weight) / (catch_data.fish.max_weight - catch_data.fish.min_weight);
-           // meta.amount += 1;
+            // meta.amount += 1;
             meta.total_catches += 1;
             if (!meta.min_weight_ratio) {
                 meta.min_weight_ratio = catch_data.fish.weight_ratio
@@ -227,7 +274,7 @@ export class Fishing_Game {
             }
         }
         //console.log(this.inventory)
-        this.score += Math.max(Math.floor(catch_data.fish.difficulty*100), 1)
+        this.score += Math.max(Math.floor(catch_data.fish.difficulty * 100), 1)
         this.elements.score.innerHTML = `Score: ${this.score}`;
         //console.log(catch_data.fish.type, ' ', catch_data.fish.weight, 'kg')
         this.update_fish(catch_data.fish);
@@ -236,34 +283,23 @@ export class Fishing_Game {
         this.on_fish_caught();
     }
     failed_catch(catch_data = {}) {
-        this.elements.quick_splash_sound.pause();
-        this.elements.quick_splash_sound.currentTime = 0;
-        this.elements.quick_splash_sound.play();
+        const sound = this.soundsEffects.quickSplash;
+        if (!sound.paused && !sound.ended) {
+            sound.pause();
+            sound.currentTime = 0;
+        };
+        sound.play();
         this.catch_bonus = 0.25;
     }
-    fish_clicked(event, fish) {
-        const catch_data = {
-            fish: fish,
-            catch_roll: Math.random(),
-            difficulty: fish.difficulty*0.5 + (1.0 - fish.depth)*0.75 //0.75 is an offset so deep fishes can be impossible (under 0.5 but in this case 0.4-0.3)
-        }
-        if (catch_data.catch_roll*this.catch_bonus <= catch_data.difficulty*2) {   
-            catch_data.sucess = false;
-            this.failed_catch(catch_data) 
-            return
-        }
-        catch_data.sucess = true;
-        this.fish_caught(catch_data);
 
-    }
-    //todo: make this handle a promis properly by resolving it on_ready
+    //todo: make this handle a promiss properly by resolving it on_ready
     async start() {
         if (this.#started) { return }
         this.#started = true;
         this.#world = new World();
         this.#level = new Level(this.world);
 
-        this.level.on_ready = () => {
+        this.level.on_ready = async () => {
             const random_point = [0.0, 0.0];
             const fish_data = {
                 width: 16,
@@ -283,21 +319,35 @@ export class Fishing_Game {
                 //the fish update to do that
                 //fish_data.type = fish_types[Math.floor(Math.random() * fish_types.length)] || {};
                 //fish_data.weight_ratio = Math.random();
-                this.level.world.random_point_in_nav_area(fish_data.width, fish_data.height, random_point)
+                const region = navigationManager.getRegion('bounds');
+                if (region) {
+                    navigationManager.getRandomPoint(region, fish_data.width, fish_data.height, 0, random_point)
+                }
+                else { console.log('mewmew', navigationManager) }
+                //this.level.world.random_point_in_nav_area(fish_data.width, fish_data.height, random_point)
                 fish_data.x = random_point[0];
                 fish_data.y = random_point[1];
                 fish_data.base_speed = Math.random() * 8 + 8;
                 fish_data.scale_x = Math.random() * 1.5 + 0.5;
                 fish_data.scale_y = Math.random() * 1.5 + 0.5;
-                const fish = new Fish(fish_data, this.level.world)
+                const fish = await Fish.create(fish_data, this.level.world)
                 this.update_fish(fish, Math.random() * 0.5 + 0.5)
-                this.level.objects.push(fish);
+                this.level.addChild(fish)
+                //this.level.objects.push(fish);
                 //fish.depth = Math.random() * 0.5 + 0.5;
-                this.level.element.appendChild(fish.image);
-                fish.image.addEventListener("click", (event) => this.fish_clicked(event, fish));
+                //this.level.element.appendChild(fish.image);
+                //fish.image.addEventListener("click", (event) => this.fish_clicked(event, fish));
+                //for the canvas system, but probably should be handled better or well the actual fish catch logic should move
+                //to the fish and have the fish trigger a signal base on the resaults
+                //fish.onClick = (event) => this.fish_clicked(event, fish)
+                fish.onCaught=(event)=>{this.fish_caught(event)}
+                fish.onEscaped =(event)=>this.failed_catch(event)
+                fish.onBite=(event)=>{
+                    event.catchBonus =this.catch_bonus;
+                }
             }
         }
-        this.level.setup(
+        await this.level.setup(
             document.getElementById('world'),
             document.getElementById('level'),
             this.world
@@ -309,6 +359,23 @@ export class Fishing_Game {
             this.#current_time = performance.now();
             this.update();
         }
+        console.log(assetManager)
+        console.log(renderObjectManager)
+        if (this.elements.gameCanvas) {
+            const canvas = this.elements.gameCanvas;
+            const ctx = canvas.getContext('2d');
+            ctx.imageSmoothingEnabled = false;
+
+            canvas.addEventListener('click', function (event) {
+                const rect = canvas.getBoundingClientRect();
+
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+
+                renderObjectManager.onClick(x, y, Infinity, 10, camera)
+            })
+        }
+
     }
     constructor() {
         //for connecting to some window events related to pausing
@@ -327,14 +394,12 @@ export async function start_fishing_game(options = {}) {
     const game = new Fishing_Game();
     const save_key = options.save_key || 'fishing_save_state'
     game.register_elements(options.element_info || {})
-    if (options.saltwater) {
-        game.fish_data = await (await fetch('./data/saltwater_fish.json')).json();
-        Object.assign(game.fish_data, await (await fetch('./data/mixwater_fish.json')).json());
-    }
-    else {
-        game.fish_data = await (await fetch('./data/freshwater_fish.json')).json();
-        Object.assign(game.fish_data, await (await fetch('./data/mixwater_fish.json')).json());
-    }
+    const mixFishData = await assetManager.load("./data/mixwater_fish.json")
+    const fishData = options.saltwater ? await assetManager.load("./data/saltwater_fish.json"):await assetManager.load("./data/freshwater_fish.json");
+    //for reasons json files will have its contents either in data or content. text files might also behave this way. this is to prevent overriding the asset properties
+    //jsons that represnt a object like image as a atlas is expected to follow a patter, but also could have code to make sure it is followed
+    game.fish_data = fishData.content
+    Object.assign(game.fish_data, mixFishData.content);
     console.log(game.fish_data)
     game.load(save_key);
     game.start();

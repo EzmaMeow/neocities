@@ -1,0 +1,7 @@
+{
+    "src": "/assets/fish.png",
+    "textureAtlas": {
+        "rows": 4,
+        "columns": 2
+    }
+}

@@ -6,6 +6,18 @@ Notices (Updated 8/14/26)
 - Primary PC not working(~8/11/26)
 
 [details]
+[summary] Log (10/24/26) [/summary]
+I decided I needed to make an audio manager and then came close of converting to a audio context approach. I stop myself and just change the name oof play and stop to represent use for Audio(). One day I will work on a audio context system, but for now I only need a share space that manage a few different audio play and a way to restart them without sending out errors occasionly in the console.
+
+Also learn that I did not handle monkey patching the event listerners for the asset extended media elements, so I remove it for now, but dispose is still handled as an event. There seem to be a way to add custom event listerners, so I did a lazy way of adding it, but currenly I have no assets being disposed so it may be a while before I get to see if it actually works and if it as simple of dispatching a vaild event object (I mean it should, but I been around and know sometimes such things are too good to be true).
+
+Meow I still have to clean up more, but at this point it is moving things to their correct owners and deleting useless words. Oddly it still require me to be able to focus. Too much could break if I am not careful when reconnecting. I already broke the radio player for fishing (but it because the local server code is really out of date of the neocity one since it the local of the github page. I just fixed it(the initRadio was not being called))
+
+(Mew I decided to move the code to the local neocities location which means it will be push to the site. It is still very messy on the code side, but I think it should function almost)
+[/details]
+
+
+[details]
 [summary] Log (10/23/26) [/summary]
 I am still slowly cleaning up the canvas verion of the fishing game offsite. The lastest update is just changing the tags used in the pages (except fishing since I am lazy). Also added some of the tags to the markup allowed tags, but I have yet to make use of them but I feel they could be useful in rare cases.
 
