@@ -5,7 +5,11 @@
       "background.webp",
       "ezma_button.webp",
       "fish.gif",
-      "frame.webp"
+      "fish.json",
+      "fish.png",
+      "frame.webp",
+      "quick_splash.wav",
+      "splash.wav"
     ],
     "data": [
       "lore_map.json",
@@ -17,6 +21,20 @@
       {
         "fishing": [
           {
+            "canvas_game": [
+              "asset_manager.js",
+              "audio_manager.js",
+              "cameras.js",
+              "image_render_object.js",
+              "navigation_manager.js",
+              "node.js",
+              "render_lib.js",
+              "render_object.js",
+              "render_object_manager.js",
+              "renderer.js",
+              "scene_node.js",
+              "state_manager.js"
+            ],
             "data": [
               "freshwater_fish.json",
               "mixwater_fish.json",
@@ -47,6 +65,7 @@
       "media_wrapper.js",
       "random_generator.js",
       "sitemap.js",
+      "square_matrix_math.js",
       "storage.js"
     ],
     "pages": [
