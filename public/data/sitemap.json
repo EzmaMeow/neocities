@@ -12,9 +12,6 @@
       "splash.wav"
     ],
     "data": [
-      "lore_map.json",
-      "media_map.json",
-      "posts_map.json",
       "sitemap.json"
     ],
     "games": [
