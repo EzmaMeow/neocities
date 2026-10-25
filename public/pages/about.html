@@ -17,35 +17,35 @@
 <body>
 
 	<!-- NAVBAR START -->
-<nav id="nav">
-    <ul>
-        <li><a href="/index.html"><span id="index-tab">&#8962</span></a></li>
-        <li>
-            <details id="pages-nav" class="nav-tab">
-                <summary id="pages-tab" class="active">Pages</summary>
-                <a href="/pages/about.html"><span id="about-tab" class="active">About</span></a>
-                <a href="/pages/notepage.html"><span id="notepage-tab">Notepage</span></a>
-                <a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
-                <a href="/pages/sitemap.html"><span id="sitemap-tab">Sitemap</span></a>
-            </details>
-        </li>
-        <li>
-            <details id="posts-nav" class="nav-tab">
-                <summary id="posts-loader-tab">Posts</summary>
-                <a href="/pages/posts.html"><span id="posts-tab">Posts</span></a>
-                <a href="/pages/media.html"><span id="media-tab">Media</span></a>
-                <a href="/pages/lore.html"><span id="lore-tab">Lore</span></a>
-            </details>
-        </li>
-        <li>
-            <details id="games-nav" class="nav-tab">
-                <summary id="games-tab">Games</summary>
-                <a href="/games/fishing/fishing.html"><span id="fishing-tab">Fishing</span></a>
-            </details>
-        </li>
-    </ul>
-</nav>
-<!-- NAVBAR END -->
+	<nav id="nav">
+		<ul>
+			<li><a href="/index.html"><span id="index-tab">&#8962</span></a></li>
+			<li>
+				<details id="pages-nav" class="nav-tab">
+					<summary id="pages-tab" class="active">Pages</summary>
+					<a href="/pages/about.html"><span id="about-tab" class="active">About</span></a>
+					<a href="/pages/notepage.html"><span id="notepage-tab">Notepage</span></a>
+					<a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
+					<a href="/pages/sitemap.html"><span id="sitemap-tab">Sitemap</span></a>
+				</details>
+			</li>
+			<li>
+				<details id="posts-nav" class="nav-tab">
+					<summary id="posts-loader-tab">Posts</summary>
+					<a href="/pages/posts.html"><span id="posts-tab">Posts</span></a>
+					<a href="/pages/media.html"><span id="media-tab">Media</span></a>
+					<a href="/pages/lore.html"><span id="lore-tab">Lore</span></a>
+				</details>
+			</li>
+			<li>
+				<details id="games-nav" class="nav-tab">
+					<summary id="games-tab">Games</summary>
+					<a href="/games/fishing/fishing.html"><span id="fishing-tab">Fishing</span></a>
+				</details>
+			</li>
+		</ul>
+	</nav>
+	<!-- NAVBAR END -->
 
 	<background></background>
 
@@ -53,25 +53,27 @@
 
 		<form class="container text-center">
 			<!-- RADIO START -->
-<section id='radio-player'>
-    <b>Radio Player</b><br>
-    <audio id="radioAudio" preload="none"></audio>
-    <button id="toggleRadio">Waiting</button>
-    <details>
-        <summary>Radio Options</summary><br>
-        <label>Use Local Storage: <input type="checkbox" class="radioOptions" data-property="useLocalStorage"
-                title="Uses localStorage to store options untill cleared."></label><br>
-        <label>Autoplay: <input type="checkbox" class="radioOptions" data-property="autoplay"></label><br><br>
-        Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions" data-property="volume"
-            style="width: 75%;"><br><br>
-        Url: <input type="text" id="streamUrl"
-            placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
-            value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
-            class="radioOptions" data-property="src">
-        <button id="radioDefaultStation">⟲</button>
-    </details>
-</section>
-<!-- RADIO END -->
+			<section id='radio-player'>
+				<b>Radio Player</b><br>
+				<audio id="radioAudio" preload="none"></audio>
+				<button id="toggleRadio">Waiting</button>
+				<details>
+					<summary>Radio Options</summary><br>
+					<label>Use Local Storage: <input type="checkbox" class="radioOptions"
+							data-property="useLocalStorage"
+							title="Uses localStorage to store options untill cleared."></label><br>
+					<label>Autoplay: <input type="checkbox" class="radioOptions"
+							data-property="autoplay"></label><br><br>
+					Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions"
+						data-property="volume" style="width: 75%;"><br><br>
+					Url: <input type="text" id="streamUrl"
+						placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
+						value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
+						class="radioOptions" data-property="src">
+					<button id="radioDefaultStation">⟲</button>
+				</details>
+			</section>
+			<!-- RADIO END -->
 		</form>
 		<div class="flex-break"></div>
 
@@ -145,10 +147,13 @@
 					<p>Also my code could be used to learn from. I follow the idea that logic should be free for all and
 						expressionism should only be the one that should be copywritable,
 						yet I like my code to be under some opensource copywrite and currently mine is under LGPL-3.0
-						license. I have a bad habbit of picking it since it sound like it prevent the code from being close source and I probably will change it for certain code
-						that dose not need such protections (if I ever dedicate myself to making a framework, engine, or any tool or resource to be 'stand upon' instead of learn from).
+						license. I have a bad habbit of picking it since it sound like it prevent the code from being
+						close source and I probably will change it for certain code
+						that dose not need such protections (if I ever dedicate myself to making a framework, engine, or
+						any tool or resource to be 'stand upon' instead of learn from).
 						untill I can spend time on figuring a more open one for my base code.
-						It should be fine to use segments of basic code, but it be better(or proper) to follow the copyright if copying with little to no modifcation.
+						It should be fine to use segments of basic code, but it be better(or proper) to follow the
+						copyright if copying with little to no modifcation.
 						if there is no copywrite info in the file or anyplace in the directory.
 						<br> Note: copywrite here for my existing content may change, but only to reduce limitations and
 						conditions or allow more permissions.
@@ -188,6 +193,28 @@
 					<a href="https://na.finalfantasyxiv.com/lodestone/character/55585435/">FF14(Ezma Mewrilah)</a><br>
 					<br>
 				</div>
+			</section>
+		</article>
+
+		<div class="flex-break"></div>
+
+		<article class="info_container collapsible">
+			<header class="info_title collapsible_toggle">
+				<h1>My Button</h1>
+			</header>
+			<section class="info_content collapsible_content text-center"
+				title="I use the version hosted on my site, but the public code uses a free image hosting site and could break.">
+				<br>
+				<a href="https://ezmameow.neocities.org/" target="_blank">
+					<img width=88 height=31 style="image-rendering: pixelated;"
+						src="https://ezmameow.neocities.org/assets/ezma_button.webp" alt="Ezma Meow's Button Image">
+				</a>
+				<br><br>
+				<textarea name="my button code" rows="9" readonly onclick="this.select()" style="text-align: left;">
+&lt;a href="https://ezmameow.neocities.org/" target="_blank"&gt;
+&lt;img width=88 height=31 style="image-rendering: pixelated;" src="https://images4.imgbox.com/29/84/FMM6TGpV_o.gif" alt="Ezma Meow's Button Image"&gt;
+&lt;/a&gt;
+            </textarea>
 			</section>
 		</article>
 
