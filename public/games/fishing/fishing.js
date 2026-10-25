@@ -135,8 +135,9 @@ export class Fishing_Game {
     async register_elements(element_info = {}) {
         this.soundVolumnController = document.getElementById(element_info.sound_volume || 'sound_volume')
         this.soundsEffects = {
-            splash: await assetManager.load('/assets/splash.wav', 'splashSound'),
-            quickSplash: await assetManager.load('/assets/quick_splash.wav', 'quickSplashSound')
+            //Note: free neocities seem to disallow sound upload so either host elsewhere or generate the sound via code
+            splash: await assetManager.load('https://ezmameow.github.io/assets/splash.wav', 'splashSound'),
+            quickSplash: await assetManager.load('https://ezmameow.github.io/assets/quick_splash.wav', 'quickSplashSound')
         }
         this.elements = {
             save_locally: document.getElementById(element_info.save_locally || 'fishing_save_locally'),
