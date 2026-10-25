@@ -6,6 +6,10 @@ on:
       - main
 permissions:
   contents: write
+
+concurrency: # prevent concurrent deploys doing strange things
+  group: deploy-to-neocities
+  cancel-in-progress: true
   
 jobs:
   deploy:
@@ -34,8 +38,8 @@ jobs:
           git push
 
       - name: Deploy to neocities
-        uses: bcomnes/deploy-to-neocities@v1
+        uses: bcomnes/deploy-to-neocities@v3
         with:
-          api_token: ${{ secrets.NEOCITIES_API_TOKEN }}
+          api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
           cleanup: false
           dist_dir: public
