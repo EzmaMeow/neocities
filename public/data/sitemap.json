@@ -12,9 +12,6 @@
       "splash.wav"
     ],
     "data": [
-      "lore_map.json",
-      "media_map.json",
-      "posts_map.json",
       "sitemap.json"
     ],
     "games": [
@@ -111,6 +108,7 @@
           "post6_warframe.md",
           "post7_starbound.md",
           "post8.md",
+          "post8_my_fake_singleton.md",
           "post8_the_two_scopes.md",
           "post9_parsers.md"
         ]
