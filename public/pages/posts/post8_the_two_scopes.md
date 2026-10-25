@@ -1,0 +1,14 @@
+<data>{"title":"Two Major Scopes"}</data>
+[tab]Either a minor a major part of programing is the two major scopes: [color=blue][tooltip=absolute or root]global[/tooltip][/color] and [color=orange][tooltip=relative]local[/tooltip][/color]. I believe any large program, system or environment gets easier to manage the more one understand how to make use of these. For this I will only talk relating to JS use.
+
+[tab]In modern JS modules allow an easy way to assign external JS as global by importing parts of it. Top level declaration in a JS script (not module) in a html environment is also a form of global scope, otherwise for modules it is the local scope of that module. Declaring in objects and functions are also local to their object and function.
+
+[tab]A bit unrelative, but in JS one can access outer scopes relative to the current local scope. This means both global and upper local declaration can be shadowed but the current local declaration. One main point of global with JS is to be able to access the same declaration from different files that are included or added to the project. 
+
+[tab]Now these scopes do not happen in code. It can also happen in a file system. In most scripting one can use two shortcuts for accessing files the project or server provides. `/` for root access and `./` for relative access. Root can be seen as the global point, but where it starts can be a bit confusing. Usually, it is the directory where the program or server is started from, but it can be changed or at a position that is less ideal. Relative is the directory of the current script file.
+
+[tab]In an ideal environment, the root will contain directory for the project and directory for shared resources. In a large web project, anything that is reused across different pages would benefit from being stored at root level if root is at the desired position. This allows the pages to have their own directory or be relocated to a directory for storing pages. Note that the main index page should be at the root, though it can be used to redirect to the main page if one really desires that.
+
+[tab]If one does have a directory for each page or directory for all pages, then relative access can be used to access content made for that or those pages. If one makes a directory for each page, then the files can be index.html, styles.css, and script.js plus directories for unique dependencies. 
+
+[tab]This can be useful for organizing as well as reducing the memory footprint if handled correctly. The question to be ask is if it should be global or local. All global risk name collisions or [tooltip=in the program, not filesystem]excess memory (ram or virtual) use[/tooltip] and all local risk unnecessary duplication or difficulties accessing content.  

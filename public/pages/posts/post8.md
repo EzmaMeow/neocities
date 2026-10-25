@@ -1,5 +1,4 @@
 <data>{"title":"Random"}</data>
-
 I may have amny ideas for a game, but I really just want to make a game with one or more of these things:
 - Building, farminmg, and gathering.
 - Trains and being able to use them as a base of some short instead of just cargo transport.

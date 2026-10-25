@@ -1,5 +1,4 @@
 <data>{"title":"Starbound"}</data>
-
 This is one of the games I really enjoy, but rarely play anymore due to the content getting stale or I just get lonely in it. I do like playing with mods, though I tend to not explore many theses days. So far I tend to focus on FU, Felin, Neki ~~there was a neko one back in the day, but Neki is probably better~~. I enjoy exploring the planets so I would install more planet base mod when I feel like dealing with universe break issues ~~lucky FU added a few diffrent types~~. I also like building a town or colony. I get bored after a while of doing the same old stuff dispite all the collectables the game seems to have.
 
 

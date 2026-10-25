@@ -1,5 +1,4 @@
 <data>{"title":"Rendering Nonsense"}</data>
-
 Meow I sometimes feel dumb when working on stuff. I know little about rendering pipelines and such. Pretty much I just knew things had scopes, but never had to build anything close to a render pipeline before this year.
 So the last few days I was fixing my Mat4 based rendering system with js canvas. I kept messing up at points due to only reading parts. I actually inverted the pipeline since I was hoping to cache caculations per render loop. Well seems clip space and screen space (as well as model view) needs to be caculated for each rendering object. 
 

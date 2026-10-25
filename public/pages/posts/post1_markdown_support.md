@@ -1,5 +1,4 @@
 <data>{"title":"Markdown Support"}</data>
-
 ## About
 ~~WARNING this post will be a mess~~
 For some reason I got distracted improving this little markdown lib and added more to it and fixed some things. So I may try to use it. I will keep the ability to extract html body from a post that is a html file, but I decided to try to use markdown files as the default to posts since they are easier to read and set up.

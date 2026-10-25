@@ -1,5 +1,4 @@
 <data>{"title":"Text Parsers"}</data>
-
 At the time of writing this (9/18/2026), I have four types of parsers I could used.
 - A custom markdown parser currently with bbcode style extra.
 - A parser that replace %varname with something else if it exists. Currently for a random float or the date.
