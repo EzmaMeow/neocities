@@ -12,7 +12,6 @@ export function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 }
-
 export function renderInline(text, handleEscChar = true) {
   if (handleEscChar) {
     text = escapeHtml(text);
@@ -42,31 +41,80 @@ export function renderInline(text, handleEscChar = true) {
     (full, label, href, title) => `<a href="${href}"${title ? ` title="${title}"` : ''} target="_blank" rel="noopener">${label}</a>`);
 
   // bold+italic ***text*** or ___text___
-  text = text.replace(/(\*\*\*|___)(.+?)\1/g, '<strong><em>$2</em></strong>');
+  text = text.replace(/(\\)?(\*\*\*|___)([^]*?)(\\)?(\2)/g,
+    (full, startEscape, delimiter, content, endEscape) => {
+      if (startEscape || endEscape) {
+        return `${delimiter}${content}${delimiter}`
+      }
+      return `<strong><em>${content}</em></strong>`
+    }
+  );
 
   // bold **text** or __text__
-  text = text.replace(/(\*\*|__)(.+?)\1/g, '<strong>$2</strong>');
+  text = text.replace(/(\\)?(\*\*|__)([^]*?)(\\)?(\2)/g,
+    (full, startEscape, delimiter, content, endEscape) => {
+      if (startEscape || endEscape) {
+        return `${delimiter}${content}${delimiter}`
+      }
+      return `<strong>${content}</strong>`
+    }
+  );
 
   // italic *text* or _text_
-  text = text.replace(/(\*|_)(.+?)\1/g, '<em>$2</em>');
+  text = text.replace(/(\\)?(\*|_)([^]*?)(\\)?(\2)/g,
+    (full, startEscape, delimiter, content, endEscape) => {
+      if (startEscape || endEscape) {
+        return `${delimiter}${content}${delimiter}`
+      }
+      return `<em>${content}</em>`
+    }
+  );
 
   // strikethrough ~~text~~
-  text = text.replace(/~~(.+?)~~/g, '<del>$1</del>');
+  text = text.replace(/(\\)?~~(.+?)(\\)?~~/g,
+    (full, startEscape, content, endEscape) => {
+      if (startEscape || endEscape) {
+        return `~~${content}~~`
+      }
+      return `<del>${content}</del>`
+    }
+  );
 
   // subscript ~text~
-  text = text.replace(/~(.+?)~/g, '<sub>$1</sub>');
+  text = text.replace(/(\\)?~(.+?)(\\)?~/g,
+    (full, startEscape, content, endEscape) => {
+      if (startEscape || endEscape) {
+        return `~${content}~`
+      }
+      return `<sub>${content}</sub>`
+    }
+  );
 
   //superscript ^text^
-  text = text.replace(/\^(.+?)\^/g, '<sup>$1</sup>');
+  text = text.replace(/(\\)?\^(.+?)(\\)?\^/g,
+    (full, startEscape, content, endEscape) => {
+      if (startEscape || endEscape) {
+        return `^${content}^`
+      }
+      return `<sup>${content}</sup>`
+    }
+  );
 
   // inline code `code`
-  text = text.replace(/`([^`]+)`/g, '<code>$1</code>');
+  text = text.replace(/(\\)?`([^`]+)(\\)?`/g,
+    (full, startEscape, content, endEscape) => {
+      if (startEscape || endEscape) {
+        return `\`${content}\``
+      }
+      return `<code>${content}</code>`
+    }
+  );
 
   //currently do not support checkbox lists
   //inline checkbox uncheck
-  text = text.replace(/\[\s\]/g, '<input type="checkbox">');
+  text = text.replace(/(?<!\\)\[\s\]/g, '<input type="checkbox">');
   //inline checkbox check
-  text = text.replace(/\[x\]/gi, '<input type="checkbox" checked>');
+  text = text.replace(/(?<!\\)\[x\]/gi, '<input type="checkbox" checked>');
 
   // Restore URLs
   text = text.replace(

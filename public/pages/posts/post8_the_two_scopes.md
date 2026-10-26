@@ -1,7 +1,7 @@
 <data>{"title":"Two Major Scopes"}</data>
 [tab]Either a minor a major part of programing is the two major scopes: [color=blue][tooltip=absolute or root]global[/tooltip][/color] and [color=orange][tooltip=relative]local[/tooltip][/color]. I believe any large program, system or environment gets easier to manage the more one understand how to make use of these. For this I will only talk relating to JS use.
 
-[tab]In modern JS modules allow an easy way to assign external JS as global by importing parts of it. Top level declaration in a JS script (not module) in a html environment is also a form of global scope, otherwise for modules it is the local scope of that module. Declaring in objects and functions are also local to their object and function.
+[tab]In modern JS modules allow an easy way to assign external JS to be global like by importing parts of it[tooltip=The only issue is that import expose the global object. So one will not be able to access the if it was not imported.]\*[tooltip]. Top level declaration in a JS script (not module) in a html environment is also a form of global scope[tooltip=It is also odd. it attach the code to window. window is a global object, but js script treat it as global while js module and other approaches have to access it with the window object]\*[tooltip], otherwise for modules it is the local scope of that module. Declaring in objects and functions are also local to their object and function.
 
 [tab]A bit unrelative, but in JS one can access outer scopes relative to the current local scope. This means both global and upper local declaration can be shadowed but the current local declaration. One main point of global with JS is to be able to access the same declaration from different files that are included or added to the project. 
 
@@ -11,4 +11,5 @@
 
 [tab]If one does have a directory for each page or directory for all pages, then relative access can be used to access content made for that or those pages. If one makes a directory for each page, then the files can be index.html, styles.css, and script.js plus directories for unique dependencies. 
 
-[tab]This can be useful for organizing as well as reducing the memory footprint if handled correctly. The question to be ask is if it should be global or local. All global risk name collisions or [tooltip=in the program, not filesystem]excess memory (ram or virtual) use[/tooltip] and all local risk unnecessary duplication or difficulties accessing content.  
+[tab]This can be useful for organizing as well as reducing the memory footprint if handled correctly. The question to be ask is if it should be global or local. All global risk name collisions or [tooltip=in the program, not filesystem]excess memory (ram or virtual) use[/tooltip] and all local risk unnecessary duplication or difficulties accessing content. 
+
