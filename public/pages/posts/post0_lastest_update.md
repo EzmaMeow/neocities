@@ -6,6 +6,13 @@ Notices (Updated 8/14/26)
 - Primary PC not working(~8/11/26)
 
 [details]
+[summary] Log (10/26/26) [/summary]
+[tab]I am not really like the two scope post. I can seem to discribe things well and global is kind of odd at least in js. Like module scope can create global like objects without being at true global scope. I understand it, but I can't really discribe it without rambling on about it. I will leave it for now meow.
+
+[tab]Also I updated the markdown parser to fix some issues with not being able to escape some characters. I am not really liking markdown since it very heavy regexp to parse correctly, but I will try to fix issues as they come, but I might not extend it and instead add features to my bbcode like markup parser.
+[/details]
+
+[details]
 [summary] Log (10/24/26) [/summary]
 I decided I needed to make an audio manager and then came close of converting to a audio context approach. I stop myself and just change the name oof play and stop to represent use for Audio(). One day I will work on a audio context system, but for now I only need a share space that manage a few different audio play and a way to restart them without sending out errors occasionly in the console.
 
