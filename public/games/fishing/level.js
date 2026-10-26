@@ -7,7 +7,6 @@ import navigationManager from "./canvas_game/navigation_manager.js"
 export class Level extends SceneNode {
     background
     objects = [];
-    world;
     test = 0
     update(delta = 1.0) {
         super.update(delta)
@@ -15,26 +14,17 @@ export class Level extends SceneNode {
             object.update(delta);
         }
     }
-    //on_ are callbacks that can be assign
-    //but only one can exist at a time(unless a signal or event is used)
-    async on_ready() {
-
-    }
+    
     //reservr for object ready logic
-    async #ready() {
-        const image = await assetManager.load("https://64.media.tumblr.com/e98d0375bdc66a34480164c535f87872/bffe166c6db88413-3d/s400x600/9aa3a8b6cb3ec80147edaf474ad8b4bec15b3e64.pnj");
+    async ready() {
+        const image = await assetManager.load("/assets/Waterscape2.webp");
         navigationManager.addRegion('bounds', 256.0, 256.0, 1.0, 0.0, 256.0 - 82.0, 0.0)
         this.backgroundRenderObject = new ImageRenderObject(image, { width: 256, height: 256 })
         renderObjectManager.add(this.backgroundRenderObject)
         this.addChild(this.backgroundRenderObject)
-        await this.on_ready()
     }
-    //Note: could make this async, just need to reslove on load (also maybe rename this?)
-    async setup(element, background, world = this.world) {
-        await this.#ready();
-        
-    }
-    constructor(world = {}) {
+
+    constructor() {
         super();
         
     }

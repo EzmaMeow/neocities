@@ -15,11 +15,11 @@ export class Entity extends SceneNode {
     #width = 16.0;
     #height = 16.0;
 
-    static async create(...args){
-        const object = new this(...args);
-        await object.ready();
-        return object;
-    }
+    //static async create(...args){
+    //    const object = new this(...args);
+    //    await object.ready();
+    //    return object;
+    //}
 
     //NOTE: this should not be needed after all the old logic is handle correctly
     updateSize() {
@@ -119,14 +119,12 @@ export class Entity extends SceneNode {
         }
 
     }
-    async ready(){
+    //async ready(){
         
-    }
-    
-    //const build the nessary peices while setup assign world related data
-    constructor(data = Entity.default_properties, world = undefined) {
+    //}
+
+    constructor(data = Entity.default_properties) {
         super()
-        this.world = world;
         this.image = document.createElement('img');
         this.image.style.position = 'absolute';
         //this.image.src = img_src;

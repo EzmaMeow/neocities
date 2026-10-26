@@ -1,5 +1,12 @@
 //this repesent an object this is part of a hierarchical and contains ways to notify its parent and manage its children
 export class Node {
+
+    static async create(...args){
+        const node = new this(...args);
+        await node.ready();
+        return node;
+    }
+
     #children = new Set();
     get children() {
         return this.#children;
@@ -43,6 +50,10 @@ export class Node {
                 child.update(delta);
             }
         }
+    }
+
+    async ready(){
+        
     }
 
 
