@@ -25,19 +25,6 @@ renderer.renderObjectManager = renderObjectManager;
 renderer.camera = camera
 
 export class Fishing_Game {
-
-    #save_locally = false;
-    get save_locally() {
-        return this.#save_locally
-    }
-    set save_locally(value) {
-        this.#save_locally = value;
-        if (this.elements.save_locally) {
-            this.elements.save_locally.checked = value;
-        }
-        stateManager.saveLocally = value
-    }
-
     #current_time = 0;
     #last_time = 0;
     //NOTE: paused location may or may not need to be change. as long as it is part of the game loop, it should be fine (though an interface my be needed to check if paused) 
@@ -67,12 +54,33 @@ export class Fishing_Game {
         quick_splash_sound: undefined,
         score: undefined
     }
+    setSaveLocally(value) {
+        if (this.elements.save_locally) {
+            this.elements.save_locally.checked = value;
+        }
+        stateManager.saveLocally = value
+        this.dirtySaveState = true;
+    }
+    updateSoundVolume(value) {
+        audioManager.volume = value;
+        if (this.soundVolumnController) {
+            this.soundVolumnController.value = value;
+
+        }
+        if (this.soundsEffects.splash) {
+            this.soundsEffects.splash.volume = value;
+        }
+        if (this.soundsEffects.quickSplash) {
+            this.soundsEffects.quickSplash.volume = value;
+        }
+        this.dirtySaveState = true;
+    }
     //todo: have the sounds stored in a array and loop it to set the sound volumn. could also make callables that dose that as well, but that can be harder to manage
     updateSounds() {
         let soundVolume = 1;
         if (this.soundVolumnController) {
             soundVolume = this.soundVolumnController.value;
-            audioManager.volume = soundVolume = this.soundVolumnController.value;
+            audioManager.volume = soundVolume;
         }
         if (this.soundsEffects.splash) {
             this.soundsEffects.splash.volume = soundVolume;
@@ -85,33 +93,39 @@ export class Fishing_Game {
     save() {
         //need to set the state properties to sync for now 
         //since old system did not store a state and store these values in itself
-        const client = stateManager.getState('client')
-        const player = stateManager.getState('player')
+        const client = this.client || stateManager.getState('client')
+        const player = this.player || stateManager.getState('player')
 
         //also save version may need to be save on all state base on what logic change. for now verion is not really used
-        client.save_version = this.save_version;
-        client.save_locally = this.save_locally;
-        client.sound_volume = this.sound_volume;
+        //client.save_version = this.save_version;
+        client.saveLocally = stateManager.saveLocally;
+        client.soundVolume = audioManager.volume;
         player.fishingScore = this.score;
 
         stateManager.saveState('client')
         stateManager.saveState('player')
+        this.dirtySaveState = false;
+        //TODO: remove old unused keys. ideally use a version checker to trim saves eventually
 
     }
     load() {
 
-        const client = stateManager.loadState('client') || {}
-        const player = stateManager.loadState('player') || {}
+        this.client = stateManager.loadState('client') || {}
+        this.player = stateManager.loadState('player') || {}
 
-        this.save_locally = client.save_locally ? true : false;
-        this.sound_volume = parseFloat(client.sound_volume) || 0.25;
-        this.score = player.fishingScore || 0;
+        this.updateSoundVolume(this.client.soundVolume || 0.25)
+        stateManager.saveLocally = this.client.saveLocally ? true : false;
+        this.save_locally = this.client.saveLocally ? true : false;
+        //this.sound_volume = parseFloat(this.client.soundVolume) || 0.25;
+        this.score = this.player.fishingScore || 0;
         if (this.score > 0 && this.elements.score) {
             this.elements.score.innerHTML = `Score: ${this.score}`;
         }
+        this.dirtySaveState = false;
     }
     async register_elements(element_info = {}) {
-        this.soundVolumnController = document.getElementById(element_info.sound_volume || 'sound_volume')
+        this.soundVolumnController = document.getElementById(element_info.sound_volume || 'sound_volume');
+        this.saveLocallyToggle = document.getElementById(element_info.save_locally || 'fishing_save_locally');
         this.soundsEffects = {
             //Note: free neocities seem to disallow sound upload so either host elsewhere or generate the sound via code
             splash: await assetManager.load('https://ezmameow.github.io/assets/splash.wav', 'splashSound'),
@@ -124,22 +138,23 @@ export class Fishing_Game {
 
         }
         camera.viewport = this.elements.gameCanvas
-        this.updateSounds();
+
         if (this.soundVolumnController) {
             this.soundVolumnController.addEventListener('change', (event) => {
-                this.soundVolume = parseFloat(event.target.value);
+                this.updateSoundVolume(parseFloat(event.target.value))
                 const sound = this.soundsEffects.splash;
-                audioManager.volume = parseFloat(event.target.value);
                 audioManager.playAudioElement(sound, 'soundEffects')
-                this.dirty_save_state = true;
             })
+            this.updateSoundVolume(parseFloat(this.soundVolumnController.value));
         }
-        if (this.elements.save_locally) {
-            this.elements.save_locally.addEventListener('change', (event) => {
-                this.save_locally = event.target.checked;
-                this.dirty_save_state = true;
+        if (this.saveLocallyToggle) {
+            this.saveLocallyToggle.addEventListener('change', (event) => {
+                this.setSaveLocally(event.target.checked);
             })
+            this.setSaveLocally(this.saveLocallyToggle.checked);
         }
+        //setting the dirty save state to false so this dose not save a state on load
+        this.dirtySaveState = false;
     }
     update() {
         if (this.paused) { return; }
@@ -155,9 +170,9 @@ export class Fishing_Game {
         this.#last_time = this.#current_time;
         this.level.update(delta)
         //may need a slower loop for save checking. NOTE: saving might not save when game loop is paused(or it shouldn't)
-        if (this.dirty_save_state = true) {
+        //NOTE: dirty_save_state will be replace in the future
+        if (this.dirtySaveState) {
             this.save();
-            this.dirty_save_state = false;
         }
         if (this.catch_bonus < 1.25) {
             this.catch_bonus += delta
@@ -165,8 +180,6 @@ export class Fishing_Game {
         if (this.elements.gameCanvas) {
             renderer.render(this.elements.gameCanvas)
         }
-
-
         requestAnimationFrame(() => this.update());
     }
     pause() {
@@ -247,10 +260,10 @@ export class Fishing_Game {
         }
         //console.log(this.inventory)
         this.score += Math.max(Math.floor(catch_data.fish.difficulty * 100), 1)
+        this.dirtySaveState = true;
         this.elements.score.innerHTML = `Score: ${this.score}`;
         //console.log(catch_data.fish.type, ' ', catch_data.fish.weight, 'kg')
         this.update_fish(catch_data.fish);
-        this.dirty_save_state = true;
         this.catch_bonus = 0.25;
         this.on_fish_caught();
     }

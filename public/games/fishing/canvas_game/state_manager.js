@@ -9,6 +9,10 @@
 //then the save ids should be appName/client and client(or global/client, but not nessary)
 //and game states would not be 'gameState' or 'game', but the name of the game or app. if the game state is a global one, then 'state' or 'global' or 'globalState' would be better
 //player may stay player to ref the client player and it should be expected to see both a global and app state
+
+//TODO: it may be ideal to wrap save in a proxy so there a way to listen for change (aka setter will call a callback if called)
+//also could make all states have a callback and allow users to call it to make sure things get update. may be better and could be assumed
+//just need to agree on a name (sync, update, updateState, onUpdate, onChange(properties))
 export class StateManager {
     //an ideitifier for the game this is for. could be the game name (probably will add '/' after it to split it up)
     //this is because it may be saved in a similar areas as other savables such as local storage and this helps keep data contained
