@@ -110,6 +110,7 @@
           "post7_starbound.md",
           "post8.md",
           "post8_dev_console.md",
+          "post8_global_shared_objects.md",
           "post8_my_fake_singleton.md",
           "post8_the_two_scopes.md",
           "post9_parsers.md"
