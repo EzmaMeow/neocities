@@ -6,6 +6,12 @@ Notices (Updated 8/14/26)
 - Primary PC not working(~8/11/26)
 
 [details]
+[summary] Log (10/28/26) [/summary]
+[tab]I am still slowly cleaning up the fishing game. Lack of energy and focus and such meow. If I game enough inspriation, I may start working on the other idea. 
+Like I know what I should do, but lake the want to. basicly tile art, collsion manager, input manager, and probably see how Tiled export stuff and a system that manage a 'static' tilemap as a collsion object and a render object to reduce unneeded caculation when the dynamic stuff recaculates. Also maybe need to figure out hpw to make myown perlin noise system. I have my own random number from seed system, just need to take it a step further and make the noise less sharp(probably by lerping a few points base on some spacing. Also how I could map it in 2d or 3d and ways I could make it faster to catch or generate if there any speed or memory issues.)
+[/details]
+
+[details]
 [summary] Log (10/26/26) [/summary]
 [tab]I am not really like the two scope post. I can seem to discribe things well and global is kind of odd at least in js. Like module scope can create global like objects without being at true global scope. I understand it, but I can't really discribe it without rambling on about it. I will leave it for now meow.
 

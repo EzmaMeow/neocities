@@ -55,8 +55,8 @@ export class Fishing_Game {
         score: undefined
     }
     setSaveLocally(value) {
-        if (this.elements.save_locally) {
-            this.elements.save_locally.checked = value;
+        if (this.saveLocallyToggle) {
+            this.saveLocallyToggle.checked = value;
         }
         stateManager.saveLocally = value
         this.dirtySaveState = true;
@@ -114,9 +114,7 @@ export class Fishing_Game {
         this.player = stateManager.loadState('player') || {}
 
         this.updateSoundVolume(this.client.soundVolume || 0.25)
-        stateManager.saveLocally = this.client.saveLocally ? true : false;
-        this.save_locally = this.client.saveLocally ? true : false;
-        //this.sound_volume = parseFloat(this.client.soundVolume) || 0.25;
+        this.setSaveLocally(this.client.saveLocally);
         this.score = this.player.fishingScore || 0;
         if (this.score > 0 && this.elements.score) {
             this.elements.score.innerHTML = `Score: ${this.score}`;
@@ -132,7 +130,7 @@ export class Fishing_Game {
             quickSplash: await assetManager.load('https://ezmameow.github.io/assets/quick_splash.wav', 'quickSplashSound')
         }
         this.elements = {
-            save_locally: document.getElementById(element_info.save_locally || 'fishing_save_locally'),
+            //save_locally: document.getElementById(element_info.save_locally || 'fishing_save_locally'),
             score: document.getElementById(element_info.score || 'score'),
             gameCanvas: document.getElementById(element_info.gameCanvas || 'gameCanvas')
 
@@ -169,8 +167,6 @@ export class Fishing_Game {
         if (delta > 2.0) { console.log('delta is greater than 2 seconds') }
         this.#last_time = this.#current_time;
         this.level.update(delta)
-        //may need a slower loop for save checking. NOTE: saving might not save when game loop is paused(or it shouldn't)
-        //NOTE: dirty_save_state will be replace in the future
         if (this.dirtySaveState) {
             this.save();
         }
