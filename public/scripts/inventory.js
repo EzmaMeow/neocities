@@ -15,30 +15,30 @@ export class Item {
         if (this.#amount === value) { return }
         this.#amount = value;
     }
-    #icon_src; get icon_src() { return this.#icon_src; }
-    set icon_src(value) {
-        if (this.#icon_src === value) { return }
-        this.#icon_src = value;
-        this.header_icon.src = this.#icon_src;
+    #iconSrc; get iconSrc() { return this.#iconSrc; }
+    set iconSrc(value) {
+        if (this.#iconSrc === value) { return }
+        this.#iconSrc = value;
+        this.header_icon.src = this.#iconSrc;
     }
     get hidden() { return this.element.hidden }
     set hidden(value) { this.element.hidden = value }
-    update_text(text) {
+    updateText(text) {
         this.header_text.innerHTML = text;
     }
-    update_info(text) {
+    updateInfo(text) {
         this.body.innerHTML = text;
     }
-    on_selection_changed(is_selected) {
+    onSelectionChanged(is_selected) {
 
     }
-    header_clicked(event) {
+    headerClicked(event) {
         this.is_selected = !this.is_selected;
         this.body.hidden = !this.is_selected;
         this.footer.hidden = !this.is_selected;
-        this.on_selection_changed(this.is_selected);
+        this.onSelectionChanged(this.is_selected);
     }
-    create_item_header() {
+    createItemHeader() {
         //NOTE: may have short info to the right of name or part of text
         //such as weight/size and amount
         this.header = document.createElement('div');
@@ -52,26 +52,26 @@ export class Item {
         this.header.appendChild(this.header_icon);
         this.header.appendChild(this.header_text);
 
-        this.header.addEventListener("click", (event) => this.header_clicked(event));
+        this.header.addEventListener("click", (event) => this.headerClicked(event));
 
         return this.header;
     }
-    create_item_body() {
+    createItemBody() {
         this.body = document.createElement('div');
         this.body.className = this.body_class || Item.body_class;
         this.body.hidden = true;
         this.element.appendChild(this.body);
         return this.body;
     }
-    create_item_footer() {
+    createItemFooter() {
         this.footer = document.createElement('div');
         this.footer.className = this.footer_class || Item.footer_class;
         this.footer.hidden = true;
         this.element.appendChild(this.footer);
         return this.footer;
     }
-    remove_item_header() {
-        this.header.removeEventListener("click", (event) => this.header_clicked(event));
+    removeItemHeader() {
+        this.header.removeEventListener("click", (event) => this.headerClicked(event));
 
         this.header.removeChild(this.header_icon);
         this.header.removeChild(this.header_text);
@@ -80,25 +80,25 @@ export class Item {
         this.header_text = null;
         this.header = null;
     }
-    remove_item_body() {
+    removeItemBody() {
         this.element.removeChild(this.body);
         this.body = null;
     }
-    remove_item_footer() {
+    removeItemFooter() {
         this.element.removeChild(this.footer);
         this.footer = null;
     }
     deconstructor() {
-        this.remove_item_header();
-        this.remove_item_body();
-        this.remove_item_footer();
+        this.removeItemHeader();
+        this.removeItemBody();
+        this.removeItemFooter();
         this.element = null;
     }
     constructor() {
         this.element = document.createElement('div');
-        this.create_item_header();
-        this.create_item_body();
-        this.create_item_footer();
+        this.createItemHeader();
+        this.createItemBody();
+        this.createItemFooter();
         this.element.hidden = true;
     }
 }
@@ -109,7 +109,7 @@ export class Inventory {
     load(data = {}) {
         //clear or add this property that hold an array format of the
         //pass inventory items as long as it exist and not null
-        this.inventory_data = [];
+        this.inventoryData = [];
         //the idea is to load the inventory as an array of
         //items objects(not from the class nessary)
         //the objects should be read only(well action need a source to trigger though)
@@ -124,7 +124,7 @@ export class Inventory {
                 //this is used for the advance inventory where items are stored in slots
                 //or some structure (grid base stuff of variation of sizes are not a focus here)
                 //so the item data is the value
-                this.inventory_data.push(value)
+                this.inventoryData.push(value)
 
             }
         }
@@ -133,29 +133,29 @@ export class Inventory {
                 if (!key || typeof key !== 'object') { continue }
                 //key is the class or base object and the value is additional meta data
                 //or just the amount. This is used for the simple inventory
-                this.inventory_data.push([key, value])
+                this.inventoryData.push([key, value])
             }
         }
-        //NOTE: the inventory_data should be treated as fixed
+        //NOTE: the inventoryData should be treated as fixed
         //and sorted items or something be used for display
 
     }
-    has_previous_page(){
+    hasPreviousPage(){
         return this.page > 0;
     }
-    has_next_page(){
-        return (this.page+1) * this.max_items < this.inventory_data.length;
+    hasNextPage(){
+        return (this.page+1) * this.max_items < this.inventoryData.length;
     }
-    next_page(){
-        if (this.has_next_page()){
+    nextPage(){
+        if (this.hasNextPage()){
             this.page += 1;
-            this.update_items();
+            this.updateItems();
         }
     }
-    previous_page(){
-        if (this.has_previous_page()){
+    previousPage(){
+        if (this.hasPreviousPage()){
             this.page -= 1;
-            this.update_items();
+            this.updateItems();
         }
     }
     //the item data may be in two formats. the array is a static item and a meta item
@@ -163,7 +163,7 @@ export class Inventory {
     //the non_array is a meta item that extends a static item or acts as a wrapper of the static item
     //so it should do all that override stuff when the propery is acess in itself
     //NOTE: can store this as a var before assigning the pacth so it can call the old logic
-    get_item_data_property(data, property, default_value) {
+    getItemDataProperty(data, property, default_value) {
         if (Array.isArray(data)) {
             if (data[1][property]) {
                 return data[1][property] !== undefined ? data[1][property] : default_value;
@@ -173,20 +173,20 @@ export class Inventory {
         return data[property] !== undefined ? data[property] : default_value;
 
     }
-    update_item(item, item_data) {
-        item.name = this.get_item_data_property(item_data, 'name', 'no_name')
-        item.amount = this.get_item_data_property(item_data, 'amount', 0)
-        item.icon_src = this.get_item_data_property(item_data, 'icon_src', "/assets/anim_profile_pic.gif")
+    updateItem(item, item_data) {
+        item.name = this.getItemDataProperty(item_data, 'name', 'no_name')
+        item.amount = this.getItemDataProperty(item_data, 'amount', 0)
+        item.iconSrc = this.getItemDataProperty(item_data, 'iconSrc', "/assets/anim_profile_pic.gif")
         //should call update text here as well and keep item simple
         //also means most if the display stuff can be overriden here
         if (item.amount !== 1) {
-            item.update_text(`${item.name} (x${item.amount})`);
+            item.updateText(`${item.name} (x${item.amount})`);
         }
         else{
-           item.update_text(item.name); 
+           item.updateText(item.name); 
         }
     }
-    update_items() {
+    updateItems() {
         const page = this.page || 0;
         const page_start = page * this.max_items;
         for (let i = 0; i < this.max_items; i++) {
@@ -194,16 +194,16 @@ export class Inventory {
             const page_position = page_start + i;
             //safty checks. last one needed if data segment smaller than page size
             if (page_position < 0) { continue; }
-            if (page_position >= this.inventory_data.length) {
+            if (page_position >= this.inventoryData.length) {
                 item.hidden = true;
                 continue;
             }
             item.hidden = false;
-            const item_data = this.inventory_data[page_position]
-            this.update_item(item,item_data);
+            const item_data = this.inventoryData[page_position]
+            this.updateItem(item,item_data);
         }
     }
-    remove_item(item, parent = this.element) {
+    removeItem(item, parent = this.element) {
         if (!item || !parent) {
             return
         }
@@ -214,7 +214,7 @@ export class Inventory {
         item.deconstructor();
         item = null;
     }
-    create_item(parent = this.element) {
+    createItem(parent = this.element) {
         if (!parent) {
             console.log(parent, ' is not vaild.')
             return
@@ -232,7 +232,7 @@ export class Inventory {
         parent.appendChild(this.element);
         this.items = [];
         for (let i = 0; i < this.max_items; i++) {
-            this.create_item();
+            this.createItem();
         }
         console.log(this)
     }

@@ -119,6 +119,12 @@ export class Fishing_Game {
         if (this.score > 0 && this.elements.score) {
             this.elements.score.innerHTML = `Score: ${this.score}`;
         }
+
+        //note: this.inventory is a map made by this as an old way of storing items.
+        //the display uses inventory.js to load that map data for display
+        //can not convery map to json, but may be able it save inventoryData from inventory as json (should be an array of object or array of object and object meta)
+        //so should move to use the inventory here
+
         this.dirtySaveState = false;
     }
     async register_elements(element_info = {}) {
@@ -215,7 +221,7 @@ export class Fishing_Game {
         )
         fish.depth = depth;
     }
-    on_fish_caught = () => {
+    onFishCaught = () => {
     }
     fish_caught(catch_data = {}) {
         const random_point = [0.0, 0.0];
@@ -254,14 +260,14 @@ export class Fishing_Game {
                 meta.max_weight_ratio = catch_data.fish.weight_ratio
             }
         }
-        //console.log(this.inventory)
+        //console.log(this.player.inventory)
         this.score += Math.max(Math.floor(catch_data.fish.difficulty * 100), 1)
         this.dirtySaveState = true;
         this.elements.score.innerHTML = `Score: ${this.score}`;
         //console.log(catch_data.fish.type, ' ', catch_data.fish.weight, 'kg')
         this.update_fish(catch_data.fish);
         this.catch_bonus = 0.25;
-        this.on_fish_caught();
+        this.onFishCaught();
     }
     failed_catch(catch_data = {}) {
         const sound = this.soundsEffects.quickSplash;
