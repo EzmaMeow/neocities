@@ -27,6 +27,7 @@
               "collision_manager.js",
               "image_render_object.js",
               "input_manager.js",
+              "items.js",
               "navigation_manager.js",
               "node.js",
               "render_lib.js",
@@ -37,6 +38,16 @@
               "state_manager.js"
             ],
             "data": [
+              {
+                "items": [
+                  {
+                    "fish": [
+                      "fish.json"
+                    ]
+                  },
+                  "item.json"
+                ]
+              },
               "freshwater_fish.json",
               "mixwater_fish.json",
               "saltwater_fish.json"
