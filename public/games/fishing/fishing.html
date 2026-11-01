@@ -11,25 +11,8 @@
     <meta name="page-id" content="fishing">
 
     <link rel="stylesheet" href="/styles.css">
-    <style>
-        /* Container that holds all images */
-        .level-container {
-            position: relative;
-            width: 100%;
-            /* Responsive width */
-            /* max-width: 800px;*/
-            margin: auto;
-        }
+    <link rel="stylesheet" href="./fishing.css">
 
-        /* Main large image */
-        .background-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            user-drag: none;
-            -webkit-user-drag: none;
-        }
-    </style>
     <link rel="icon" href="/assets/anim_profile_pic.webp" type="image/x-icon">
 </head>
 
@@ -126,7 +109,7 @@
                 <br>
             </details>
             <details class="text-center">
-                <summary>Inventory(WIP. Not saved)</summary>
+                <summary>Fish Log(WIP)</summary>
                 <div id='inventory'></div>
                 <br>
                 <button id="inventory_previous">Back</button>
@@ -162,47 +145,31 @@
 
         inventory.updateItem = function (item, item_data) {
             item.icon_src = this.getItemDataProperty(item_data, 'icon_src', '')
-            const min = this.getItemDataProperty(item_data, 'min_weight', 0.0)
-            const max = this.getItemDataProperty(item_data, 'max_weight', 1.0)
-            const min_weight_ratio = this.getItemDataProperty(item_data, 'min_weight_ratio', 0)
-            const max_weight_ratio = this.getItemDataProperty(item_data, 'max_weight_ratio', 0)
-            const min_weight = min + (max - min) * min_weight_ratio;
-            const max_weight = min + (max - min) * max_weight_ratio;
-            const weight = min + (max - min) * this.getItemDataProperty(item_data, 'weight_ratio', 0.0);
-            const total_caught = this.getItemDataProperty(item_data, 'total_catches', 0)
+            const min = this.getItemDataProperty(item_data, 'minWeight', 0.0)
+            const max = this.getItemDataProperty(item_data, 'maxWeight', 1.0)
+            const minWeightRatio = this.getItemDataProperty(item_data, 'minWeightRatio', 0)
+            const maxWeightRatio = this.getItemDataProperty(item_data, 'maxWeightRatio', 0)
+            const minWeight = min + (max - min) * minWeightRatio;
+            const maxWeight = min + (max - min) * maxWeightRatio;
+            const weight = min + (max - min) * this.getItemDataProperty(item_data, 'weightRatio', 0.0);
+            const totalCaught = this.getItemDataProperty(item_data, 'totalCatches', 0)
             const name = this.getItemDataProperty(item_data, 'name', 'no_name')
 
             item.updateText(`${name} ${weight.toFixed(3)}kg`);
-            item.updateInfo(`Total Caught:${total_caught} <br> Min Weight:${min_weight.toFixed(3)}kg <br> Max Weight::${max_weight.toFixed(3)}kg`);
+            item.updateInfo(`Total Caught:${totalCaught} <br> Min Weight:${minWeight.toFixed(3)}kg <br> Max Weight::${maxWeight.toFixed(3)}kg`);
 
         }
+        //should one day allow more info in fish caught so it could try to update that single fish
+        //but for now the amount of fish is limited. also the display may undergo a redesign
         game.onFishCaught = function () {
-            inventory.load(game.inventory)
+            inventory.load(game.player.logs.fish)
             inventory.updateItems();
             updateInventoryButtons();
-            //needed to reset the ref since inventory load makes a new array (and why the script need to be split into a invetory state and inventory display)
-            //game.player.inventory = inventory.inventoryData;
         }
-        //this is a hack to load invetory untill inventory is split up to handle core and implemention
-        //if (game.player.inventory) {
-        //    if (!game.inventory){
-        //        game.inventory = new Map();
-        //    }
-        //    if (!Array.isArray(game.player.inventory)){
-        //        game.player.inventory = inventory.inventoryData
-        //    }
-        //    game.player.inventory.forEach(item => {
-        //        const type = item[0];
-        //        const data = item[1]; 
-        //        game.inventory.set(type,data)
-        //    });
-        //}
 
-        inventory.load(
-            game.inventory
-        )
-        //set the player state inventory to the ref of inventory data since it should be safe for json as long as it keep sync with game inventory
-        //game.player.inventory = inventory.inventoryData;
+        if (game.player.logs.fish){
+            inventory.load(game.player.logs.fish)
+        }
 
         inventory.updateItems();
         updateInventoryButtons()

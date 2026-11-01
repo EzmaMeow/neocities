@@ -1,3 +1,12 @@
+
+//TODO NOTE: split this into core and display where display depends on the stucture to read, but need to be given a vaild inventory ref
+//inventory should holds various inventories as needed with an optional filter to filter out unnessary containers
+//Note: current items have capture log data since the fish acts as a simple inventory but with log data as the meta instead of amount
+//need to change display to also pull from such logs.
+//the issue is fishes are meant to be advance items, but are this odd simple item so limits and such are not nessary
+//in short I could work on the log and a log display instead of inventory and switch to advance when needed. could convert the log to items\
+//also need a way to call these logs like statistics under items of subtype fish
+
 export class Item {
     static icon_class = 'inv_item_icon';
     static text_class = 'inv_item_text';
@@ -137,24 +146,30 @@ export class Inventory {
                 this.inventoryData.push([key, value])
             }
         }
+        //note: need a share display info idealy from a asset. the key should be the fish item asset path or id which should be used to fetch it
+        else if (typeof data === "object" && data) {
+            for (const [key, value] of Object.entries(data)) {
+                this.inventoryData.push([{name:key},value])
+            }
+        }
         //NOTE: the inventoryData should be treated as fixed
         //and sorted items or something be used for display
 
     }
-    hasPreviousPage(){
+    hasPreviousPage() {
         return this.page > 0;
     }
-    hasNextPage(){
-        return (this.page+1) * this.max_items < this.inventoryData.length;
+    hasNextPage() {
+        return (this.page + 1) * this.max_items < this.inventoryData.length;
     }
-    nextPage(){
-        if (this.hasNextPage()){
+    nextPage() {
+        if (this.hasNextPage()) {
             this.page += 1;
             this.updateItems();
         }
     }
-    previousPage(){
-        if (this.hasPreviousPage()){
+    previousPage() {
+        if (this.hasPreviousPage()) {
             this.page -= 1;
             this.updateItems();
         }
@@ -183,8 +198,8 @@ export class Inventory {
         if (item.amount !== 1) {
             item.updateText(`${item.name} (x${item.amount})`);
         }
-        else{
-           item.updateText(item.name); 
+        else {
+            item.updateText(item.name);
         }
     }
     updateItems() {
@@ -201,7 +216,7 @@ export class Inventory {
             }
             item.hidden = false;
             const item_data = this.inventoryData[page_position]
-            this.updateItem(item,item_data);
+            this.updateItem(item, item_data);
         }
     }
     removeItem(item, parent = this.element) {

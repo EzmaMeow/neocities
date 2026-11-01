@@ -1,3 +1,5 @@
 {
-    "type":"Item"
+    "type":"Item",
+    "name":"Fish",
+	"icon":""
 }

@@ -1,0 +1,12 @@
+.inv_item_body {
+    background-color: #0cefff52;
+}
+.inv_item_footer {
+    background-color: #0cefff52;
+}
+
+.inv_item_header {
+    border: 1px solid var(--border-color);
+    margin-right: auto;
+    margin-left: auto;
+}

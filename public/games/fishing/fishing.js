@@ -230,6 +230,36 @@ export class Fishing_Game {
         if (!this.inventory) {
             this.inventory = new Map();
         }
+        if (!this.player.logs) {
+            this.player.logs = {};
+        }
+        if (!this.player.logs.fish) {
+            this.player.logs.fish = {};
+        }
+        const fishLog = this.player.logs.fish;
+        const fishType = catch_data.fish.type ? catch_data.fish.type.name : "Fish";
+        if (!fishLog[fishType]) {
+            fishLog[fishType] = {
+                totalCatches: 0,
+                weightRatio: 0.0,
+                minWeightRatio: undefined,
+                maxWeightRatio: 0
+            }
+        }
+        const fishLogData = fishLog[fishType];
+        const totalWeight = catch_data.fish.weight + (catch_data.fish.min_weight + (catch_data.fish.max_weight - catch_data.fish.min_weight) * fishLogData.weightRatio)
+        fishLogData.weightRatio = (totalWeight - catch_data.fish.min_weight) / (catch_data.fish.max_weight - catch_data.fish.min_weight);
+        fishLogData.totalCatches += 1;
+        if (!fishLogData.minWeightRatio) {
+            fishLogData.minWeightRatio = catch_data.fish.weight_ratio
+        }
+        else if (catch_data.fish.weight_ratio < fishLogData.minWeightRatio) {
+            fishLogData.minWeightRatio = catch_data.fish.weight_ratio
+        }
+        if (catch_data.fish.weight_ratio > fishLogData.maxWeightRatio) {
+            fishLogData.maxWeightRatio = catch_data.fish.weight_ratio
+        }
+
         if (catch_data.fish.type) {
             if (!this.inventory.has(catch_data.fish.type)) {
                 this.inventory.set(catch_data.fish.type, {
