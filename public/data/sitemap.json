@@ -55,6 +55,7 @@
           },
           "entity.js",
           "fish.js",
+          "fishing.css",
           "fishing.html",
           "fishing.js",
           "level.js"
