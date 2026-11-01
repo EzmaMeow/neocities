@@ -247,8 +247,7 @@ export class Fishing_Game {
             }
         }
         const fishLogData = fishLog[fishType];
-        const totalWeight = catch_data.fish.weight + (catch_data.fish.min_weight + (catch_data.fish.max_weight - catch_data.fish.min_weight) * fishLogData.weightRatio)
-        fishLogData.weightRatio = (totalWeight - catch_data.fish.min_weight) / (catch_data.fish.max_weight - catch_data.fish.min_weight);
+        fishLogData.weightRatio += catch_data.fish.weight_ratio;
         fishLogData.totalCatches += 1;
         if (!fishLogData.minWeightRatio) {
             fishLogData.minWeightRatio = catch_data.fish.weight_ratio
@@ -270,6 +269,7 @@ export class Fishing_Game {
                     max_weight_ratio: 0
                 })
             }
+
             const meta = this.inventory.get(catch_data.fish.type)
             //amount is needed for vol count. both amount and weight can be reduce
             //NOTE: amount is normally needed for simple items. it may be convert to 

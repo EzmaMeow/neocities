@@ -127,6 +127,7 @@
 
         const game = await start_fishing_game();
         const inventory = new Inventory('inventory')
+        inventory.typeMap = game.fish_data;
 
         const inventoryPreviousButton = document.getElementById('inventory_previous');
         const inventoryNextButton = document.getElementById('inventory_next');

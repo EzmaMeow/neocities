@@ -149,7 +149,22 @@ export class Inventory {
         //note: need a share display info idealy from a asset. the key should be the fish item asset path or id which should be used to fetch it
         else if (typeof data === "object" && data) {
             for (const [key, value] of Object.entries(data)) {
-                this.inventoryData.push([{name:key},value])
+                //type should not be saved in the log, so it is removed from the log entry after adding to the key. it should be reapply every
+                if (this.typeMap){
+                    const type = this.typeMap[key]
+                    if (type){
+                        this.inventoryData.push([type,value])
+                        continue
+                    }
+                }
+                if (value.type){
+                    this.inventoryData.push([value.type,value])
+                    delete value.type
+                }
+                else{
+                   this.inventoryData.push([{name:key},value]) 
+                }
+                
             }
         }
         //NOTE: the inventoryData should be treated as fixed
