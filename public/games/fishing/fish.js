@@ -83,6 +83,9 @@ export class Fish extends Entity {
     }
     //bite happens on click
     bite(event) {
+        if (!event) {
+            event = {}
+        }
         event.fish = this;
         //starts the logic after taking the bait
         if (this.onBite) {

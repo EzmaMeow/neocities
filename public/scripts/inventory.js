@@ -109,6 +109,7 @@ export class Inventory {
     load(data = {}) {
         //clear or add this property that hold an array format of the
         //pass inventory items as long as it exist and not null
+        //NOTE: for the actual savable inventory data, any key base object should be ref by a asset path or id...or their paths should be grab when saving and replaced or
         this.inventoryData = [];
         //the idea is to load the inventory as an array of
         //items objects(not from the class nessary)

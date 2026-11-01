@@ -43,12 +43,14 @@ export const defaultExtensionClassMap = new Map(Object.entries({
     mkv: Video
 }));
 
+export const defaultClassMap = new Map()
+
 export class AssetManager {
 
     #assets = new Map()
     //will add properties to the asset listed in extensionClassMap and monkey patch functions as needed
     //the event and flags are stored in it to reduce the need to add check to make sure such ref are cleared on disposal
-    async createAsset(src, extensionClassMap = this.extensionClassMap || defaultExtensionClassMap) {
+    async createAsset(src, extensionClassMap = this.extensionClassMap || defaultExtensionClassMap, classMap = this.classMap || defaultClassMap) {
         if (!src) { return }
         let extension = ((/(?:\.([^.]+))?$/).exec(src)[1] || '').toLowerCase();
         let metadata;
@@ -65,33 +67,48 @@ export class AssetManager {
                 extension = ((/(?:\.([^.]+))?$/).exec(metadata.src)[1] || '').toLowerCase();
             }
         }
-        if (!extensionClassMap.has(extension) && !metadata) {
-            console.warn(`${extension} lack an asset type and unable to load`)
+        let assetClass = extensionClassMap.get(extension)
+        if (!assetClass && metadata) {
+            if (metadata.type) {
+                assetClass = classMap.get(metadata.type)
+            }
+            console.warn("asset class is undefined and lack a type in metadata. Will be turn into a generic EventTarget object. ", assetClass, extension, metadata);
         }
-        const constClass = extensionClassMap.get(extension)
-        const asset = constClass ? new constClass() : new EventTarget();
+        if (!assetClass && !metadata) {
+            console.warn("asset class is undefined. Will be turn into a generic EventTarget object, yet the asset probably will be improper. ", assetClass, extension, metadata);
+        }
+        //const assetClass = extensionClassMap.get(extension)
+        const asset = assetClass ? new assetClass() : new EventTarget();
         if (!asset) {
             console.error(`Failed to create new asset : ${src}`)
         }
         //metadata will contain namespace objects so various properties types can be added like textureAlas and animationData
         if (metadata) {
-            if (constClass) {
-                for (const [key, value] of Object.entries(metadata)) {
-                    if (asset[key] && key !== 'src') {
-                        console.warn(`Asset ${src} has a property ${key}. Ignoring it. Rename it if it is needed.`)
-                        continue
+            if (assetClass) {
+                //will allow custom classes to use load as a way to set properties else will force inject them
+                if (typeof asset.load === "function") {
+                    asset.load(metadata)
+                }
+                else {
+                    for (const [key, value] of Object.entries(metadata)) {
+                        if (asset[key] && key !== 'src') {
+                            console.warn(`Asset ${src} has a property ${key}. Ignoring it. Rename it if it is needed.`)
+                            continue
+                        }
+                        asset[key] = value;
                     }
-                    asset[key] = value;
                 }
             }
-            else{
+            else {
                 asset.content = metadata;
-                asset.src = src;
+                //asset.src = src;
             }
         }
         else {
             asset.src = src
         }
+        //will add the loaded path to all assets. load will also add a assetUid if one was set
+        asset.assetPath = src
         //this forces the asset to load else it may not be able to render
         if (asset.decode) {
             await asset.decode();
@@ -122,6 +139,12 @@ export class AssetManager {
             return this.#assets.get(id)
         }
         const asset = await this.createAsset(path)
+        if (!asset) {
+            return asset
+        }
+        if (uid) {
+            asset.assetUid = uid
+        }
         //disabling cache for allowing the createAsset logic with load as well as load an existing asset without creating a new one
         if (cache) {
             this.#assets.set(id, asset)

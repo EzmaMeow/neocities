@@ -181,28 +181,28 @@
             inventory.updateItems();
             updateInventoryButtons();
             //needed to reset the ref since inventory load makes a new array (and why the script need to be split into a invetory state and inventory display)
-            game.player.inventory = inventory.inventoryData;
+            //game.player.inventory = inventory.inventoryData;
         }
         //this is a hack to load invetory untill inventory is split up to handle core and implemention
-        if (game.player.inventory) {
-            if (!game.inventory){
-                game.inventory = new Map();
-            }
-            if (!Array.isArray(game.player.inventory)){
-                game.player.inventory = inventory.inventoryData
-            }
-            game.player.inventory.forEach(item => {
-                const type = item[0];
-                const data = item[1]; 
-                game.inventory.set(type,data)
-            });
-        }
+        //if (game.player.inventory) {
+        //    if (!game.inventory){
+        //        game.inventory = new Map();
+        //    }
+        //    if (!Array.isArray(game.player.inventory)){
+        //        game.player.inventory = inventory.inventoryData
+        //    }
+        //    game.player.inventory.forEach(item => {
+        //        const type = item[0];
+        //        const data = item[1]; 
+        //        game.inventory.set(type,data)
+        //    });
+        //}
 
         inventory.load(
             game.inventory
         )
         //set the player state inventory to the ref of inventory data since it should be safe for json as long as it keep sync with game inventory
-        game.player.inventory = inventory.inventoryData;
+        //game.player.inventory = inventory.inventoryData;
 
         inventory.updateItems();
         updateInventoryButtons()
@@ -218,6 +218,10 @@
                     sessionStorage.removeItem(key);
                 }
             }
+            delete game.player.inventory;
+            delete game.client.sound_volume;
+            delete game.client.save_locally;
+            delete game.client.save_version;
         }
 
     </script>
