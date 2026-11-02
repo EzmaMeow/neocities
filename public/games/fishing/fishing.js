@@ -44,7 +44,16 @@ export class Fishing_Game {
     save_version = 1;
     dirty_save_state = false;
     //most of the rod logic should stay here or in it own object. how the fish respond should be move to the fish object and simplfy the callbacks
-    catch_bonus = 0.5; //this is to allow one to wait between catches
+    #catchBonus = 0.5; //this is to allow one to wait between catches
+    set catchBonus(value) {
+        this.#catchBonus = value;
+        if (this.catchSucessProgress) {
+            this.catchSucessProgress.value = Math.min(Math.max(value * 100, 0), 100);
+        }
+    }
+    get catchBonus() {
+        return this.#catchBonus;
+    }
     //should have them assign later
     //NOTE: this might be kept, but it may be better to have them at class level since assets are going to be stored in the asset manager
     //so controll elements will be the only ones that will manage here(though assests may still be stored for quicker acess)
@@ -128,8 +137,9 @@ export class Fishing_Game {
         this.dirtySaveState = false;
     }
     async register_elements(element_info = {}) {
-        this.soundVolumnController = document.getElementById(element_info.sound_volume || 'sound_volume');
-        this.saveLocallyToggle = document.getElementById(element_info.save_locally || 'fishing_save_locally');
+        this.soundVolumnController = document.getElementById(element_info.soundVolume || 'sound_volume');
+        this.saveLocallyToggle = document.getElementById(element_info.saveLocally || 'fishing_save_locally');
+        this.catchSucessProgress = document.getElementById(element_info.catchSuccess || 'catchSuccess');
         this.soundsEffects = {
             //Note: free neocities seem to disallow sound upload so either host elsewhere or generate the sound via code
             splash: await assetManager.load('https://ezmameow.github.io/assets/splash.wav', 'splashSound'),
@@ -176,8 +186,8 @@ export class Fishing_Game {
         if (this.dirtySaveState) {
             this.save();
         }
-        if (this.catch_bonus < 1.25) {
-            this.catch_bonus += delta
+        if (this.catchBonus < 1.0) {
+            this.catchBonus += delta
         }
         if (this.elements.gameCanvas) {
             renderer.render(this.elements.gameCanvas)
@@ -296,13 +306,13 @@ export class Fishing_Game {
         this.elements.score.innerHTML = `Score: ${this.score}`;
         //console.log(catch_data.fish.type, ' ', catch_data.fish.weight, 'kg')
         this.update_fish(catch_data.fish);
-        this.catch_bonus = 0.25;
+        this.catchBonus = 0.0;
         this.onFishCaught();
     }
     failed_catch(catch_data = {}) {
         const sound = this.soundsEffects.quickSplash;
         audioManager.playAudioElement(sound, 'soundEffects');
-        this.catch_bonus = 0.25;
+        this.catchBonus = 0.0;
     }
 
     //todo: make this handle a promiss properly by resolving it on_ready
@@ -335,7 +345,7 @@ export class Fishing_Game {
             fish.onCaught = (event) => { this.fish_caught(event) }
             fish.onEscaped = (event) => this.failed_catch(event)
             fish.onBite = (event) => {
-                event.catchBonus = this.catch_bonus;
+                event.catchBonus = this.catchBonus;
             }
         }
 

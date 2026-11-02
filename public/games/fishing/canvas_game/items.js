@@ -6,7 +6,7 @@ export class Item{
 
 }
 
-//The roll of items is to help manage loading of items and connection the item type to asset manager
+//The role of items is to help manage loading of items and connection the item type to asset manager. may have one for other major types like enities 
 export class Items{
 
 }

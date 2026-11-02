@@ -7,6 +7,10 @@
 //in short I could work on the log and a log display instead of inventory and switch to advance when needed. could convert the log to items\
 //also need a way to call these logs like statistics under items of subtype fish
 
+//TODO: rename and change the focus of this to focus on displaying inventory from a state
+//maybe a base for resuable control objects
+//and extend to for each type of invetory and log style and import the one that is used.
+
 export class Item {
     static icon_class = 'inv_item_icon';
     static text_class = 'inv_item_text';
