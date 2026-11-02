@@ -56,7 +56,7 @@
 <section id='radio-player'>
     <b>Radio Player</b><br>
     <audio id="radioAudio" preload="none"></audio>
-    <button id="toggleRadio">Waiting</button>
+    <button id="toggleRadio" type="button">Waiting</button>
     <details>
         <summary>Radio Options</summary><br>
         <label>Use Local Storage: <input type="checkbox" class="radioOptions" data-property="useLocalStorage"
@@ -68,7 +68,7 @@
             placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
             value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
             class="radioOptions" data-property="src">
-        <button id="radioDefaultStation">⟲</button>
+        <button id="radioDefaultStation" type="button">⟲</button>
     </details>
 </section>
 <!-- RADIO END -->
@@ -92,15 +92,15 @@
                 NOTE: the html is wrap in a span tag with a markdown-render class. This is to allow markdown styling to
                 be appled to the elements inside it and it is not really needed.<br><br>
             </details>
-            <button onclick="copyText(0)">Copy Input</button>
-            <button onclick="copyText(1)">Copy Output Text</button>
-            <button onclick="copyText(2)">Copy Output Html</button>
+            <button onclick="copyText(0)" type="button">Copy Input</button>
+            <button onclick="copyText(1)" type="button">Copy Output Text</button>
+            <button onclick="copyText(2)" type="button">Copy Output Html</button>
             <br>
-            <button onclick="loadInput()">Upload Input Text</button>
-            <button onclick="downloadText(0)">Download Input Text</button>
+            <button onclick="loadInput()" type="button">Upload Input Text</button>
+            <button onclick="downloadText(0)" type="button">Download Input Text</button>
             <br>
-            <button onclick="downloadText(1)">Download Output Text</button>
-            <button onclick="downloadText(2)">Download Output Html</button>
+            <button onclick="downloadText(1)" type="button">Download Output Text</button>
+            <button onclick="downloadText(2)" type="button">Download Output Html</button>
         </section>
         <div class="flex-break"></div>
 

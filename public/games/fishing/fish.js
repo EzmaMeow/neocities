@@ -73,6 +73,7 @@ export class Fish extends Entity {
         if (!event.fish) { event.fish = this }
         event.catchRoll = Math.random();
         //todo: make the math easier to read.
+        //also maybe have the fish get tired if a failed catch happens close to the sucess rate that would reduce the difficulty for the next catch untill it is restored
         event.difficulty = this.difficulty * 0.5 + (1.0 - this.depth) * 0.75; //0.75 is an offset so deep fishes can be impossible (under 0.5 but in this case 0.4-0.3)
         //catch bonus is 0-1, but offset by 0.25 so there is still a chance at 0.25 from fish at surface
         if (event.catchRoll * ((event.catchBonus || 1)+0.25) <= event.difficulty * 2) {
