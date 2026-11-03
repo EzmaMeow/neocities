@@ -243,7 +243,10 @@
         if (!game.player.logs.fish) {game.player.logs.fish = {}}
         fishingLog.logData = game.player.logs.fish
 
-        fishingLog.updateEntries();
+        game.onReady =()=>{
+            fishingLog.updateEntries();
+        }
+        
         updateFishLogButtons()
 
         //this here here for cleanup of old data untill I design a place for it

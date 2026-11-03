@@ -160,6 +160,7 @@ export class Fishing_Game {
 
         this.dirtySaveState = false;
     }
+
     async register_elements(element_info = {}) {
         this.soundVolumnController = document.getElementById(element_info.soundVolume || 'sound_volume');
         this.saveLocallyToggle = document.getElementById(element_info.saveLocally || 'fishing_save_locally');
@@ -272,7 +273,7 @@ export class Fishing_Game {
             this.player.logs.fish = {};
         }
         const fishLog = this.player.logs.fish;
-        const fishType = catch_data.fish.type ? catch_data.fish.type.name : "Fish";
+        const fishType = catch_data.fish.type ? catch_data.fish.type.id : "fish";
         if (!fishLog[fishType]) {
             fishLog[fishType] = {
                 totalCatches: 0,
@@ -330,12 +331,12 @@ export class Fishing_Game {
         this.dirtySaveState = true;
         this.elements.score.innerHTML = `Score: ${this.score}`;
         //console.log(catch_data.fish.type, ' ', catch_data.fish.weight, 'kg')
-        if (this.lastCatchElement && catch_data.fish.type.name){
+        if (this.lastCatchElement && catch_data.fish.type.name) {
             this.lastCatchElement.innerText = `Latest catch: ${catch_data.fish.type.name} (${catch_data.fish.weight.toFixed(3)}kg)`
         }
         this.update_fish(catch_data.fish);
         this.catchBonus = 0.0;
-        
+
         this.onFishCaught();
     }
     failed_catch(catch_data = {}) {
@@ -343,30 +344,24 @@ export class Fishing_Game {
         audioManager.playAudioElement(sound, 'soundEffects');
         this.catchBonus = 0.0;
     }
-
-    //todo: make this handle a promiss properly by resolving it on_ready
-    async start() {
-        if (this.#started) { return }
-        this.#started = true;
-        this.#level = await Level.create();
-
+    async loadInitFishes() {
         const random_point = [0.0, 0.0];
+
         const fishData = {
             width: 16,
             height: 16,
             img_src: '/assets/fish.gif',
             opacity: 0.9
         }
+
         if (!this.fishData) { this.fishData = {} }
+
         for (let fish of fishList) {
             await definitions.load(`fish/${fish}.json`).then((data) => {
                 if (!data) {
                     return
                 }
-                if (!data.name) {
-                    return
-                }
-                this.fishData[data.name] = data;
+                this.fishData[data.id || fish] = data;
             });
         }
 
@@ -382,7 +377,8 @@ export class Fishing_Game {
             fishData.scale_x = Math.random() * 1.5 + 0.5;
             fishData.scale_y = Math.random() * 1.5 + 0.5;
             const fish = await Fish.create(fishData)
-            this.update_fish(fish, Math.random() * 0.5 + 0.5)
+            this.update_fish(fish)
+            //this.update_fish(fish, Math.random() * 0.5 + 0.5)
             this.level.addChild(fish)
             fish.onCaught = (event) => { this.fish_caught(event) }
             fish.onEscaped = (event) => this.failed_catch(event)
@@ -390,6 +386,59 @@ export class Fishing_Game {
                 event.catchBonus = this.catchBonus;
             }
         }
+        //the log need the data to run the update
+        //so may need to make a few async functions with onX functions or events
+        //when some thing not awaited are finished processing. need to anot await everything so init load dose not stall for things that can load as needed
+        //such as loading in the fish. the fish are needed, but having the scenen render and have the fish spawn under water once their data loaded may be better
+        if (this.onReady){
+            this.onReady();
+        }
+    }
+    //todo: make this handle a promiss properly by resolving it on_ready
+    async start() {
+        if (this.#started) { return }
+        this.#started = true;
+        this.#level = await Level.create();
+
+        //const random_point = [0.0, 0.0];
+        //const fishData = {
+        //    width: 16,
+        //    height: 16,
+        //    img_src: '/assets/fish.gif',
+        //    opacity: 0.9
+        //}
+        //if (!this.fishData) { this.fishData = {} }
+        this.loadInitFishes()
+        
+        //for (let fish of fishList) {
+        //    await definitions.load(`fish/${fish}.json`).then((data) => {
+        //        if (!data) {
+        //            return
+        //        }
+        //        this.fishData[fish] = data;
+        //    });
+        //}
+
+        //for (let i = 0; i < 10; i++) {
+        //    const region = navigationManager.getRegion('bounds');
+        //    if (region) {
+        //        navigationManager.getRandomPoint(region, fishData.width, fishData.height, 0, random_point)
+        //    }
+        //    else { console.log('mewmew', navigationManager) }
+        //   fishData.x = random_point[0];
+        //    fishData.y = random_point[1];
+        //    fishData.base_speed = Math.random() * 8 + 8;
+        //    fishData.scale_x = Math.random() * 1.5 + 0.5;
+        //    fishData.scale_y = Math.random() * 1.5 + 0.5;
+        //    const fish = await Fish.create(fishData)
+        //    this.update_fish(fish, Math.random() * 0.5 + 0.5)
+        //    this.level.addChild(fish)
+        //    fish.onCaught = (event) => { this.fish_caught(event) }
+        //    fish.onEscaped = (event) => this.failed_catch(event)
+        //    fish.onBite = (event) => {
+        //        event.catchBonus = this.catchBonus;
+        //    }
+        //}
 
         if (!this.#paused) {
             //if paused when start, then it will start paused.
@@ -436,7 +485,7 @@ export async function start_fishing_game(options = {}) {
     //jsons that represnt a object like image as a atlas is expected to follow a patter, but also could have code to make sure it is followed
     // game.fishData = fishData.content
     //Object.assign(game.fishData, mixFishData.content);
-    
+
     await game.start();
     game.load(save_key);
     return game;
