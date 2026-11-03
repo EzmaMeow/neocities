@@ -25,6 +25,7 @@
               "audio_manager.js",
               "cameras.js",
               "collision_manager.js",
+              "definitions.js",
               "image_render_object.js",
               "input_manager.js",
               "items.js",
@@ -39,13 +40,40 @@
             ],
             "data": [
               {
-                "items": [
+                "definitions": [
                   {
                     "fish": [
-                      "fish.json"
+                      "bluegill.json",
+                      "carp.json",
+                      "catfish.json",
+                      "crappie.json",
+                      "dorado.json",
+                      "drum.json",
+                      "fish.json",
+                      "grouper.json",
+                      "halibut.json",
+                      "largemouth_bass.json",
+                      "mackerel.json",
+                      "marlin.json",
+                      "mola.json",
+                      "muskellunge.json",
+                      "pickerel.json",
+                      "pike.json",
+                      "red_snapper.json",
+                      "salmon.json",
+                      "sea_bass.json",
+                      "smallmouth_bass.json",
+                      "sturgeon.json",
+                      "sunfish.json",
+                      "swordfish.json",
+                      "tarpon.json",
+                      "tilapia.json",
+                      "trout.json",
+                      "tuna.json",
+                      "walleye.json"
                     ]
                   },
-                  "item.json"
+                  "object.json"
                 ]
               },
               "freshwater_fish.json",
