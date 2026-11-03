@@ -5,8 +5,8 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name":"Mola",
-		"min_weight":247.0,
-		"max_weight":1000.0,
+		"minWeight":247.0,
+		"maxWeight":1000.0,
 		"saltwater": true,
 		"freshwater": false
 }

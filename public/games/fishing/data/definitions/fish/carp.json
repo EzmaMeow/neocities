@@ -5,8 +5,8 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name":"Carp",
-		"min_weight":1.0,
-		"max_weight":15.0,
+		"minWeight":1.0,
+		"maxWeight":15.0,
 		"saltwater": false,
 		"freshwater": true
 }

@@ -5,8 +5,8 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name":"Mackerel",
-		"min_weight":0.5,
-		"max_weight":10.0,
+		"minWeight":0.5,
+		"maxWeight":10.0,
 		"saltwater": true,
 		"freshwater": false
 }

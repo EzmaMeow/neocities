@@ -5,8 +5,8 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name": "Catfish",
-    "min_weight": 0.5,
-    "max_weight": 100.0,
+    "minWeight": 0.5,
+    "maxWeight": 100.0,
     "saltwater": false,
     "freshwater": true
 }

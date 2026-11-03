@@ -164,6 +164,7 @@ export class Fishing_Game {
         this.soundVolumnController = document.getElementById(element_info.soundVolume || 'sound_volume');
         this.saveLocallyToggle = document.getElementById(element_info.saveLocally || 'fishing_save_locally');
         this.catchSucessProgress = document.getElementById(element_info.catchSuccess || 'catchSuccess');
+        this.lastCatchElement = document.getElementById(element_info.lastCatch || 'last-catch');
         this.soundsEffects = {
             //Note: free neocities seem to disallow sound upload so either host elsewhere or generate the sound via code
             splash: await assetManager.load('https://ezmameow.github.io/assets/splash.wav', 'splashSound'),
@@ -241,10 +242,10 @@ export class Fishing_Game {
             navigationManager.getRandomPoint(region, fish.width, fish.height, 0, random_point)
         }
 
-        const fish_types = Object.keys(this.fish_data);
-        fish.type = this.fish_data[fish_types[Math.floor(Math.random() * fish_types.length)]] || {};
+        const fish_types = Object.keys(this.fishData);
+        fish.type = this.fishData[fish_types[Math.floor(Math.random() * fish_types.length)]] || {};
         fish.weight_ratio = Math.random();
-        const weight = fish.type.min_weight + (fish.type.max_weight - fish.type.min_weight) * fish.weight_ratio;
+        const weight = fish.type.minWeight + (fish.type.maxWeight - fish.type.minWeight) * fish.weight_ratio;
         const size = weight <= 10 ? 0.25 + (0.75 - 0.25) * weight / 10.0 : 0.75 + (3.0 - 0.75) * (weight - 10) / 1000.0;
         fish.difficulty = size / 3.0;
         fish.set_position(random_point[0], random_point[1]);
@@ -329,8 +330,12 @@ export class Fishing_Game {
         this.dirtySaveState = true;
         this.elements.score.innerHTML = `Score: ${this.score}`;
         //console.log(catch_data.fish.type, ' ', catch_data.fish.weight, 'kg')
+        if (this.lastCatchElement && catch_data.fish.type.name){
+            this.lastCatchElement.innerText = `Latest catch: ${catch_data.fish.type.name} (${catch_data.fish.weight.toFixed(3)}kg)`
+        }
         this.update_fish(catch_data.fish);
         this.catchBonus = 0.0;
+        
         this.onFishCaught();
     }
     failed_catch(catch_data = {}) {
@@ -346,24 +351,37 @@ export class Fishing_Game {
         this.#level = await Level.create();
 
         const random_point = [0.0, 0.0];
-        const fish_data = {
+        const fishData = {
             width: 16,
             height: 16,
             img_src: '/assets/fish.gif',
             opacity: 0.9
         }
+        if (!this.fishData) { this.fishData = {} }
+        for (let fish of fishList) {
+            await definitions.load(`fish/${fish}.json`).then((data) => {
+                if (!data) {
+                    return
+                }
+                if (!data.name) {
+                    return
+                }
+                this.fishData[data.name] = data;
+            });
+        }
+
         for (let i = 0; i < 10; i++) {
             const region = navigationManager.getRegion('bounds');
             if (region) {
-                navigationManager.getRandomPoint(region, fish_data.width, fish_data.height, 0, random_point)
+                navigationManager.getRandomPoint(region, fishData.width, fishData.height, 0, random_point)
             }
             else { console.log('mewmew', navigationManager) }
-            fish_data.x = random_point[0];
-            fish_data.y = random_point[1];
-            fish_data.base_speed = Math.random() * 8 + 8;
-            fish_data.scale_x = Math.random() * 1.5 + 0.5;
-            fish_data.scale_y = Math.random() * 1.5 + 0.5;
-            const fish = await Fish.create(fish_data)
+            fishData.x = random_point[0];
+            fishData.y = random_point[1];
+            fishData.base_speed = Math.random() * 8 + 8;
+            fishData.scale_x = Math.random() * 1.5 + 0.5;
+            fishData.scale_y = Math.random() * 1.5 + 0.5;
+            const fish = await Fish.create(fishData)
             this.update_fish(fish, Math.random() * 0.5 + 0.5)
             this.level.addChild(fish)
             fish.onCaught = (event) => { this.fish_caught(event) }
@@ -416,20 +434,10 @@ export async function start_fishing_game(options = {}) {
     //const fishData = options.saltwater ? await assetManager.load("./data/saltwater_fish.json") : await assetManager.load("./data/freshwater_fish.json");
     //for reasons json files will have its contents either in data or content. text files might also behave this way. this is to prevent overriding the asset properties
     //jsons that represnt a object like image as a atlas is expected to follow a patter, but also could have code to make sure it is followed
-    // game.fish_data = fishData.content
-    //Object.assign(game.fish_data, mixFishData.content);
-    if (!game.fish_data) { game.fish_data = {} }
-    for (let fish of fishList) {
-        const data = await definitions.load(`fish/${fish}.json`);
-        if (!data) {
-            continue
-        }
-        if (!data.name) {
-            continue
-        }
-        game.fish_data[data.name] = data;
-    }
+    // game.fishData = fishData.content
+    //Object.assign(game.fishData, mixFishData.content);
+    
+    await game.start();
     game.load(save_key);
-    game.start();
     return game;
 }

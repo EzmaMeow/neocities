@@ -5,9 +5,9 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name":"Pike",
-		"min_weight":1.4,
-		"max_weight":28.4,
-		"average_weight":11.3,
+		"minWeight":1.4,
+		"maxWeight":28.4,
+		"averageWeight":11.3,
 		"saltwater": false,
 		"freshwater": true
 }

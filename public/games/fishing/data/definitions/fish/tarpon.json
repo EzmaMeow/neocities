@@ -5,8 +5,8 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name":"Tarpon",
-		"min_weight":10.0,
-		"max_weight":150.0,
+		"minWeight":10.0,
+		"maxWeight":150.0,
 		"saltwater": true,
 		"freshwater": false
 }

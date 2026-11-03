@@ -19,10 +19,10 @@ export class Fish extends Entity {
     weight_ratio = 1.0;
     difficulty = 0.0;
     get min_weight() {
-        return this.type.min_weight || 0.001;
+        return this.type.minWeight || 0.001;
     }
     get max_weight() {
-        return this.type.max_weight || 1.000;
+        return this.type.maxWeight || 1.000;
     }
     get weight() {
         //console.log(`${min_weight} ${max_weight} ${this.weight_ratio}`)

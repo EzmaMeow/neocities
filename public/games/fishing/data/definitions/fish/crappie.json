@@ -5,8 +5,8 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name":"Crappie",
-		"min_weight":0.25,
-		"max_weight":0.75,
+		"minWeight":0.25,
+		"maxWeight":0.75,
 		"saltwater": false,
 		"freshwater": true
 }

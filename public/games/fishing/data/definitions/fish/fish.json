@@ -5,8 +5,8 @@
     "sprite":"",
     "catchDifficulty":1,
     "baseSpeed":1,
-    "min_weight": 0.01,
-    "max_weight": 1.0,
+    "minWeight": 0.01,
+    "maxWeight": 1.0,
     "saltwater": true,
     "freshwater": true
 }

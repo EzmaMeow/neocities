@@ -87,6 +87,8 @@
                     Meow click to fish : 3<br>
                     <br>
                     <a class='text-center' id="score">(NOTE:this is a prototype)</a>
+                    <br><br>
+                    <span id="last-catch"></span>
                 </p>
 
             </div>
@@ -129,7 +131,7 @@
         const fishingLog = {
             page: 0,
             logData: {},
-            definitions:{},
+            definitions: {},
             maxEntries: 10,
             entries: [],
             logEntriesElement: document.getElementById('inventory'),
@@ -137,7 +139,7 @@
             updateEntry(entry, entryName, entryData) {
                 //directly acessing it instead of loading for now untill this moves to its own file and class. also could pull from game.fish_data if move below
                 const entryDefinition = this.definitions[entryName];
-                if (!entryDefinition){
+                if (!entryDefinition) {
                     console.log(entryName)
                     return
                 }
@@ -154,7 +156,7 @@
                 const name = entryData.name || entryDefinition.name || "no name"
                 entry.innerHTML = `
                 <details>
-                    <summary>${icon?`<img src=${icon} alt="Log Entry Icon">`:""}${name} ${weight.toFixed(3)}kg</summary>
+                    <summary>${icon ? `<img src=${icon} alt="Log Entry Icon">` : ""}${name} ${weight.toFixed(3)}kg</summary>
                     <p>Total caught: ${totalCaught}</p>
                     <p>Min weight: ${minWeight.toFixed(3)}</p>
                     <p>Max weight: ${maxWeight.toFixed(3)}</p>
@@ -212,7 +214,7 @@
 
         const game = await start_fishing_game();
 
-        fishingLog.definitions = game.fish_data
+        fishingLog.definitions = game.fishData
 
         const fishLogPreviousButton = document.getElementById('inventory_previous');
         const fishLogNextButton = document.getElementById('inventory_next');
@@ -237,10 +239,9 @@
             fishingLog.updateEntries();
             updateFishLogButtons();
         }
-
-        if (game.player.logs.fish) {
-            fishingLog.logData = game.player.logs.fish
-        }
+        if (!game.player.logs) {game.player.logs = {}}
+        if (!game.player.logs.fish) {game.player.logs.fish = {}}
+        fishingLog.logData = game.player.logs.fish
 
         fishingLog.updateEntries();
         updateFishLogButtons()

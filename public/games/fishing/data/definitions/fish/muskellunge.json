@@ -5,9 +5,9 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name":"Muskellunge",
-		"min_weight":7.0,
-		"max_weight":30.0,
-		"average_weight":16.5,
+		"minWeight":7.0,
+		"maxWeight":30.0,
+		"averageWeight":16.5,
 		"saltwater": false,
 		"freshwater": true
 }

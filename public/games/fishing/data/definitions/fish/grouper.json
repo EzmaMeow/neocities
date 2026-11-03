@@ -5,8 +5,8 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name":"Grouper",
-		"min_weight":5.0,
-		"max_weight":300.0,
+		"minWeight":5.0,
+		"maxWeight":300.0,
 		"saltwater": true,
 		"freshwater": false
 }

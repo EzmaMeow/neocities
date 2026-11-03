@@ -5,8 +5,8 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name":"Red Snapper",
-		"min_weight":2.0,
-		"max_weight":20.0,
+		"minWeight":2.0,
+		"maxWeight":20.0,
 		"saltwater": true,
 		"freshwater": false
 }

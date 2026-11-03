@@ -5,8 +5,8 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name":"Tilapia",
-		"min_weight":0.5,
-		"max_weight":5.0,
+		"minWeight":0.5,
+		"maxWeight":5.0,
 		"saltwater": false,
 		"freshwater": true
 }

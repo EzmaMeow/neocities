@@ -5,8 +5,8 @@
     "catchDifficulty": 1,
     "baseSpeed": 1,
     "name":"Smallmouth Bass",
-		"min_weight":0.4,
-		"max_weight":2.4,
+		"minWeight":0.4,
+		"maxWeight":2.4,
 		"saltwater": false,
 		"freshwater": true
 }
