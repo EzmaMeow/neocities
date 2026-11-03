@@ -19,60 +19,62 @@
 <body>
 
     <!-- NAVBAR START -->
-<nav id="nav">
-    <ul>
-        <li><a href="/index.html"><span id="index-tab">&#8962</span></a></li>
-        <li>
-            <details id="pages-nav" class="nav-tab">
-                <summary id="pages-tab">Pages</summary>
-                <a href="/pages/about.html"><span id="about-tab">About</span></a>
-                <a href="/pages/notepage.html"><span id="notepage-tab">Notepage</span></a>
-                <a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
-                <a href="/pages/sitemap.html"><span id="sitemap-tab">Sitemap</span></a>
-            </details>
-        </li>
-        <li>
-            <details id="posts-nav" class="nav-tab">
-                <summary id="posts-loader-tab">Posts</summary>
-                <a href="/pages/posts.html"><span id="posts-tab">Posts</span></a>
-                <a href="/pages/media.html"><span id="media-tab">Media</span></a>
-                <a href="/pages/lore.html"><span id="lore-tab">Lore</span></a>
-            </details>
-        </li>
-        <li>
-            <details id="games-nav" class="nav-tab">
-                <summary id="games-tab" class="active">Games</summary>
-                <a href="/games/fishing/fishing.html"><span id="fishing-tab" class="active">Fishing</span></a>
-            </details>
-        </li>
-    </ul>
-</nav>
-<!-- NAVBAR END -->
+    <nav id="nav">
+        <ul>
+            <li><a href="/index.html"><span id="index-tab">&#8962</span></a></li>
+            <li>
+                <details id="pages-nav" class="nav-tab">
+                    <summary id="pages-tab">Pages</summary>
+                    <a href="/pages/about.html"><span id="about-tab">About</span></a>
+                    <a href="/pages/notepage.html"><span id="notepage-tab">Notepage</span></a>
+                    <a href="/pages/guestbook.html"><span id="guestbook-tab">Guestbook</span></a>
+                    <a href="/pages/sitemap.html"><span id="sitemap-tab">Sitemap</span></a>
+                </details>
+            </li>
+            <li>
+                <details id="posts-nav" class="nav-tab">
+                    <summary id="posts-loader-tab">Posts</summary>
+                    <a href="/pages/posts.html"><span id="posts-tab">Posts</span></a>
+                    <a href="/pages/media.html"><span id="media-tab">Media</span></a>
+                    <a href="/pages/lore.html"><span id="lore-tab">Lore</span></a>
+                </details>
+            </li>
+            <li>
+                <details id="games-nav" class="nav-tab">
+                    <summary id="games-tab" class="active">Games</summary>
+                    <a href="/games/fishing/fishing.html"><span id="fishing-tab" class="active">Fishing</span></a>
+                </details>
+            </li>
+        </ul>
+    </nav>
+    <!-- NAVBAR END -->
 
     <background></background>
 
     <div id="body_container">
         <div class="container text-center">
             <!-- RADIO START -->
-<section id='radio-player'>
-    <b>Radio Player</b><br>
-    <audio id="radioAudio" preload="none"></audio>
-    <button id="toggleRadio" type="button">Waiting</button>
-    <details>
-        <summary>Radio Options</summary><br>
-        <label>Use Local Storage: <input type="checkbox" class="radioOptions" data-property="useLocalStorage"
-                title="Uses localStorage to store options untill cleared."></label><br>
-        <label>Autoplay: <input type="checkbox" class="radioOptions" data-property="autoplay"></label><br><br>
-        Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions" data-property="volume"
-            style="width: 75%;"><br><br>
-        Url: <input type="text" id="streamUrl"
-            placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
-            value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
-            class="radioOptions" data-property="src">
-        <button id="radioDefaultStation" type="button">⟲</button>
-    </details>
-</section>
-<!-- RADIO END -->
+            <section id='radio-player'>
+                <b>Radio Player</b><br>
+                <audio id="radioAudio" preload="none"></audio>
+                <button id="toggleRadio" type="button">Waiting</button>
+                <details>
+                    <summary>Radio Options</summary><br>
+                    <label>Use Local Storage: <input type="checkbox" class="radioOptions"
+                            data-property="useLocalStorage"
+                            title="Uses localStorage to store options untill cleared."></label><br>
+                    <label>Autoplay: <input type="checkbox" class="radioOptions"
+                            data-property="autoplay"></label><br><br>
+                    Volume: <input type="range" min="0" max="1" step="0.01" value="0.5" class="radioOptions"
+                        data-property="volume" style="width: 75%;"><br><br>
+                    Url: <input type="text" id="streamUrl"
+                        placeholder="Enter stream URL (e.g. http://...) or radio garden channel id"
+                        value="https://radio.garden/listen/wcpe-the-classical-station/dNa5l6AK" style="width:75%;"
+                        class="radioOptions" data-property="src">
+                    <button id="radioDefaultStation" type="button">⟲</button>
+                </details>
+            </section>
+            <!-- RADIO END -->
         </div>
         <div class="flex-break"></div>
 
@@ -91,7 +93,8 @@
             <div class="level-container" id="world">
                 <canvas id="gameCanvas" height="400" width="400">
             </div>
-            <progress id="catchSuccess" value="32" max="100" style="width: 100%;" title="This represents the sucess bonus for catching fish."></progress>
+            <progress id="catchSuccess" value="32" max="100" style="width: 100%;"
+                title="This represents the sucess bonus for catching fish."></progress>
             <details class="text-center">
                 <summary>Options</summary>
                 <br>
@@ -121,57 +124,126 @@
 
     <script type="module">
         import { start_fishing_game } from "./fishing.js"
-        import { Inventory } from "/scripts/inventory.js"
+
+        //TODO: should give details or something inside an id base on the entry soopen detials stay open
+        const fishingLog = {
+            page: 0,
+            logData: {},
+            definitions:{},
+            maxEntries: 10,
+            entries: [],
+            logEntriesElement: document.getElementById('inventory'),
+            //NOTE: this will use defininitions to get the real values 
+            updateEntry(entry, entryName, entryData) {
+                //directly acessing it instead of loading for now untill this moves to its own file and class. also could pull from game.fish_data if move below
+                const entryDefinition = this.definitions[entryName];
+                if (!entryDefinition){
+                    console.log(entryName)
+                    return
+                }
+                const icon = entryData.icon || entryDefinition.icon || ""
+                const min = entryData.minWeight || entryDefinition.minWeight || 0.0
+                const max = entryData.maxWeight || entryDefinition.maxWeight || 1.0
+                const minWeightRatio = entryData.minWeightRatio || entryDefinition.minWeightRatio || 0.0
+                const maxWeightRatio = entryData.maxWeightRatio || entryDefinition.maxWeightRatio || 0.0
+                const weightRatio = entryData.weightRatio || entryDefinition.weightRatio || 0.0
+                const minWeight = min + (max - min) * minWeightRatio;
+                const maxWeight = min + (max - min) * maxWeightRatio;
+                const weight = min + (max - min) * weightRatio;
+                const totalCaught = entryData.totalCatches || entryDefinition.totalCatches || 0;
+                const name = entryData.name || entryDefinition.name || "no name"
+                entry.innerHTML = `
+                <details>
+                    <summary>${icon?`<img src=${icon} alt="Log Entry Icon">`:""}${name} ${weight.toFixed(3)}kg</summary>
+                    <p>Total caught: ${totalCaught}</p>
+                    <p>Min weight: ${minWeight.toFixed(3)}</p>
+                    <p>Max weight: ${maxWeight.toFixed(3)}</p>
+                </details>
+                `
+            },
+            updateEntries() {
+                if (this.entries.length < this.maxEntries) {
+                    this.entries.length = 0;
+                    for (let i = 0; i < this.maxEntries; i++) {
+                        const entry = document.createElement('log-entry')
+                        this.entries.push(entry)
+                        this.logEntriesElement.appendChild(entry)
+                    }
+                }
+                const page = this.page || 0;
+                const pageStart = page * this.maxEntries;
+                const dataKeys = Object.keys(this.logData);
+                const dataLength = dataKeys.length;
+                for (let i = 0; i < this.maxEntries; i++) {
+                    const entry = this.entries[i];
+                    const pagePosition = pageStart + i;
+                    if (pagePosition < 0) { continue; }
+                    if (pagePosition >= dataLength) {
+                        entry.hidden = true;
+                        continue;
+                    }
+                    entry.hidden = false;
+                    const entryName = dataKeys[pagePosition]
+                    const entryData = this.logData[entryName]
+                    this.updateEntry(entry, entryName, entryData);
+                }
+            },
+            hasPreviousPage() {
+                return this.page > 0;
+            },
+            hasNextPage() {
+                return (this.page + 1) * this.maxEntries < Object.keys(this.logData).length;
+            },
+            nextPage() {
+                if (this.hasNextPage()) {
+                    this.page += 1;
+                    this.updateEntries();
+                    this.logEntriesElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            },
+            previousPage() {
+                if (this.hasPreviousPage()) {
+                    this.page -= 1;
+                    this.updateEntries();
+                    this.logEntriesElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            },
+        }
 
         const game = await start_fishing_game();
-        const inventory = new Inventory('inventory')
-        inventory.typeMap = game.fish_data;
 
-        const inventoryPreviousButton = document.getElementById('inventory_previous');
-        const inventoryNextButton = document.getElementById('inventory_next');
-        function updateInventoryButtons() {
-            inventoryPreviousButton.hidden = !inventory.hasPreviousPage();
-            inventoryNextButton.hidden = !inventory.hasNextPage();
+        fishingLog.definitions = game.fish_data
+
+        const fishLogPreviousButton = document.getElementById('inventory_previous');
+        const fishLogNextButton = document.getElementById('inventory_next');
+
+        function updateFishLogButtons() {
+            fishLogPreviousButton.hidden = !fishingLog.hasPreviousPage();
+            fishLogNextButton.hidden = !fishingLog.hasNextPage();
         }
-        inventoryPreviousButton.addEventListener('click', (event) => {
-            inventory.previousPage();
-            updateInventoryButtons()
+        fishLogPreviousButton.addEventListener('click', (event) => {
+            fishingLog.previousPage();
+            updateFishLogButtons();
+
         })
-        inventoryNextButton.addEventListener('click', (event) => {
-            inventory.nextPage();
-            updateInventoryButtons()
+        fishLogNextButton.addEventListener('click', (event) => {
+            fishingLog.nextPage();
+            updateFishLogButtons();
         })
 
-        inventory.updateItem = function (item, item_data) {
-            item.icon_src = this.getItemDataProperty(item_data, 'icon_src', '')
-            const min = this.getItemDataProperty(item_data, 'minWeight', 0.0)
-            const max = this.getItemDataProperty(item_data, 'maxWeight', 1.0)
-            const minWeightRatio = this.getItemDataProperty(item_data, 'minWeightRatio', 0)
-            const maxWeightRatio = this.getItemDataProperty(item_data, 'maxWeightRatio', 0)
-            const minWeight = min + (max - min) * minWeightRatio;
-            const maxWeight = min + (max - min) * maxWeightRatio;
-            const weight = min + (max - min) * this.getItemDataProperty(item_data, 'weightRatio', 0.0);
-            const totalCaught = this.getItemDataProperty(item_data, 'totalCatches', 0)
-            const name = this.getItemDataProperty(item_data, 'name', 'no_name')
-
-            item.updateText(`${name} ${weight.toFixed(3)}kg`);
-            item.updateInfo(`Total Caught:${totalCaught} <br> Min Weight:${minWeight.toFixed(3)}kg <br> Max Weight::${maxWeight.toFixed(3)}kg`);
-
-        }
         //should one day allow more info in fish caught so it could try to update that single fish
         //but for now the amount of fish is limited. also the display may undergo a redesign
         game.onFishCaught = function () {
-            inventory.load(game.player.logs.fish)
-            inventory.updateItems();
-            updateInventoryButtons();
+            fishingLog.updateEntries();
+            updateFishLogButtons();
         }
 
-        if (game.player.logs.fish){
-            inventory.load(game.player.logs.fish)
+        if (game.player.logs.fish) {
+            fishingLog.logData = game.player.logs.fish
         }
 
-        inventory.updateItems();
-        updateInventoryButtons()
+        fishingLog.updateEntries();
+        updateFishLogButtons()
 
         //this here here for cleanup of old data untill I design a place for it
         const saveKeys = ["client", "player", "/client", "/player", "fishing_save_state"]

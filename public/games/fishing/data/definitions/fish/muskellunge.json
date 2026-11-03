@@ -1,0 +1,13 @@
+{
+    "discription": "A Fish",
+    "icon": "",
+    "sprite": "",
+    "catchDifficulty": 1,
+    "baseSpeed": 1,
+    "name":"Muskellunge",
+		"min_weight":7.0,
+		"max_weight":30.0,
+		"average_weight":16.5,
+		"saltwater": false,
+		"freshwater": true
+}

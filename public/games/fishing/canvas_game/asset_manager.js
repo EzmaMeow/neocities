@@ -2,7 +2,6 @@
 //so each assets may need a metadata instead of the assets. their id should be their path or an uid
 //this data could be useful for spritesheets to set some defaults or images loaded in as animations (similar to spritesheet, but more focus on animation)
 //NOTE: this may not have ref checking, if an asset needs to be free, it should flag it as such in the data and objects that use it should check i\
-const disposeEvent = new Event('dispose');
 
 export function Video(options = {}) {
     const element = document.createElement('video');
@@ -68,9 +67,10 @@ export class AssetManager {
             }
         }
         let assetClass = extensionClassMap.get(extension)
+        //may or may not merge extensionClassMap with ClassMap and focus on metatdata assetType over extension
         if (!assetClass && metadata) {
             if (metadata.type) {
-                assetClass = classMap.get(metadata.type)
+                assetClass = classMap.get(metadata.assetType)
             }
             console.warn("asset class is undefined and lack a type in metadata. Will be turn into a generic EventTarget object. ", assetClass, extension, metadata);
         }
@@ -117,7 +117,10 @@ export class AssetManager {
         const oldDispose = asset.dispose
         asset.dispose = function (...args) {
             this.disposed = true;
-            document.dispatchEvent(disposeEvent);
+            this.dispatchEvent(new CustomEvent('disposeEvent', {
+                bubbles: true,
+                cancelable: true
+            }));
             if (typeof oldDispose === "function") {
                 oldDispose(...args);
             }

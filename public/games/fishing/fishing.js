@@ -7,6 +7,30 @@ import { OrthogonalCamera } from "./canvas_game/cameras.js"
 import navigationManager from "./canvas_game/navigation_manager.js"
 import stateManager from "./canvas_game/state_manager.js"
 import audioManager from "./canvas_game/audio_manager.js"
+import definitions from "./canvas_game/definitions.js"
+
+const fishList = [
+    "carp",
+    "catfish",
+    "crappie",
+    "trout",
+    "largemouth_bass",
+    "smallmouth_bass",
+    "sturgeon",
+    "walleye",
+    "pike",
+    "pickerel",
+    "muskellunge",
+    "bluegill",
+    "sunfish",
+    "drum",
+    "tilapia",
+    "salmon"
+]
+//definitions.addEventListener("definitionLoaded", (event) => {
+//    console.log('meow?', event)
+//})
+
 
 window.debugGame = function () {
     console.log('dropping latest state of various game systems')
@@ -388,12 +412,23 @@ export async function start_fishing_game(options = {}) {
     const game = new Fishing_Game();
     const save_key = options.save_key || 'fishing_save_state'
     game.register_elements(options.element_info || {})
-    const mixFishData = await assetManager.load("./data/mixwater_fish.json")
-    const fishData = options.saltwater ? await assetManager.load("./data/saltwater_fish.json") : await assetManager.load("./data/freshwater_fish.json");
+    //const mixFishData = await assetManager.load("./data/mixwater_fish.json")
+    //const fishData = options.saltwater ? await assetManager.load("./data/saltwater_fish.json") : await assetManager.load("./data/freshwater_fish.json");
     //for reasons json files will have its contents either in data or content. text files might also behave this way. this is to prevent overriding the asset properties
     //jsons that represnt a object like image as a atlas is expected to follow a patter, but also could have code to make sure it is followed
-    game.fish_data = fishData.content
-    Object.assign(game.fish_data, mixFishData.content);
+    // game.fish_data = fishData.content
+    //Object.assign(game.fish_data, mixFishData.content);
+    if (!game.fish_data) { game.fish_data = {} }
+    for (let fish of fishList) {
+        const data = await definitions.load(`fish/${fish}.json`);
+        if (!data) {
+            continue
+        }
+        if (!data.name) {
+            continue
+        }
+        game.fish_data[data.name] = data;
+    }
     game.load(save_key);
     game.start();
     return game;

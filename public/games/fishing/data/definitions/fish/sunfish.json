@@ -1,0 +1,12 @@
+{
+    "discription": "A Fish",
+    "icon": "",
+    "sprite": "",
+    "catchDifficulty": 1,
+    "baseSpeed": 1,
+    "name":"Sunfish",
+		"min_weight":0.1,
+		"max_weight":1.0,
+		"saltwater": false,
+		"freshwater": true
+}

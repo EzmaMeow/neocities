@@ -1,0 +1,12 @@
+{
+    "discription": "A Fish",
+    "icon": "",
+    "sprite": "",
+    "catchDifficulty": 1,
+    "baseSpeed": 1,
+    "name":"Tuna",
+		"min_weight":20.0,
+		"max_weight":600.0,
+		"saltwater": true,
+		"freshwater": false
+}

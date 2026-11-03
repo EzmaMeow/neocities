@@ -1,5 +1,5 @@
 {
-    "type":"Image",
+    "assetType":"Image",
     "src": "/assets/fish.webp",
     "textureAtlas": {
         "rows": 4,

@@ -1,6 +1,0 @@
-{
-    "type":"Item",
-    "name":"Fish",
-	"icon":"",
-    "Note":"The fish item dose not need all data related to the fish. Instead it needs info related to the fish item and displaying the item."
-}

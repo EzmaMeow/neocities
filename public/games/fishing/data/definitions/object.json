@@ -1,0 +1,3 @@
+{
+    "note:":"may use definitions instead of dedicated items and enitity jsons. it will hold the log info of the object plus any info related to the item and enity version. these may be asset paths. Note most data should be at top level. only data not nessary needed except for item or enitity should be wramp in an additonal object or enitiy"
+}

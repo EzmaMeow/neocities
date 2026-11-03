@@ -1,0 +1,12 @@
+{
+    "discription": "A Fish",
+    "icon": "",
+    "sprite": "",
+    "catchDifficulty": 1,
+    "baseSpeed": 1,
+    "name":"Largemouth Bass",
+		"min_weight":0.5,
+		"max_weight":2.0,
+		"saltwater": false,
+		"freshwater": true
+}

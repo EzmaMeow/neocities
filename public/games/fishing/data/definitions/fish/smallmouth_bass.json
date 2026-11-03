@@ -1,0 +1,12 @@
+{
+    "discription": "A Fish",
+    "icon": "",
+    "sprite": "",
+    "catchDifficulty": 1,
+    "baseSpeed": 1,
+    "name":"Smallmouth Bass",
+		"min_weight":0.4,
+		"max_weight":2.4,
+		"saltwater": false,
+		"freshwater": true
+}

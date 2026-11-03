@@ -1,0 +1,12 @@
+{
+    "discription": "A Fish",
+    "icon": "",
+    "sprite": "",
+    "catchDifficulty": 1,
+    "baseSpeed": 1,
+    "name":"Sturgeon",
+		"min_weight":160.0,
+		"max_weight":360.0,
+		"saltwater": false,
+		"freshwater": true
+}

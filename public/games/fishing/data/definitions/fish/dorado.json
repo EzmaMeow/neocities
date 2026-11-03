@@ -1,0 +1,12 @@
+{
+    "discription": "A Fish",
+    "icon": "",
+    "sprite": "",
+    "catchDifficulty": 1,
+    "baseSpeed": 1,
+    "name":"Dorado",
+		"min_weight":5.0,
+		"max_weight":40.0,
+		"saltwater": true,
+		"freshwater": false
+}

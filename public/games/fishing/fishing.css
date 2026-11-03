@@ -10,3 +10,18 @@
     margin-right: auto;
     margin-left: auto;
 }
+log-entry details{
+    margin-right: 16px;
+    margin-left: 16px;
+}
+log-entry details{
+    background-color: #0cefff52;
+}
+log-entry summary{
+    border: 1px solid var(--border-color);
+}
+log-entry p{
+    margin: 0%;
+    padding: 0%;
+    background-color: #0cefff52;
+}

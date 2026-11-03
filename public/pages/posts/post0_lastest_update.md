@@ -6,6 +6,11 @@ Notices (Updated 8/14/26)
 - Primary PC not working(~8/11/26)
 
 [details]
+[summary] Log (11/2/26) [/summary]
+[tab]I decided that instead of static item definitions, I will have just static definitions for things. I mean I may have item type that define functionality, but the data seems better to be stored in a entry base on what it represents. This mean that the log would not need to compare many static data for an entry and instead only need to worry about its static definition and the dynamic state. So today I design a definitions class and move the fish data to their own json with more properties. I also started removing the old inventory from the fishing game and replace it with the fish log. It a bit odd with responsiveness, but I will worry about fixing that later. Mostly I need to access parts of the entry to modify and the odd reactions is due to the details closing when the log updates.
+[/details]
+
+[details]
 [summary] Log (10/31/26) [/summary]
 [tab]I been think about the collsion manager or at least a part of it. There are two major lookup I want to have where one is faster and meant for static collsions and the other one that more lazy made, but less work to update on move and probably less memory per object  for use dynamic shape. I kind of not planing to have any culling for dynamic collsion object and leave that to a diffrent system that tells or notify the owner to unregister its object. I mean a map or array of dynamic objects should be less memory overhead and easier to manager than a nested collections and verification checks.
 

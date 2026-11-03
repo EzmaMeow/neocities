@@ -1,0 +1,12 @@
+{
+    "discription": "A Fish",
+    "icon": "",
+    "sprite": "",
+    "catchDifficulty": 1,
+    "baseSpeed": 1,
+    "name":"Walleye",
+		"min_weight":4.0,
+		"max_weight":10.0,
+		"saltwater": false,
+		"freshwater": true
+}

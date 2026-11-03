@@ -1,0 +1,12 @@
+{
+    "discription": "A Fish",
+    "icon": "",
+    "sprite": "",
+    "catchDifficulty": 1,
+    "baseSpeed": 1,
+    "name":"Sea Bass",
+		"min_weight":1.0,
+		"max_weight":50.0,
+		"saltwater": true,
+		"freshwater": false
+}
