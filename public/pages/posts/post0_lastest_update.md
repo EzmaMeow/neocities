@@ -5,6 +5,14 @@ Notices (Updated 8/14/26)
 - Real life distractments
 - Primary PC not working(~8/11/26)
 
+
+[details]
+[summary] Log (11/8/26) [/summary]
+[tab]Food issue greatly hinder my will to work on the project. Also I open my old Godot project so there a chance I might work on both. I did make a tile connection code in gdscript (aka terrains) that I could use for the js project. I kind of dislike Godot tilemap/tilelayers. It is better than it was, but is a pain to work with for more advance dynamic maps (considering I had to make my own connection logic since the tile layer approch is too costly to run). 
+
+[tab]I am not sure when I be in the right mind again to work on the website or add mnore content to it. Maybe soom maybe not or maybe on and off *rolls around*
+[/details]
+
 [details]
 [summary] Log (11/2/26) [/summary]
 [tab]I decided that instead of static item definitions, I will have just static definitions for things. I mean I may have item type that define functionality, but the data seems better to be stored in a entry base on what it represents. This mean that the log would not need to compare many static data for an entry and instead only need to worry about its static definition and the dynamic state. So today I design a definitions class and move the fish data to their own json with more properties. I also started removing the old inventory from the fishing game and replace it with the fish log. It a bit odd with responsiveness, but I will worry about fixing that later. Mostly I need to access parts of the entry to modify and the odd reactions is due to the details closing when the log updates.

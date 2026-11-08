@@ -400,45 +400,7 @@ export class Fishing_Game {
         this.#started = true;
         this.#level = await Level.create();
 
-        //const random_point = [0.0, 0.0];
-        //const fishData = {
-        //    width: 16,
-        //    height: 16,
-        //    img_src: '/assets/fish.gif',
-        //    opacity: 0.9
-        //}
-        //if (!this.fishData) { this.fishData = {} }
         this.loadInitFishes()
-        
-        //for (let fish of fishList) {
-        //    await definitions.load(`fish/${fish}.json`).then((data) => {
-        //        if (!data) {
-        //            return
-        //        }
-        //        this.fishData[fish] = data;
-        //    });
-        //}
-
-        //for (let i = 0; i < 10; i++) {
-        //    const region = navigationManager.getRegion('bounds');
-        //    if (region) {
-        //        navigationManager.getRandomPoint(region, fishData.width, fishData.height, 0, random_point)
-        //    }
-        //    else { console.log('mewmew', navigationManager) }
-        //   fishData.x = random_point[0];
-        //    fishData.y = random_point[1];
-        //    fishData.base_speed = Math.random() * 8 + 8;
-        //    fishData.scale_x = Math.random() * 1.5 + 0.5;
-        //    fishData.scale_y = Math.random() * 1.5 + 0.5;
-        //    const fish = await Fish.create(fishData)
-        //    this.update_fish(fish, Math.random() * 0.5 + 0.5)
-        //    this.level.addChild(fish)
-        //    fish.onCaught = (event) => { this.fish_caught(event) }
-        //    fish.onEscaped = (event) => this.failed_catch(event)
-        //    fish.onBite = (event) => {
-        //        event.catchBonus = this.catchBonus;
-        //    }
-        //}
 
         if (!this.#paused) {
             //if paused when start, then it will start paused.
@@ -479,13 +441,6 @@ export async function start_fishing_game(options = {}) {
     const game = new Fishing_Game();
     const save_key = options.save_key || 'fishing_save_state'
     game.register_elements(options.element_info || {})
-    //const mixFishData = await assetManager.load("./data/mixwater_fish.json")
-    //const fishData = options.saltwater ? await assetManager.load("./data/saltwater_fish.json") : await assetManager.load("./data/freshwater_fish.json");
-    //for reasons json files will have its contents either in data or content. text files might also behave this way. this is to prevent overriding the asset properties
-    //jsons that represnt a object like image as a atlas is expected to follow a patter, but also could have code to make sure it is followed
-    // game.fishData = fishData.content
-    //Object.assign(game.fishData, mixFishData.content);
-
     await game.start();
     game.load(save_key);
     return game;
